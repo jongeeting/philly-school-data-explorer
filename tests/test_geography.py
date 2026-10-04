@@ -95,3 +95,88 @@ def test_school_sites_split_on_moves():
     )
     sites = school_sites(attr)
     assert len(sites) == 3  # 2020-21 at A, 2022 at B, 2023 back at A
+
+
+def _sites():
+    return pd.DataFrame(
+        {
+            "school_id": ["a", "b", "c"],
+            "valid_from_sy": [2018, 2018, 2018],
+            "pwd_parcel_id": [1.0, 2.0, None],
+            "opa_account": ["111", "222", None],
+            "parcel_address": ["1 X ST", "2 Y ST", None],
+            "parcel_owner": ["SMITH", "CITY OF PHILA", None],
+            "match": ["nearest", "contains", "query_error"],
+            "confidence": ["medium", "high", None],
+            "distance_m": [7.0, 0.0, None],
+            "needs_review": [True, True, True],
+            "status": ["derived"] * 3,
+        }
+    )
+
+
+def test_corrections_replace_confirm_and_keep_unresolved():
+    from phillyschools.parcels import apply_corrections
+
+    corr = pd.DataFrame(
+        [
+            {
+                "correction_id": "c1",
+                "school_id": "a",
+                "valid_from_sy": "2018",
+                "action": "replace",
+                "pwd_parcel_id": "9",
+                "opa_account": "999",
+                "parcel_address": "9 Z ST",
+                "parcel_owner": "SCHOOL DISTRICT OF PHILA",
+                "reason": "wrong neighbor",
+            },
+            {
+                "correction_id": "c2",
+                "school_id": "b",
+                "valid_from_sy": "2018",
+                "action": "confirm",
+                "reason": "City-owned building",
+            },
+            {
+                "correction_id": "c3",
+                "school_id": "c",
+                "valid_from_sy": "2018",
+                "action": "unresolved",
+                "reason": "ask the district",
+            },
+        ]
+    )
+    out = apply_corrections(_sites(), corr).set_index("school_id")
+    assert out.loc["a", "opa_account"] == "999" and out.loc["a", "status"] == "corrected"
+    assert not out.loc["a", "needs_review"] and not out.loc["b", "needs_review"]
+    assert out.loc["b", "opa_account"] == "222" and out.loc["b", "confidence"] == "reviewed"
+    assert out.loc["c", "needs_review"] and out.loc["c", "correction_id"] == "c3"
+
+
+def test_correction_for_unknown_site_fails_loudly():
+    import pytest
+
+    from phillyschools.parcels import apply_corrections
+
+    corr = pd.DataFrame(
+        [
+            {
+                "correction_id": "x",
+                "school_id": "zzz",
+                "valid_from_sy": "2018",
+                "action": "confirm",
+                "reason": "",
+            }
+        ]
+    )
+    with pytest.raises(ValueError):
+        apply_corrections(_sites(), corr)
+
+
+def test_error_answers_are_not_matches():
+    from phillyschools.parcels import _ok, best_parcel
+
+    assert not _ok({"error": {"code": 400}})
+    assert _ok({"features": []})
+    assert best_parcel(39.9, -75.1, None)["match"] == "query_error"

@@ -22,7 +22,9 @@ Neighborhoods are for display only; never use them as an analysis unit.
 
 Each distinct school location is matched to the parcel containing it, else the nearest within 100 m. For district-run schools, a School District-owned parcel within 50 m beats a closer parcel owned by someone else (`match = owner_preferred`), because the district's points often sit in the street next to a rowhouse. `opa_account` is the key the BPN property platform uses.
 
-First build: 390 school sites; 257 inside a parcel, 119 within 25 m, 9 farther, 5 with no parcel within 100 m. 27 district-run sites sit on parcels the district does not own (City buildings, housing authority, leases, or a wrong neighbor); they are flagged `needs_review`. A campus with several parcels records only the one at the district's point.
+Reviewed fixes are rows in [`corrections/school_parcel.csv`](../corrections/school_parcel.csv), applied on every build (`replace`, `confirm`, or `unresolved`), each with a reason and the archived evidence it rests on. The first review (Oct 4, 2026) covered the 27 district-run sites on parcels the district does not own, checked against the City's schools layer (OpenDataPhilly, same ULCS codes): 13 replaced (5 where the City's service had returned an error, 8 where the district's point matched a neighbor), 13 confirmed as real arrangements (City-owned buildings, a housing authority building, Penn Alexander, a City prison and juvenile center, leased SLA buildings), and 1 unresolved (Cayuga, 2018).
+
+Current build: 390 school sites; 253 inside a parcel, 100 nearest within 100 m, 24 owner-preferred, 13 corrected; 1 still needs review. The City's parcel service sometimes answers with an error inside a normal response; those answers are retried and never cached.
 
 ## Not yet built
 

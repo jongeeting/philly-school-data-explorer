@@ -36,6 +36,14 @@ def read_downloads() -> list[dict]:
         return list(csv.DictReader(f))
 
 
+def append_download(record: dict) -> None:
+    """Re-read the log and append, so separate processes do not overwrite each other."""
+    rows = read_downloads()
+    if not any(r["local_path"] == record["local_path"] for r in rows):
+        rows.append(record)
+        _write_downloads(rows)
+
+
 def _write_downloads(rows: list[dict]) -> None:
     with open(SOURCES / "downloads.csv", "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=DOWNLOAD_FIELDS)
@@ -123,7 +131,7 @@ def fetch(rows: list[dict], pause: float = 1.0) -> list[dict]:
         }
         downloads.append(record)
         new.append(record)
-        _write_downloads(downloads)  # persist after every file so a crash loses nothing
+        append_download(record)  # persist each file at once; merges with concurrent writers
         time.sleep(pause)
     if failures:
         _log_failures(failures)
@@ -172,8 +180,7 @@ def fetch_one_snapshot(source_key: str, url: str) -> Path:
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / f"{now.strftime('%Y%m%dT%H%M%SZ')}.html"
     path.write_bytes(resp.content)
-    downloads = read_downloads()
-    downloads.append(
+    append_download(
         {
             "source_key": source_key,
             "url": url,
@@ -185,7 +192,6 @@ def fetch_one_snapshot(source_key: str, url: str) -> Path:
             "last_modified": resp.headers.get("Last-Modified", ""),
         }
     )
-    _write_downloads(downloads)
     return path
 
 
@@ -204,10 +210,7 @@ def record_local_file(source_key: str, url: str, path: Path) -> dict:
         "etag": "",
         "last_modified": "",
     }
-    downloads = read_downloads()
-    if not any(d["local_path"] == record["local_path"] for d in downloads):
-        downloads.append(record)
-        _write_downloads(downloads)
+    append_download(record)
     return record
 
 

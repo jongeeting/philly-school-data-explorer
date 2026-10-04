@@ -116,11 +116,10 @@ def cmd_build_geography(a):
 
 def cmd_link_parcels(a):
     attr = pd.read_parquet(ROOT / "core" / "school_year_attr.parquet")
-    df = build_school_parcel(attr)
+    df = build_school_parcel(attr, offline=a.offline)
     write_school_parcel(df)
-    print(
-        f"  {len(df)} school sites; confidence: {df['confidence'].value_counts(dropna=False).to_dict()}"
-    )
+    print(f"  {len(df)} school sites; match: {df['match'].value_counts(dropna=False).to_dict()}")
+    print(f"  needs review: {int(df['needs_review'].sum())}")
 
 
 def cmd_stage(a):
@@ -215,6 +214,7 @@ def main():
     s.set_defaults(fn=cmd_build_geography)
 
     s = sub.add_parser("link-parcels", help="match school locations to City parcels (OPA)")
+    s.add_argument("--offline", action="store_true", help="use archived answers only")
     s.set_defaults(fn=cmd_link_parcels)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
