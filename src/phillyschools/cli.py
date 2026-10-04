@@ -10,6 +10,7 @@ from .discover import discover
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
 from .identity import build_identity, load_registry, validate, write_core
 from .sourcetable import build_source
+from .stage import write_staging
 
 PROTOTYPE_INPUT = ROOT / "prototype" / "data" / "school_years.csv"
 
@@ -47,6 +48,11 @@ def cmd_fetch(a):
 def cmd_snapshot(a):
     path = fetch_one_snapshot(a.source, a.url)
     print(f"saved {path}")
+
+
+def cmd_stage(a):
+    out = write_staging()
+    print(out.groupby('year').size().to_string())
 
 
 def cmd_build_identity(a):
@@ -92,6 +98,9 @@ def main():
     s.add_argument("source")
     s.add_argument("url")
     s.set_defaults(fn=cmd_snapshot)
+
+    s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
+    s.set_defaults(fn=cmd_stage)
 
     s = sub.add_parser("build-identity", help="build identity tables into core/")
     s.set_defaults(fn=cmd_build_identity)

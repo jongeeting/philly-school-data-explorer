@@ -25,6 +25,10 @@ Tables (built by `uv run psd build-identity`, written to `core/`):
 - **One school changed NCES code:** Vaux High School (`sch_00197`) is 421899007634 in 2019 and 421899007661 from 2020. One ULCS (Boys Latin of Philadelphia Charter School) appears twice in 2025; the first row is kept.
 - **Not yet answered:** whether the district ever reassigns a retired ULCS to a new school. The registry protects us either way; ask the district contact.
 
+## Status
+
+Rebuilt from archived raw lists (`psd stage`, then `psd build-identity`), 2018-19 through 2026-27: 339 schools, 2,792 school-years. Matches the prototype for 2019-2026, all existing IDs unchanged. **Not releasable** until the district's terms are resolved ([SOURCE_TERMS.md](SOURCE_TERMS.md)).
+
 ## Next
 
-Rebuild from archived raw files (`psd fetch`) instead of prototype output, add the 2026-27 list, and derive lineage from the Longitudinal School List.
+Stage the 2017-18 list and derive lineage from the 2017 Longitudinal School List.
