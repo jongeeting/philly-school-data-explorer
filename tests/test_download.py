@@ -74,3 +74,24 @@ def test_fetch_archives_hashes_and_never_overwrites(server, tmp_path, monkeypatc
     assert (raw / "t" / "data.csv").read_text() == "a,b\n1,2\n"  # original untouched
     assert len(list((raw / "t").glob("data.*.csv"))) == 1
     assert len(fetch_mod.read_downloads()) == 2
+
+
+def test_rejects_html_where_a_document_was_expected():
+    from phillyschools.fetch import _is_unexpected_html
+
+    assert _is_unexpected_html("report.pdf", b"  <!DOCTYPE html><html>Sign in</html>")
+    assert not _is_unexpected_html("report.pdf", b"%PDF-1.7 ...")
+    assert not _is_unexpected_html("agenda.html", b"<!DOCTYPE html>")
+
+
+def test_uses_served_extension():
+    from phillyschools.fetch import _served_name
+
+    assert (
+        _served_name("Testimony_ab12.pdf", 'attachment; filename="notes.docx"')
+        == "Testimony_ab12.docx"
+    )
+    assert (
+        _served_name("Testimony_ab12.pdf", "attachment; filename=03.26.pdf") == "Testimony_ab12.pdf"
+    )
+    assert _served_name("x.pdf", "") == "x.pdf"

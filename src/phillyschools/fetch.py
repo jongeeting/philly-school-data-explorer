@@ -101,11 +101,15 @@ def fetch(rows: list[dict], pause: float = 1.0) -> list[dict]:
         if resp is None:
             failures.append(r["url"])
             continue
+        if _is_unexpected_html(r["filename"], resp.content):
+            failures.append(r["url"])  # an error or confirmation page, not the file
+            continue
         sha = hashlib.sha256(resp.content).hexdigest()
         prior = [d for d in downloads if d["url"] == r["url"] and d["sha256"] == sha]
         if prior:
             continue  # identical bytes already archived
-        path = _unique_path(directory, r["filename"], stamp.strftime("%Y%m%d"))
+        name = _served_name(r["filename"], resp.headers.get("Content-Disposition", ""))
+        path = _unique_path(directory, name, stamp.strftime("%Y%m%d"))
         path.write_bytes(resp.content)
         record = {
             "source_key": r["source_key"],
@@ -205,3 +209,23 @@ def record_local_file(source_key: str, url: str, path: Path) -> dict:
         downloads.append(record)
         _write_downloads(downloads)
     return record
+
+
+def _is_unexpected_html(filename: str, body: bytes) -> bool:
+    """True when we asked for a document but got a web page back."""
+    if Path(filename).suffix.lower() in {".html", ".htm"}:
+        return False
+    head = body[:512].lstrip().lower()
+    return head.startswith((b"<!doctype html", b"<html"))
+
+
+def _served_name(filename: str, disposition: str) -> str:
+    """Keep our file name but use the server's extension when it differs (e.g. .docx)."""
+    m = re.search(r'filename\*?=(?:UTF-8\'\')?"?([^";]+)"?', disposition)
+    if not m:
+        return filename
+    served = Path(m.group(1)).suffix.lower()
+    ours = Path(filename)
+    if served and served != ours.suffix.lower() and len(served) <= 6:
+        return ours.stem + served
+    return filename
