@@ -1,0 +1,20 @@
+# Layers rebuilt by script or too large for git (see docs/DATA_MODEL.md, "Storage, layers and tooling")
+raw/*
+staging/*
+!raw/.gitkeep
+!staging/.gitkeep
+prototype/raw/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Env / OS
+.env*
+.DS_Store
+
+# Internal strategy docs (host options, faction assessments); never commit
+private/

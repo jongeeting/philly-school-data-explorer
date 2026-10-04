@@ -1,0 +1,6 @@
+type,id,school_keys,names,detail
+ulcs maps to several school_keys,3240,126515001-0|326510730-0,Liguori Academy-Fortis|The Fortis Program,
+src_id maps to several school_keys,324,126515001-0|326510730-0,Liguori Academy-Fortis|The Fortis Program,
+state key shared by several programs,126515001-8507,126515001-8507,"Stetson, John B. Middle School|Stetson Middle School Continuation Academy|John B. Stetson Middle School",2 ULCS codes
+state key shared by several programs,126515001-8508,126515001-8508,Olney High School|Olney HS Continuation Academy|Olney High School Continuation Academy,2 ULCS codes
+state key shared by several programs,126515001-9999,126515001-9999,Camelot Academy|Phila. Juv. Justice Services Ctr. School|Crossroads at Hunting Park|Ben Franklin High School EOP|Excel Academy South|El Centro de Estudiantes (Big Picture),24 ULCS codes

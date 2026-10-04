@@ -1,0 +1,24 @@
+source_key,publisher,dataset,url,grain,charters,cadence,license,notes
+sdp_enrollment,SDP,Enrollment & demographics (Oct 1),https://opendataphilly.org/datasets/sdp-school-enrollment-and-demographics/,school; 2009-10 on,from 2019-20,yearly (Nov),SDP terms of use,2014-15 to 2018-19 reposted Aug 2025 under new suppression rules
+sdp_employees,SDP,Employees (aggregates only),https://opendataphilly.org/datasets/sdp-district-employees/,school/employee,no,several per year,SDP terms of use,roster has names and pay: publish aggregates only
+sdp_finances,SDP,Finances and school budgets,https://opendataphilly.org/datasets/sdp-district-finances/,district and school,no,yearly (Jan),SDP terms of use,school-level is budgeted not actual; FY2026 zip ~170 MB
+sdp_school_performance,SDP,School performance (attendance suspensions incidents graduation),https://opendataphilly.org/datasets/sdp-school-performance/,school,partly,yearly,SDP terms of use,attendance excludes charters
+sdp_pssa_keystone,SDP,PSSA & Keystone,https://opendataphilly.org/datasets/sdp-pssa-keystone-performance/,school,no,yearly,SDP terms of use,groups under 20 suppressed
+sdp_spree,SDP,SPREE / school progress reports,https://opendataphilly.org/datasets/sdp-school-progress-report-data/,school; 2012-13 on,partly,yearly,SDP terms of use,framework changed 2020
+sdp_pses,SDP,Philly School Experience Survey,https://opendataphilly.org/datasets/sdp-philly-school-experience-survey/,school,partly,yearly,SDP terms of use,hidden below response-rate thresholds
+sdp_school_selection,SDP,School selection,https://opendataphilly.org/datasets/sdp-school-selection-information/,school pairs,criteria schools,yearly,SDP terms of use,
+sdp_catchment_retention,SDP,Catchment retention (flows),https://opendataphilly.org/datasets/sdp-school-catchment-retention/,catchment x school,yes,yearly (Dec),SDP terms of use,
+sdp_meals,SDP,Meals & nutrition,https://opendataphilly.org/datasets/sdp-school-meals-and-nutrition/,school,partly,yearly,SDP terms of use,
+sdp_yrbs,SDP,Youth Risk Behavior Survey,https://opendataphilly.org/datasets/sdp-youth-risk-behavior-survey/,citywide sample,partly,every 2 years,SDP terms of use,needs CDC codebook
+sdp_goals_guardrails,SDP,Goals & Guardrails reports,https://www.philasd.org/research/#ggera,district,no,monthly-ish,SDP terms of use,PDFs; targets reset Apr 2024
+sdp_facilities_dashboard,SDP,Facilities planning data dashboard,https://www.philasd.org/blog/2025/09/10/announcing-the-facilities-planning-process-data-dashboard/,building,district buildings,per release,SDP terms of use,ARCHIVE EVERY SNAPSHOT: prior site went offline in 2024
+sdp_facilities_master_plan,SDP,Facilities master plan,https://www.philasd.org/blog/2026/02/25/fppmasterplan/,building,district buildings,per plan version,SDP terms of use,
+sdp_environmental,SDP,Environmental (AHERA asbestos and lead),https://www.philasd.org/environmental,building,district buildings,every 6 months,SDP terms of use,likely PDF reports
+sdp_charter_evaluations,SDP,Charter Schools Office evaluations,https://www.philasd.org/charterschools/,charter school; 2018 on,charters only,yearly,SDP terms of use,PDFs
+pde_professional_personnel,PDE,Professional personnel (anonymized staff IDs),https://www.pa.gov/agencies/education/data-and-reporting/school-staff/professional-and-support-personnel,individual (anonymized) ,yes,yearly,PA open data terms,consistent ID enables turnover; aggregate only
+pde_future_ready,PDE,Future Ready PA Index data files,https://futurereadypa.org/Home/DataFiles,school; 2017-18 to 2024-25,yes incl. cyber,yearly (Nov),PA open data terms,only apples-to-apples cross-sector source
+odp_schools,City of Philadelphia,OpenDataPhilly schools layer,https://opendataphilly.org/datasets/schools/,point,yes,rarely,City open data license,
+sdp_catchments,SDP,Catchment boundaries,https://opendataphilly.org/datasets/sdp-school-catchment-areas/,polygon; 2012-13 on,n/a,yearly,SDP terms of use,
+sdp_transportation_late_buses,SDP,Daily canceled/late bus list,https://www.philasd.org/transportation/,route x day,serves charter riders,daily,SDP terms of use,NO PUBLIC HISTORY: start scraping now
+census_tracts,Census Bureau,TIGER/Line tracts + ACS,https://www.census.gov/geographies/mapping-files.html,tract,n/a,per release,public domain,
+opendataphilly_neighborhoods,City of Philadelphia,Neighborhoods,https://opendataphilly.org/,polygon,n/a,rarely,City open data license,default display set

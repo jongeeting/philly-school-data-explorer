@@ -1,0 +1,210 @@
+school_key,resid,name,governance,pct_econ_dis,prof_ela
+104510394-8031,4.028325041407521,Antonia Pantoja Charter School,Charter,82.6,31.7
+108515107-7960,-2.9338336511762613,Southwest Leadership Academy Charter School,Charter,97.9,21.0
+126510001-7677,9.51024462833408,Russell Byers Charter School,Charter,97.2,22.1
+126510005-7748,0.9913420801575986,Green Woods Charter School,Charter,41.5,61.7
+126510006-7722,8.344271083337299,West Philadelphia Achievement Charter School,Charter,100.0,14.7
+126510007-7724,-3.42051564978615,Wissahickon Charter School,Charter,81.5,23.2
+126510008-7684,6.869948130730556,Richard Allen Preparatory Charter School,Charter,87.3,20.1
+126510011-7775,1.8030016688698207,The Jacquelyn Y. Kelley Discovery Charter School,Charter,94.1,23.9
+126510013-7776,-5.121222600671813,KIPP Philadelphia Charter School,Charter,76.0,19.0
+126510015-7825,17.78039314651029,Ad Prima Charter School,Charter,92.6,37.4
+126510016-7828,-5.82444046959922,Philadelphia Montessori Charter School,Charter,73.5,17.4
+126510019-7856,-0.1852338691875642,Northwood Academy Charter School,Charter,74.9,29.7
+126510021-7857,12.070097970584447,Folk Arts-Cultural Treasures Charter School,Charter,42.3,65.4
+126510929-8454,-8.701428788566128,Philadelphia Hebrew Public Charter School,Charter,80.2,18.0
+126511624-8453,8.099820036841082,MAST Community Charter School III,Charter,70.4,32.3
+126511748-8208,-1.795628432967721,Mastery Charter School at Clymer,Charter,98.6,23.7
+126512039-8361,-2.567553504539331,Impact Charter School West,Charter,82.9,22.7
+126512674-8287,6.463150156004673,Universal Charter School at Alcorn,Charter,94.2,36.2
+126512850-7511,4.205108630864568,Harambee Institute of Science and Technology Charter School,Charter,73.3,40.7
+126512990-7543,-13.517104712657252,Alliance For Progress Charter School,Charter,82.4,9.5
+126513020-7548,-1.2806310101552103,West Oak Lane Charter School,Charter,74.1,29.7
+126513070-7557,-1.6697133664530928,Inquiry Charter School,Charter,74.3,29.8
+126513100-7564,9.599620969813776,Eugenio Maria De Hostos Charter School,Charter,79.7,34.4
+126513110-7565,-12.197192005475694,Laboratory Charter School of Communication and Languages,Charter,82.9,11.3
+126513160-7575,10.964431460839505,Christopher Columbus Charter School,Charter,94.2,60.4
+126513210-7580,-13.457901691764208,Universal Institute Charter School,Charter,43.9,31.6
+126513250-7584,-2.8566942737116445,Young Scholars Charter School,Charter,95.5,14.1
+126513380-7639,-5.887765387504442,Global Leadership Academy Charter School,Charter,92.8,20.8
+126513415-8196,-42.00968798601112,Universal Charter School at Vare,Charter,3.7,22.2
+126513510-7683,-1.3337679566975165,Independence Charter School,Charter,52.3,47.4
+126514059-8431,-7.4829090032010654,KIPP North Philadelphia Charter School,Charter,81.2,12.5
+126515001-3601,-1.762726250744424,William C. Bryant School,District,91.4,23.8
+126515001-3602,-2.618094438983198,Joseph W. Catharine School,District,84.9,27.9
+126515001-3611,-4.000510707722771,Morton McMichael School,District,92.6,14.0
+126515001-3613,-1.318976203950739,John M. Patterson School,District,90.8,24.8
+126515001-3614,-4.037936119225331,James Rhoads School,District,92.6,16.3
+126515001-3615,4.382667064942736,Martha Washington School,District,93.2,24.1
+126515001-3616,3.340969971640346,Penrose School,District,92.5,26.6
+126515001-3618,-3.660261050539752,Bache-Martin School,District,54.6,48.6
+126515001-3620,3.977287967474568,F. Amedee Bregy School,District,84.9,22.3
+126515001-3622,0.38198301647945004,George W. Childs School,District,80.7,30.3
+126515001-3625,-5.283919676215882,Edward Gideon School,District,95.1,12.9
+126515001-3626,1.8997040982506082,William D. Kelley School,District,94.3,23.5
+126515001-3629,-12.715049020679531,Delaplaine McDaniel School,District,85.6,10.5
+126515001-3630,-1.2215645919490967,General George G. Meade School,District,93.4,17.3
+126515001-3635,13.505353076477325,Edwin M. Stanton School,District,70.2,56.4
+126515001-3642,6.8124048186702195,Fanny Jackson Coppin School,District,48.4,63.4
+126515001-3645,8.334438020420523,General Philip Kearny School,District,92.6,32.0
+126515001-3647,10.514085454722855,Eliza B. Kirkbride School,District,79.9,38.0
+126515001-3648,21.36500302610274,General George A. McCall School,District,43.7,79.1
+126515001-3649,5.517081850238948,William M. Meredith School,District,15.1,90.5
+126515001-3650,9.912745167938134,George W. Nebinger School,District,67.9,49.3
+126515001-3653,11.202929686513036,George W. Sharswood School,District,83.8,42.4
+126515001-3654,-1.6321512754523297,Southwark School,District,75.6,36.8
+126515001-3655,-8.897909381343991,Spring Garden School,District,90.6,14.3
+126515001-3657,10.55300339788351,John H. Taggart School,District,84.1,38.8
+126515001-3662,-4.849322342569652,James G. Blaine School,District,94.9,13.5
+126515001-3663,-4.66224654288463,Rudolph Blankenburg School,District,94.2,15.0
+126515001-3664,-4.998435387119163,Lewis C. Cassidy Academics Plus School,District,84.9,17.1
+126515001-3668,-0.2574493617372203,Samuel Gompers School,District,80.3,27.0
+126515001-3670,-11.734559365647115,Robert E. Lamberton School,District,86.8,8.7
+126515001-3675,-7.005665809818862,Thomas M. Peirce School,District,94.5,7.5
+126515001-3684,6.745101935375693,Henry A. Brown School,District,82.6,29.5
+126515001-3687,1.8312157694518802,Paul L. Dunbar School,District,92.9,22.6
+126515001-3688,-13.005137648369995,Lewis Elkin School,District,93.4,8.3
+126515001-3693,1.3762936385139568,William H. Hunter School,District,94.2,20.9
+126515001-3694,3.8567773967828303,James R. Ludlow School,District,90.2,18.5
+126515001-3697,6.638190474966092,John Moffet School,District,65.9,45.1
+126515001-3701,10.56598820525416,Richmond School,District,87.5,31.1
+126515001-3702,-4.622224940618891,Isaac A. Sheppard School,District,92.7,21.4
+126515001-3703,0.30121186458762733,John Welsh School,District,90.8,19.8
+126515001-3706,1.493282318732439,Anna B. Day School,District,87.9,25.0
+126515001-3708,-2.984166403631722,Franklin S. Edmonds School,District,83.2,29.2
+126515001-3709,5.790443095716447,Eleanor C. Emlen School,District,89.7,29.5
+126515001-3712,1.2643878592343682,Charles W. Henry School,District,40.5,62.9
+126515001-3713,-6.204939568845653,Henry H. Houston School,District,57.6,47.9
+126515001-3714,9.009965639210373,John S. Jenks Academy for the Arts and Sciences,District,64.5,60.4
+126515001-3717,3.2833710536228344,Anna L. Lingelbach School,District,69.5,44.6
+126515001-3718,4.876802317853248,James Logan School,District,92.8,30.3
+126515001-3719,-5.2726413606116225,John F. McCloskey School,District,75.0,26.1
+126515001-3720,0.14658750525053202,Thomas Mifflin School,District,65.9,42.3
+126515001-3722,-1.6124356587957773,Joseph Pennell School,District,92.0,25.4
+126515001-3724,0.12997430892774986,William Rowen School,District,89.5,23.2
+126515001-3725,4.865291481277128,Shawmont School,District,67.3,49.2
+126515001-3726,8.018589122605581,James Dobson School,District,52.4,58.3
+126515001-3727,-8.134782719160375,Edward T. Steel School,District,94.5,13.1
+126515001-3738,-0.9354167260122814,Ellwood School,District,86.3,26.4
+126515001-3739,1.963979493040874,Thomas K. Finletter School,District,87.3,24.7
+126515001-3742,-0.1297272490528414,Francis Hopkinson School,District,89.6,21.1
+126515001-3743,-2.2589925229226253,Julia W. Howe School,District,87.8,13.8
+126515001-3744,-1.73073261929765,Henry W. Lawton School,District,86.2,22.5
+126515001-3745,6.882566937482788,Bridesburg School,District,75.1,36.3
+126515001-3749,-7.092304791925204,Andrew J. Morrison School,District,86.1,18.9
+126515001-3750,3.7605074450133826,Olney Elementary School,District,85.5,28.2
+126515001-3751,-4.910260194815297,Feltonville Intermediate School,District,88.8,13.8
+126515001-3753,-7.348259709252507,James J. Sullivan School,District,92.5,14.6
+126515001-3755,-9.888148714538781,Bayard Taylor School,District,89.6,9.4
+126515001-3758,-13.27620325994684,Ethan Allen School,District,77.5,19.2
+126515001-3760,1.328383339540925,Watson Comly School,District,66.5,41.0
+126515001-3762,-0.17358117771963677,Kennedy C. Crossan School,District,79.2,29.3
+126515001-3763,-15.027856985147446,Hamilton Disston School,District,84.7,13.2
+126515001-3764,-6.72817339693506,Edwin Forrest School,District,78.9,21.8
+126515001-3765,8.84540969086657,Fox Chase School,District,71.4,50.0
+126515001-3766,7.729755380767045,Thomas Holme School,District,80.0,36.9
+126515001-3769,-3.3819882535493044,Mayfair School,District,74.3,32.9
+126515001-3770,3.3010089214330756,J. Hampton Moore School,District,79.4,36.7
+126515001-3771,-1.8232631746905075,Rhawnhurst School,District,76.8,26.4
+126515001-3773,-12.559590555658202,Solomon Solis-Cohen School,District,79.2,21.3
+126515001-3776,7.310307688572898,Stephen Girard School,District,86.8,32.5
+126515001-3781,2.533843044111277,Aloysius L. Fitzpatrick School,District,73.5,33.0
+126515001-3782,-0.5287140331334896,Benjamin B. Comegys School,District,95.6,20.3
+126515001-3783,11.895420020794164,Samuel Powel School,District,51.9,68.1
+126515001-3786,-0.27562900573038124,William Dick School,District,97.1,12.7
+126515001-3797,-8.726031170048664,John Marshall School,District,90.8,15.9
+126515001-3798,-6.330768936144918,S. Weir Mitchell School,District,94.4,11.7
+126515001-3800,-11.412695702878954,Gloria Casarez School,District,92.0,13.7
+126515001-3801,4.798296220917983,Robert B. Pollock School,District,76.8,36.7
+126515001-3803,19.943898442461247,Anne Frank School,District,74.9,53.9
+126515001-3804,-5.600111733332999,Add B. Anderson School,District,88.2,17.3
+126515001-3805,-6.637902574341726,Marian Anderson Neighborhood Academy,District,48.5,49.0
+126515001-3835,-7.606248479985328,General Louis Wagner School,District,88.9,13.7
+126515001-4726,21.18615304270861,Joseph Greenberg School,District,51.0,73.7
+126515001-4727,10.789631911893105,Stephen Decatur School,District,66.6,51.2
+126515001-4732,-1.4973920269453451,Alain Locke School,District,91.7,19.0
+126515001-4868,-1.0382208848900814,Robert Morris School,District,91.6,18.5
+126515001-4961,11.169752978569706,William H. Loesche School,District,77.4,48.0
+126515001-4963,-7.165376737571627,Allen M. Stearne School,District,90.6,12.4
+126515001-5040,0.9939017406942874,Tanner G. Duckrey School,District,95.7,18.2
+126515001-5041,10.827196622548891,"Hancock, John Demonstration School",District,69.6,49.4
+126515001-5120,8.731413597165897,Horatio B. Hackett School,District,62.0,55.6
+126515001-5121,-6.132532917078099,Potter-Thomas School,District,92.0,10.8
+126515001-5122,6.858180591211483,Cook-Wissahickon School,District,51.6,63.1
+126515001-5123,-1.1880740558711782,William Cramp School,District,94.9,15.4
+126515001-5124,0.3996549297377108,John H. Webster School,District,95.3,21.2
+126515001-5125,-3.3748989213345784,John F. Hartranft School,District,90.7,13.4
+126515001-5183,-2.411485300562354,Mary M. Bethune School,District,95.8,15.4
+126515001-5185,-3.007011814421683,Andrew Hamilton School,District,92.5,18.2
+126515001-5186,2.571155025028697,Albert M. Greenfield School,District,15.4,86.1
+126515001-5187,-10.275019603642878,Edward Heston School,District,94.7,11.7
+126515001-5188,-4.615205711226481,Richard R. Wright School,District,95.9,11.9
+126515001-5292,-6.779965263390871,Dr. Ethel Allen School,District,93.2,11.9
+126515001-5293,-7.314257065365903,William McKinley School,District,96.4,9.8
+126515001-5294,3.330731709034861,John B. Kelly School,District,92.1,19.8
+126515001-6528,1.2925431869342934,Avery D. Harrington School,District,88.3,22.6
+126515001-6529,-0.6855794669988349,Joseph H. Brown School,District,79.8,27.4
+126515001-6530,0.2588590361039067,Henry C. Lea School,District,71.4,36.7
+126515001-6533,-4.919984565923158,William C. Longstreth School,District,94.0,11.8
+126515001-6534,-12.035813778249704,Alexander K. McClure School,District,91.6,4.0
+126515001-6535,-1.2904441613740818,Thomas G. Morton School,District,90.7,17.4
+126515001-6539,-5.500255735445528,Samuel Pennypacker School,District,88.4,15.8
+126515001-6544,-4.983640595189644,Frances E. Willard School,District,96.8,15.0
+126515001-6765,-3.804394352395699,Prince Hall School,District,90.6,14.8
+126515001-6767,-13.373614965486752,Roberto Clemente Middle School,District,86.1,7.5
+126515001-6823,4.55439776020663,Alternative Middle Years at James Martin,District,86.5,28.7
+126515001-6824,15.44082570580831,Charles C.A. Baldi Middle School,District,70.3,57.6
+126515001-6913,1.2532144320330403,Fitler Academics Plus School,District,83.7,20.8
+126515001-6960,5.995761879949832,Overbrook Educational Center,District,75.3,39.4
+126515001-7022,7.519179792593156,Middle Years Alternative School,District,82.8,28.8
+126515001-7175,-2.4060481228363564,Julia de Burgos School,District,91.8,18.0
+126515001-7225,3.8104399630772448,Laura W. Waring School,District,79.6,31.9
+126515001-7226,17.477735595590016,D. Newlin Fell School,District,78.7,48.5
+126515001-7227,29.542644232976375,Abram S. Jenks School,District,69.4,69.3
+126515001-7228,0.9951045942429282,Francis S. Key School,District,81.4,25.9
+126515001-7230,-14.50611052099442,Laura H. Carnell School,District,83.0,12.5
+126515001-7231,-2.1115198888925364,Benjamin Franklin Elementary School,District,83.5,21.4
+126515001-7232,-2.1458922045181175,James R. Lowell School,District,90.1,23.4
+126515001-7233,-3.9990817130893994,William H. Ziegler School,District,83.1,27.7
+126515001-7234,-7.001295693708838,Gilbert Spruance School,District,81.3,19.3
+126515001-7235,0.09741274732877751,Louis H. Farrell School,District,74.0,33.6
+126515001-7239,-5.076955089570389,Jay Cooke School,District,92.1,15.0
+126515001-7242,-5.017469810804543,Warren G. Harding Middle School,District,86.5,16.8
+126515001-7253,-2.4735247559409785,Castor Gardens Middle School,District,75.2,30.5
+126515001-7256,6.059848379836519,Alexander Adaire School,District,37.6,70.7
+126515001-7368,-6.193893191101257,Feltonville School of Arts and Sciences,District,84.4,20.1
+126515001-7404,-10.651937674316912,Cayuga School,District,85.0,12.0
+126515001-7472,-1.621193964721397,Overbrook Elementary School,District,85.6,26.3
+126515001-7521,-0.7480937335209804,Thurgood Marshall School,District,91.7,21.2
+126515001-7522,-2.685753406840744,Honorable Luis Munoz-Marin School,District,95.4,17.1
+126515001-7663,-4.29577413667522,"Grover Washington, Jr. Middle School",District,85.5,14.8
+126515001-7706,16.64862412157791,Sadie T.M. Alexander UPenn Partnership School,District,26.6,89.9
+126515001-7963,9.415953301244185,Juniata Park Academy,District,90.2,28.4
+126515001-8029,-5.5227512762301165,John Barry School,District,93.6,14.1
+126515001-8292,-9.731024918904904,E. Washington Rhodes School,District,95.5,6.8
+126515001-8294,12.046889783179624,Vare-Washington School,District,71.2,45.3
+126515001-8296,-5.486201392832027,Theodore Roosevelt School,District,93.0,14.2
+126515001-8297,-10.287757050585382,William T. Tilden Middle School,District,87.2,11.4
+126515001-8385,-13.000142007285305,Philadelphia Learning Academy North,District,89.2,
+126515001-8387,8.071501891975382,Science Leadership Academy Middle School,District,54.4,54.7
+126515001-8389,-7.86790583412765,Kenderton School,District,95.0,13.0
+126515001-8493,-4.938387640092311,Northeast Community Propel Academy,District,74.2,32.6
+126515691-8252,-4.585186549583418,The Philadelphia Charter School for Arts and Sciences,Charter,87.0,16.6
+126516457-8153,18.253490826204544,Mastery Charter School at Harrity,Charter,87.3,36.2
+126516724-8425,-13.621443116419188,Deep Roots Charter School,Charter,96.1,16.4
+126517286-8151,5.922548843866686,Mastery Charter School at Smedley,Charter,89.8,31.9
+126517442-8251,-4.8441967071500445,Universal Charter School at Creighton,Charter,30.5,49.9
+126517643-8427,5.953671418655879,Mastery Prep Elementary Charter School,Charter,96.7,30.9
+126518004-8390,-13.114826478538545,Global Leadership Academy Charter School Southwest at Huey,Charter,57.1,16.1
+126518118-8365,9.059979371601942,Mastery Charter School at Wister,Charter,100.0,27.4
+126518547-8150,-5.229106805929896,Mastery Charter School at Douglass,Charter,98.9,13.3
+126518795-8288,6.0429725447049245,Mastery Charter School at Pastorius,Charter,94.0,25.7
+126519392-8257,-3.993051686745126,Memphis Street Academy Charter School at J.P. Jones,Charter,87.6,15.6
+126519433-8152,3.4168849130686376,Mastery Charter School at Mann,Charter,88.8,29.6
+126519476-8206,2.979506479080939,General David B. Birney Charter School,Charter,96.6,17.2
+126519644-8259,9.014515646262485,Mastery Charter School at Cleveland,Charter,94.3,32.4
+147513703-8123,9.427326880822152,Franklin Towne Charter Elementary School,Charter,69.0,46.7
+173515368-7985,-2.950598890429047,Pan American Academy Charter School,Charter,100.0,14.9
+182514568-7979,20.160057750479222,Keystone Academy Charter School,Charter,76.8,47.7
+126515001-8515,-8.416748092901713,Guion S. Bluford School,District,91.8,15.2
+126515362-8499,-6.143581436676918,KIPP Octavius Catto Charter School,Charter,81.2,23.9

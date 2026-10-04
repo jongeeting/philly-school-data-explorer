@@ -1,0 +1,22 @@
+[project]
+name = "philly-school-data"
+version = "0.0.1"
+description = "Open, linked data on Philadelphia's public schools"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas",
+  "geopandas",
+  "duckdb",
+  "pyarrow",
+  "requests",
+]
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["prototype"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
