@@ -1,0 +1,5 @@
+correction_id,sy,student_group,action,reason,evidence,corrected_on,corrected_by
+corr_enroll_001,2011,black,withhold,"The district's 2010-11 file reports zero Black students in every school; race groups fall short of school totals by up to 1,729 students",raw/sdp_enrollment/2010-2011 Enrollment & Demographics.xlsx (Ethnicity sheet),2026-10-04,claude (reviewed with Jon Geeting)
+corr_enroll_002,2011,hispanic,withhold,"The district's 2010-11 file reports zero Hispanic students in every school",raw/sdp_enrollment/2010-2011 Enrollment & Demographics.xlsx (Ethnicity sheet),2026-10-04,claude (reviewed with Jon Geeting)
+corr_enroll_003,2011,american_indian,withhold,"The district's 2010-11 file reports zero American Indian students in every school",raw/sdp_enrollment/2010-2011 Enrollment & Demographics.xlsx (Ethnicity sheet),2026-10-04,claude (reviewed with Jon Geeting)
+corr_enroll_004,2011,multiracial,withhold,"The district's 2010-11 file reports zero multiracial students in every school",raw/sdp_enrollment/2010-2011 Enrollment & Demographics.xlsx (Ethnicity sheet),2026-10-04,claude (reviewed with Jon Geeting)

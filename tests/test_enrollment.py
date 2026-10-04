@@ -67,8 +67,11 @@ def test_real_enrollment_and_flows_are_consistent():
     t = build_enrollment(load_registry())
     assert validate_enrollment(t) == []
     e = t["enrollment"][t["enrollment"]["student_group"] == "all"]
-    by_grade = e[e["grade"] != "ALL"].groupby("sy")["count"].sum()
-    totals = e[e["grade"] == "ALL"].groupby("sy")["count"].sum()
+    # Old files suppress small grade rows, so compare only school-years with no withheld rows.
+    withheld = e[e["status"] != "reported"].groupby(["school_id", "sy"]).size()
+    e = e[~e.set_index(["school_id", "sy"]).index.isin(withheld.index)]
+    by_grade = e[e["grade"] != "ALL"].groupby(["school_id", "sy"])["count"].sum()
+    totals = e[e["grade"] == "ALL"].groupby(["school_id", "sy"])["count"].sum()
     assert (by_grade - totals).abs().max() < 1  # school totals equal the sum of grades
     assert (
         t["catchment_flow"]["enrolled_school_id"].notna().all()

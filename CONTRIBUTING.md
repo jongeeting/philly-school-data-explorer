@@ -6,7 +6,7 @@ Design rules every table follows (full context in [docs/DATA_MODEL.md](docs/DATA
 2. **Time.** `sy` = the spring year of a school year (2025 = SY 2024-25 = FY2025, July to June). Every row also stores its snapshot date when the source has one (most counts are October 1).
 3. **Grain.** Each fact table states its grain in one line. No table mixes grains.
 4. **Long, not wide.** Scores, enrollment, and spending are rows (entity, year, measure, group, value). Wide views are built for the website, not stored.
-5. **Status beside value.** Every value has a `status`: reported, suppressed, waived, not applicable, carried forward, or derived.
+5. **Status beside value.** Every value has a `status`: reported, suppressed, waived, not applicable, carried forward, derived, or invalid in source (published by the source but demonstrably wrong; withheld by a correction row with a reason).
 6. **Provenance on every row.** `source_id` points to the `source` table: publisher, URL, file name, download date, file hash, license.
 7. **Raw is never edited.** Every fix is a row in `correction` with a reason.
 8. **Derived is labeled.** Computed values live in `derived/`, tagged with a method version, never mixed into source facts.

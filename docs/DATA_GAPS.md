@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**38 unresolved** of 43 tracked (13 high priority).
+**38 unresolved** of 44 tracked (12 high priority).
 
 **Kinds of gap**
 
@@ -48,13 +48,14 @@ Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CS
 
 | ID | Gap | Kind | Priority | Status | How to close |
 | --- | --- | --- | --- | --- | --- |
-| GAP-014 | Enrollment 2014-15 to 2025-26 is loaded; 2009-10 to 2013-14 workbooks (different layout, one sheet per group) are archived but not staged *(Sector-complete from 2014-15 in the reposted files, not 2019-20 as first thought)* | `not-yet-ingested` | high | in-progress | Fetch and stage; note pre-2019 sector coverage |
+| GAP-014 | Enrollment 2009-10 to 2025-26 is loaded (2009-14 workbooks staged 2026-10-04) *(District-only before 2014-15; one program (Ombudsman South Transition, 2010-12) has an SRC ID with no ULCS)* | `not-yet-ingested` | high | closed | Fetch and stage; note pre-2019 sector coverage |
 | GAP-016 | Prototype score files (PDE Future Ready 2017-18 to 2024-25, School Fast Facts) are not archived here; prototype scripts cannot rerun *(Findings are in docs/FINDINGS_2026-10-03.md)* | `not-yet-ingested` | high | open | Add PDE sources to the file catalog and archive with hashes |
 | GAP-018 | Charter coverage is uneven: district PSSA, attendance, and employee files exclude charters; SPREE gives charters improvement labels only in 2024-25 | `not-collected-by-district` | high | open | Use PDE Future Ready for cross-sector measures; label sector coverage on every measure |
 | GAP-019 | Measure dictionary and method breaks not written (attendance renamed 'persistent' in 2021-22; framework changes) | `not-yet-ingested` | high | open | Phase 4 of the data model |
 | GAP-015 | Catchment retention (flows) not ingested; roughly 16,000 students in cyber and out-of-city charters appear only in flows *(catchment_flow built 2026-10-04 with 50 placeholder schools (cyber, out-of-city charter, programs, non-public special education))* | `not-yet-ingested` | medium | closed | Add placeholder school records for out-of-system destinations so flows sum |
 | GAP-017 | No 2020 state test results (state file repeats 2019); 2021 low participation and no growth scores; science waived in 2025 *(Usable test years: 2018, 2019, 2022-2025)* | `not-collected-by-district` | medium | open | Record as measure breaks with status codes; never interpolate |
 | GAP-020 | Student groups under 20 are suppressed at source; enrollment files for 2014-15 to 2018-19 were reposted Aug 2025 under new suppression rules | `not-collected-by-district` | medium | open | Keep status codes; archive both versions of reposted files |
+| GAP-044 | The district's 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school; those values are withheld *(corrections/enrollment.csv)* | `not-collected-by-district` | medium | open | Ask the district for a corrected file; until then the correction rows stand |
 | GAP-043 | 2019-20 enrollment keys schools by SRC ID; Camelot Academy's SRC ID does not map to a ULCS, so its 2019-20 enrollment is unassigned | `not-collected-by-district` | low | open | Ask the district or match by name with a correction row |
 
 ## District operations and buildings

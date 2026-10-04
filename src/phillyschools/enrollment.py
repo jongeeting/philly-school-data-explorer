@@ -95,21 +95,38 @@ def to_count(value) -> tuple[float | None, str]:
         return None, "not_reported"
 
 
-def _src_to_ulcs() -> dict[tuple[str, int], str]:
-    """(SRC ID, sy) -> ULCS from the identity crosswalk (2019-20 enrollment uses SRC IDs)."""
-    xw = pd.read_parquet(CORE / "school_id_xwalk.parquet")
-    ulcs = (
-        xw[xw["id_type"] == "ulcs"]
-        .drop_duplicates("school_id", keep="last")
-        .set_index("school_id")["id_value"]
-    )
-    src = xw[xw["id_type"] == "src_id"]
-    out = {}
-    for r in src.itertuples():
-        last = r.valid_to_sy if pd.notna(r.valid_to_sy) else 2100
-        for sy in range(int(r.valid_from_sy), int(last) + 1):
-            out[(r.id_value, sy)] = ulcs.get(r.school_id)
-    return out
+class SrcToUlcs:
+    """SRC ID -> ULCS for a given year, from the identity crosswalk.
+
+    Some years' district lists omit programs (alternative schools were left off the 2020-2025
+    lists), so when the exact year is missing we fall back to the SRC ID's ULCS from other
+    years, but only if that SRC ID has only ever meant one ULCS.
+    """
+
+    def __init__(self) -> None:
+        xw = pd.read_parquet(CORE / "school_id_xwalk.parquet")
+        ulcs = (
+            xw[xw["id_type"] == "ulcs"]
+            .drop_duplicates("school_id", keep="last")
+            .set_index("school_id")["id_value"]
+        )
+        src = xw[xw["id_type"] == "src_id"]
+        self.by_year: dict[tuple[str, int], str] = {}
+        seen: dict[str, set] = {}
+        for r in src.itertuples():
+            code = ulcs.get(r.school_id)
+            seen.setdefault(r.id_value, set()).add(code)
+            last = r.valid_to_sy if pd.notna(r.valid_to_sy) else 2100
+            for sy in range(int(r.valid_from_sy), int(last) + 1):
+                self.by_year[(r.id_value, sy)] = code
+        self.unique = {k: next(iter(v)) for k, v in seen.items() if len(v) == 1}
+
+    def get(self, key: tuple[str, int]) -> str | None:
+        return self.by_year.get(key) or self.unique.get(key[0])
+
+
+def _src_to_ulcs() -> SrcToUlcs:
+    return SrcToUlcs()
 
 
 def stage_enrollment() -> pd.DataFrame:
@@ -147,7 +164,84 @@ def stage_enrollment() -> pd.DataFrame:
                     status=[p[1] for p in parsed],
                 )
             )
+    frames += stage_enrollment_legacy(src_map)
     return pd.concat(frames, ignore_index=True)
+
+
+LEGACY_SHEETS = {
+    "Gender": {"male": "male", "female": "female"},
+    "ELL": {"not ell": "not_english_learner", "ell": "english_learner"},
+    "IEP": {"not iep": "not_iep", "iep": "iep"},
+    "Ethnicity": {
+        "american indian": "american_indian",
+        "asian": "asian",
+        "black": "black",
+        "hispanic": "hispanic",
+        "multi-race": "multiracial",
+        "native hawaiian": "pacific_islander",
+        "white": "white",
+    },
+    "Econ. Disadv.": {"economically": "economically_disadvantaged"},
+}
+
+
+def _legacy_group(label: str, mapping: dict[str, str]) -> str | None:
+    text = re.sub(r"\s+", " ", str(label)).strip().lower()
+    # Match the start of the label only: "Female" contains "male", and every race label
+    # contains "(not Hispanic)".
+    for key, group in mapping.items():
+        if text.startswith(key):
+            return group
+    return None
+
+
+def stage_enrollment_legacy(src_map: dict) -> list[pd.DataFrame]:
+    """2009-10 to 2013-14 workbooks: one sheet per group, SRC school IDs, two header rows.
+
+    Rows with 20 or fewer students are suppressed in the source ("s"); those rows carry
+    status `suppressed` for every group. These files cover district schools only.
+    """
+    frames = []
+    for path in sorted(ENROLL_DIR.glob("20*-20* Enrollment & Demographics.xlsx")):
+        sy = spring_year(path.name)
+        book = pd.ExcelFile(path)
+        for sheet, mapping in LEGACY_SHEETS.items():
+            if sheet not in book.sheet_names:
+                continue
+            d = book.parse(sheet, header=None, dtype=str)
+            head = next(i for i, row in d.iterrows() if "School ID" in row.astype(str).tolist())
+            cols = d.iloc[head].astype(str).tolist()
+            labels = d.iloc[head - 1].astype(str).tolist()
+            body = d.iloc[head + 1 :]
+            body = body[body[cols.index("School ID")].notna()]
+            src = body[cols.index("School ID")].str.strip().str.replace(r"\.0$", "", regex=True)
+            base = pd.DataFrame(
+                {
+                    "sy": sy,
+                    "ulcs": [src_map.get((v, sy)) for v in src],
+                    "source_name": body[cols.index("School Name")].str.strip(),
+                    "sector": "District",
+                    "grade": body[cols.index("Grade")].map(grade_code),
+                    "cep_rate": None,
+                    "source_file": path.name,
+                    "src_id": src,
+                }
+            )
+            groups = [(j, _legacy_group(lab, mapping)) for j, lab in enumerate(labels)]
+            if sheet == "Gender":
+                groups.append((cols.index("Total Enrolled"), "all"))
+            for j, group in groups:
+                if group is None:
+                    continue
+                parsed = body[j].map(to_count)
+                frames.append(
+                    base.assign(
+                        student_group=group,
+                        count=[p[0] for p in parsed],
+                        status=[p[1] for p in parsed],
+                    )
+                )
+    return frames
 
 
 def stage_flows() -> pd.DataFrame:
@@ -219,6 +313,27 @@ def stage_retention_details() -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True)
 
 
+ENROLLMENT_CORRECTIONS = ROOT / "corrections" / "enrollment.csv"
+
+
+def apply_enrollment_corrections(enrollment: pd.DataFrame) -> pd.DataFrame:
+    """Withhold values the source publishes in error (status `invalid_in_source`)."""
+    if not ENROLLMENT_CORRECTIONS.exists():
+        return enrollment.assign(correction_id=None)
+    out = enrollment.copy()
+    out["correction_id"] = None
+    for c in pd.read_csv(ENROLLMENT_CORRECTIONS, dtype=str).itertuples():
+        hit = (out["sy"] == int(c.sy)) & (out["student_group"] == c.student_group)
+        if not hit.any():
+            raise ValueError(f"correction {c.correction_id} matches no enrollment rows")
+        if c.action != "withhold":
+            raise ValueError(f"unknown enrollment correction action {c.action}")
+        out.loc[hit, "count"] = None
+        out.loc[hit, "status"] = "invalid_in_source"
+        out.loc[hit, "correction_id"] = c.correction_id
+    return out
+
+
 def build_enrollment(registry: pd.DataFrame) -> dict:
     enroll = stage_enrollment()
     flows = stage_flows()
@@ -228,7 +343,9 @@ def build_enrollment(registry: pd.DataFrame) -> dict:
     # Placeholders: any school code in these files that is not on a district school list
     # (cyber and out-of-city charters, non-public special education, short-lived programs),
     # so every student lands on a school_id and flows add up.
-    known = set(registry["ulcs"])
+    # "Outside" means not on any district school list (core/school), not "not yet minted":
+    # placeholders keep their registry IDs across rebuilds.
+    known = set(pd.read_parquet(CORE / "school.parquet")["ulcs"])
     seen = pd.concat(
         [
             flows[["enrolled_ulcs", "enrolled_name", "sy"]].set_axis(
@@ -260,7 +377,7 @@ def build_enrollment(registry: pd.DataFrame) -> dict:
     )[["school_id", "ulcs", "name", "kind", "first_sy", "last_sy", "status"]]
 
     enroll["school_id"] = enroll["ulcs"].map(ulcs_to_id)
-    missing = enroll[enroll["school_id"].isna()].drop_duplicates(["sy", "ulcs"])
+    missing = enroll[enroll["school_id"].isna()].drop_duplicates(["sy", "source_name"])
     for r in missing.itertuples():
         issues.append(
             {
@@ -273,6 +390,7 @@ def build_enrollment(registry: pd.DataFrame) -> dict:
     enrollment = enroll.dropna(subset=["school_id"])[
         ["school_id", "sy", "grade", "student_group", "count", "status", "sector", "source_file"]
     ].copy()
+    enrollment = apply_enrollment_corrections(enrollment)
     enrollment["source_id"] = "sdp_enrollment:sy" + enrollment["sy"].astype(str)
     enrollment["snapshot_date"] = (enrollment["sy"] - 1).astype(str) + "-10-01"
 
