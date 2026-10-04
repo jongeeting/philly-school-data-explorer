@@ -9,6 +9,7 @@ dependencies = [
   "duckdb",
   "pyarrow",
   "requests",
+  "openpyxl>=3.1.5",
 ]
 
 [project.scripts]
