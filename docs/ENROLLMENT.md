@@ -25,3 +25,15 @@ The share of students attending their own catchment school fell from about 47% i
 ## Not yet loaded
 
 Enrollment for 2009-10 to 2013-14 (Excel workbooks with a different layout, one sheet per student group).
+
+## Neighborhood rollup (derived)
+
+`uv run psd neighborhood-flows` writes `derived/neighborhood_flow` (neighborhood x enrolled school x year) and `derived/neighborhood_metric` (neighborhood x year x measure: resident students, share attending their catchment school, and students by sector of the school they attend). Method `catchment_flow_to_neighborhood_v1`:
+
+- Each catchment's students are spread over neighborhoods by where the catchment's 2020 population lives (census-block crosswalk), rescaled so every student is counted once.
+- The district's flow file does not say whether a student counts toward a school's elementary, middle, or high catchment; K-8 schools are weighted 6/9 elementary and 3/9 middle, 6-12 schools 4/7 high and 3/7 middle.
+- Students with unplaced addresses, or whose catchment school has no boundary that year, are reported citywide, never dropped. Allocated plus unplaced equals the district's total in every year (checked on every build).
+- Estimates under 20 students are suppressed, and so is any percentage whose numerator is suppressed. Most neighborhood-to-school pairs are suppressed; neighborhood totals mostly are not.
+- Early years undercount: 15,735 (2016-17) and 27,911 (2017-18) students have addresses the district could not place, against about 2,000 a year recently.
+
+Neighborhoods are for display only. In 2025-26, Northeast neighborhoods such as Somerton and Bustleton have about 64% of public school students in their catchment school; parts of West, Southwest, and Northwest Philadelphia (Germantown-Morton, Carroll Park, Haddington) are at 14% to 20%. Describe these as family choices and seat availability together, not as school quality.

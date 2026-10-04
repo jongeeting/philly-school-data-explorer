@@ -15,6 +15,7 @@ from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
 from .identity import build_identity, load_registry, validate, write_core
+from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
 from .sourcetable import build_source
 from .stage import write_staging
@@ -140,6 +141,27 @@ def cmd_build_enrollment(a):
         print(f"  {name:20} {len(t[name]):>8} rows")
 
 
+def cmd_neighborhood_flows(a):
+    t = build_neighborhood_flows()
+    off = t["checks"]["difference"].abs().max()
+    if off > 1:
+        print(f"CHECK FAILED: allocated + unplaced differs from flow totals by {off:.1f}")
+        print(t["checks"].to_string())
+        sys.exit(1)
+    pub = publishable(t)
+    defined = set(pd.read_csv(ROOT / "registry" / "measures.csv")["measure_id"])
+    undefined = set(pub["neighborhood_metric"]["measure_id"]) - defined
+    if undefined:
+        print(f"UNDEFINED MEASURES (add to registry/measures.csv): {sorted(undefined)}")
+        sys.exit(1)
+    write_neighborhood_flows(t, pub)
+    print(t["checks"].round(0).to_string(index=False))
+    for name, df in pub.items():
+        print(
+            f"  {name:20} {len(df):>8} rows; suppressed {int((df['status'] == 'suppressed').sum())}"
+        )
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -237,6 +259,9 @@ def main():
 
     s = sub.add_parser("build-enrollment", help="enrollment, catchment flows, school metrics")
     s.set_defaults(fn=cmd_build_enrollment)
+
+    s = sub.add_parser("neighborhood-flows", help="roll catchment flows up to neighborhoods")
+    s.set_defaults(fn=cmd_neighborhood_flows)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)
