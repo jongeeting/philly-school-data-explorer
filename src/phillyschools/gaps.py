@@ -6,6 +6,8 @@ from . import ROOT, SOURCES
 
 GAPS_CSV = SOURCES / "gaps.csv"
 GAPS_MD = ROOT / "docs" / "DATA_GAPS.md"
+QUESTIONS_MD = ROOT / "docs" / "DISTRICT_QUESTIONS.md"
+OWNERS = {"us", "district", "state", "other", "owner decision"}
 AREA_ORDER = ["identity", "geography", "measures", "operations", "workforce", "legal"]
 AREA_TITLES = {
     "identity": "Schools and identity",
@@ -55,6 +57,12 @@ def render_markdown(gaps: list[dict]) -> str:
         "",
         "Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CSV with a note.",
         "",
+        (
+            "Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`). "
+            "Open questions for the district are collected in "
+            "[DISTRICT_QUESTIONS.md](DISTRICT_QUESTIONS.md)."
+        ),
+        "",
     ]
     for area in AREA_ORDER:
         group = sorted(
@@ -66,20 +74,51 @@ def render_markdown(gaps: list[dict]) -> str:
         lines += [
             f"## {AREA_TITLES[area]}",
             "",
-            "| ID | Gap | Kind | Priority | Status | How to close |",
-            "| --- | --- | --- | --- | --- | --- |",
+            "| ID | Gap | Kind | Priority | Status | Owner | How to close |",
+            "| --- | --- | --- | --- | --- | --- | --- |",
         ]
         for g in group:
             note = f" *({g['notes']})*" if g["notes"] else ""
             lines.append(
                 f"| {g['gap_id']} | {g['gap']}{note} | `{g['kind']}` | {g['priority']} | "
-                f"{g['status']} | {g['how_to_close']} |"
+                f"{g['status']} | {g.get('who_can_close', '')} | {g['how_to_close']} |"
             )
         lines.append("")
     return "\n".join(lines)
 
 
+def render_questions(gaps: list[dict]) -> str:
+    """The open questions only the district can answer, in priority order, for handoff."""
+    open_q = sorted(
+        (
+            g
+            for g in gaps
+            if g["status"] != "closed"
+            and g.get("district_question")
+            and g.get("who_can_close") == "district"
+        ),
+        key=lambda g: (PRIORITY_RANK[g["priority"]], g["gap_id"]),
+    )
+    lines = [
+        "# Questions for the School District",
+        "",
+        (
+            "Open data gaps that someone at the district could close. Generated from "
+            "[sources/gaps.csv](../sources/gaps.csv) (`district_question`); full entries are in "
+            "[DATA_GAPS.md](DATA_GAPS.md)."
+        ),
+        "",
+    ]
+    for i, g in enumerate(open_q, start=1):
+        lines.append(f"{i}. **{g['district_question']}** ({g['gap_id']}, {g['priority']} priority)")
+        lines.append(f"   - Context: {g['gap']}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def write_markdown() -> str:
-    text = render_markdown(read_gaps())
+    gaps = read_gaps()
+    text = render_markdown(gaps)
     GAPS_MD.write_text(text)
+    QUESTIONS_MD.write_text(render_questions(gaps))
     return text
