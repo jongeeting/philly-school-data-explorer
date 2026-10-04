@@ -1,0 +1,20 @@
+name: Suggest a data source
+description: A public dataset we should add
+labels: ["new-source"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Link to the data
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What question would it answer?
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: Publisher's terms of use, if known

@@ -1,0 +1,18 @@
+name: Report a data error
+description: A number, school, or boundary looks wrong
+labels: ["data-error"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where did you see it?
+      description: School, table, or page, plus the release version if you know it
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong, and what should it be?
+      description: A link to the official source is the most helpful thing you can add
+    validations:
+      required: true

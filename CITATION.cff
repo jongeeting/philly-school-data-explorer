@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this data, please cite it as below."
+title: "Philly School Data"
+abstract: "Open, linked data on Philadelphia's public schools, built from School District, state, City and Census sources."
+authors:
+  - family-names: Geeting
+    given-names: Jon
+repository-code: "https://github.com/jongeeting/philly-school-data"
+license: CC-BY-4.0
+keywords: [Philadelphia, schools, education, open data]

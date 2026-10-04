@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/jongeeting/philly-school-data/discussions
+    about: Ask how to use the data or float an idea
