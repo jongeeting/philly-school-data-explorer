@@ -10,6 +10,7 @@ from . import ROOT, STAGING
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
 from .discover import add_file, discover
 from .drive import catalog_drive
+from .enrollment import build_enrollment, validate_enrollment, write_enrollment
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
@@ -122,6 +123,23 @@ def cmd_link_parcels(a):
     print(f"  needs review: {int(df['needs_review'].sum())}")
 
 
+def cmd_build_enrollment(a):
+    t = build_enrollment(load_registry())
+    problems = validate_enrollment(t)
+    if problems:
+        print("VALIDATION FAILED:\n  " + "\n  ".join(problems))
+        sys.exit(1)
+    write_enrollment(t)
+    for name in [
+        "enrollment",
+        "catchment_flow",
+        "school_metric",
+        "school_placeholder",
+        "enrollment_issues",
+    ]:
+        print(f"  {name:20} {len(t[name]):>8} rows")
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -216,6 +234,9 @@ def main():
     s = sub.add_parser("link-parcels", help="match school locations to City parcels (OPA)")
     s.add_argument("--offline", action="store_true", help="use archived answers only")
     s.set_defaults(fn=cmd_link_parcels)
+
+    s = sub.add_parser("build-enrollment", help="enrollment, catchment flows, school metrics")
+    s.set_defaults(fn=cmd_build_enrollment)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)
