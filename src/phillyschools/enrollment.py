@@ -22,6 +22,7 @@ import pandas as pd
 
 from . import CORE, RAW, ROOT, spring_year
 from .identity import mint_ids
+from .metrics import write_metric_part
 
 ENROLL_DIR = RAW / "sdp_enrollment"
 FLOW_DIR = RAW / "sdp_catchment_retention"
@@ -471,15 +472,10 @@ def write_enrollment(t: dict) -> None:
     from .identity import REGISTRY_FILE
 
     t["_registry"].to_csv(REGISTRY_FILE, index=False)
-    for name in [
-        "enrollment",
-        "catchment_flow",
-        "school_metric",
-        "school_placeholder",
-        "enrollment_issues",
-    ]:
+    for name in ["enrollment", "catchment_flow", "school_placeholder", "enrollment_issues"]:
         t[name].to_parquet(CORE / f"{name}.parquet", index=False)
         t[name].to_csv(CORE / f"{name}.csv", index=False)
+    write_metric_part("enrollment", t["school_metric"])
     if MEASURES.exists():
         pd.read_csv(MEASURES).to_csv(CORE / "measure.csv", index=False)
         pd.read_csv(MEASURES).to_parquet(CORE / "measure.parquet", index=False)

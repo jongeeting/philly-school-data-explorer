@@ -39,6 +39,7 @@ uv run psd build-identity        # build core/ identity tables
 uv run psd build-geography       # catchments, zones, population-weighted crosswalk
 uv run psd link-parcels          # school locations to City parcels (OPA)
 uv run psd build-enrollment      # enrollment, catchment flows, school metrics
+uv run psd build-scores          # Future Ready scores, growth, attendance, graduation
 uv run pytest
 ```
 
@@ -51,7 +52,7 @@ Data foundation (details in [docs/DATA_MODEL.md](docs/DATA_MODEL.md)):
 - [ ] Archive the at-risk sources (late-bus list, facilities dashboard) on a schedule
 - [x] **Identity:** minted `school_id` (444 schools, 2002 to 2027), dated code crosswalk, reported closures, built from archived district lists ([docs/IDENTITY.md](docs/IDENTITY.md)); lineage deferred. **Blocked for release on the district's data terms** ([docs/SOURCE_TERMS.md](docs/SOURCE_TERMS.md))
 - [x] **Geography:** catchments 2012-13 to 2024-25, assignment zones, population-weighted crosswalk, schools linked to City parcels (OPA) ([docs/GEOGRAPHY.md](docs/GEOGRAPHY.md))
-- [~] **Measures:** measure dictionary started (`registry/measures.csv`); `enrollment` 2014-15 to 2025-26, `catchment_flow` 2016-17 to 2025-26, and `school_metric` built with status codes ([docs/ENROLLMENT.md](docs/ENROLLMENT.md)); test scores, attendance, and method breaks next
+- [~] **Measures:** measure dictionary started (`registry/measures.csv`); `enrollment` 2014-15 to 2025-26, `catchment_flow` 2016-17 to 2025-26, and `school_metric` built with status codes ([docs/ENROLLMENT.md](docs/ENROLLMENT.md)); Future Ready test scores, growth, attendance, and graduation 2017-18 to 2024-25 ([docs/SCORES.md](docs/SCORES.md)); district PSSA and Star next
 - [ ] **Flows and buildings:** catchment flows, buildings, conditions, facility plans, school events
 - [ ] **Marts and dictionary:** wide tables, generated data dictionary, JSON schemas, tested example queries
 - [ ] **First release:** validation report, version tag, changelog, DOI

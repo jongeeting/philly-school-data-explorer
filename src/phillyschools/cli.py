@@ -12,11 +12,13 @@ from .discover import add_file, discover
 from .drive import catalog_drive
 from .enrollment import build_enrollment, validate_enrollment, write_enrollment
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
+from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
 from .identity import build_identity, load_registry, validate, write_core
 from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
+from .scores import build_scores, write_scores
 from .sourcetable import build_source
 from .stage import write_staging
 from .telvue import catalog_videos
@@ -76,6 +78,11 @@ def cmd_catalog_video(a):
         f"{len(df)} videos cataloged (site reports {total}); dated: {df['meeting_date'].notna().sum()}"
     )
     print(df.groupby(df["meeting_date"].str[:4]).size().to_string())
+
+
+def cmd_catalog_future_ready(a):
+    rows = catalog_future_ready()
+    print(f"cataloged {len(rows)} Future Ready files")
 
 
 def cmd_fetch(a):
@@ -162,6 +169,15 @@ def cmd_neighborhood_flows(a):
         )
 
 
+def cmd_build_scores(a):
+    t = build_scores()
+    combined = write_scores(t)
+    m = t["metric"]
+    print(f"  future_ready rows {len(m)}; school_metric now {len(combined)} rows")
+    print(m.groupby(["sy", "status"]).size().unstack(fill_value=0).to_string())
+    print(f"  shared state keys: {len(t['issues'])} (core/future_ready_issues.csv)")
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -232,6 +248,9 @@ def main():
     s = sub.add_parser("catalog-video", help="list Board/SRC meeting videos (metadata only)")
     s.set_defaults(fn=cmd_catalog_video)
 
+    s = sub.add_parser("catalog-future-ready", help="catalog PDE Future Ready data files")
+    s.set_defaults(fn=cmd_catalog_future_ready)
+
     s = sub.add_parser("fetch", help="download cataloged files into raw/")
     s.add_argument("--source", nargs="*")
     s.add_argument("--sy", nargs="*", help="spring years, e.g. 2025 2026")
@@ -262,6 +281,11 @@ def main():
 
     s = sub.add_parser("neighborhood-flows", help="roll catchment flows up to neighborhoods")
     s.set_defaults(fn=cmd_neighborhood_flows)
+
+    s = sub.add_parser(
+        "build-scores", help="Future Ready test scores, growth, attendance, graduation"
+    )
+    s.set_defaults(fn=cmd_build_scores)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)
