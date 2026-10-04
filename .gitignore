@@ -18,3 +18,11 @@ __pycache__/
 
 # Internal strategy docs (host options, faction assessments); never commit
 private/
+
+# Built tables are published as release assets, not committed (registry/ IS committed)
+core/*
+!core/.gitkeep
+marts/*
+!marts/.gitkeep
+derived/*
+!derived/.gitkeep

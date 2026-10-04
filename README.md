@@ -17,22 +17,36 @@ Built for people and agents equally: a dashboard, an MCP server, a chatbot, and 
 
 | Folder | Contents | In git? |
 | --- | --- | --- |
-| `raw/` | Downloads exactly as published (never edited) | No; manifest and download scripts are |
+| `raw/` | Downloads exactly as published (never edited) | No; `sources/downloads.csv` and the tool are |
 | `staging/` | Each source cleaned to the design rules | No; rebuilt by script |
 | `core/` | The core tables, as Parquet/GeoParquet | Released via GitHub releases |
 | `marts/` | Wide tables shaped for the website | Released |
 | `derived/` | Computed estimates tagged by method version | Released |
-| `sources/` | Source manifest: URL, publisher, license, refresh cadence | Yes |
+| `sources/` | `manifest.csv` (datasets), `files.csv` (discovered file URLs), `downloads.csv` (what we archived, with hashes) | Yes |
+| `registry/` | Permanent `school_id` registry (append-only) | Yes |
+| `src/phillyschools/` | The `psd` command line tool and build code | Yes |
 | `prototype/` | The first-pass scripts and outputs (Oct 3, 2026) that this project grew from | Yes |
 | `docs/` | Data model, findings, methods | Yes |
+
+## Quick start
+
+```bash
+uv sync
+uv run psd discover              # catalog downloadable files from each source page
+uv run psd fetch --dry-run --source sdp_master_school_list   # preview sizes
+uv run psd fetch --source sdp_master_school_list              # archive into raw/
+uv run psd build-identity        # build core/ identity tables
+uv run pytest
+```
 
 ## Roadmap
 
 Data foundation (details in [docs/DATA_MODEL.md](docs/DATA_MODEL.md)):
 
 - [x] Repo scaffold, design rules, source manifest, prototype preserved
-- [ ] Download scripts and archiving of at-risk sources (late-bus list, facilities dashboard)
-- [ ] **Identity:** minted `school_id`, dated code crosswalk, lineage, corrections
+- [x] Download tooling: `psd discover` catalogs files, `psd fetch` archives them with SHA-256, `psd snapshot` archives pages
+- [ ] Archive the at-risk sources (late-bus list, facilities dashboard) on a schedule
+- [~] **Identity:** minted `school_id`, dated code crosswalk, events, corrections built from prototype data ([docs/IDENTITY.md](docs/IDENTITY.md)); rebuild from raw files and add lineage next
 - [ ] **Geography:** catchments by vintage, assignment zones, population-weighted tract crosswalk
 - [ ] **Measures:** measure dictionary, method breaks, `school_metric` and `enrollment` with status codes
 - [ ] **Flows and buildings:** catchment flows, buildings, conditions, facility plans, school events

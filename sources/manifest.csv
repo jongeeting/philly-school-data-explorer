@@ -22,3 +22,5 @@ sdp_catchments,SDP,Catchment boundaries,https://opendataphilly.org/datasets/sdp-
 sdp_transportation_late_buses,SDP,Daily canceled/late bus list,https://www.philasd.org/transportation/,route x day,serves charter riders,daily,SDP terms of use,NO PUBLIC HISTORY: start scraping now
 census_tracts,Census Bureau,TIGER/Line tracts + ACS,https://www.census.gov/geographies/mapping-files.html,tract,n/a,per release,public domain,
 opendataphilly_neighborhoods,City of Philadelphia,Neighborhoods,https://opendataphilly.org/,polygon,n/a,rarely,City open data license,default display set
+sdp_master_school_list,SDP,Master school lists (by school year) and longitudinal list,https://www.philasd.org/research/,school; 2017-18 on,yes (governance column),yearly (Oct),SDP terms of use,primary identity source (ULCS AUN-school NCES SRC); includes 2017 longitudinal list
+sdp_data_terms,SDP,School District Data Sets Terms of Use,https://www.philasd.org/research/,document,n/a,rarely,n/a,READ BEFORE RELEASING DERIVED DATA; archive each version

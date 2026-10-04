@@ -499,7 +499,7 @@ wheels = [
 [[package]]
 name = "philly-school-data-explorer"
 version = "0.0.1"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "duckdb" },
     { name = "geopandas" },
