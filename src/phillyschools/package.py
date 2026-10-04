@@ -14,6 +14,8 @@ from pathlib import Path
 from . import ROOT
 from .fetch import read_downloads
 
+ALREADY_COMPRESSED = {".pdf", ".zip", ".xlsx", ".docx", ".pptx", ".png", ".jpg", ".jpeg", ".mp4"}
+
 README = """# {title}
 
 Archived {date} by the Philly School Data Explorer project
@@ -53,7 +55,12 @@ def build_package(
                 continue
             if hashlib.sha256(path.read_bytes()).hexdigest() != d["sha256"]:
                 raise ValueError(f"hash mismatch, refusing to package: {d['local_path']}")
-            z.write(path, d["local_path"])
+            stored = path.suffix.lower() in ALREADY_COMPRESSED
+            z.write(
+                path,
+                d["local_path"],
+                compress_type=zipfile.ZIP_STORED if stored else zipfile.ZIP_DEFLATED,
+            )
         for extra in extra_files or []:
             z.write(extra, extra.name)
         buf = io.StringIO()
