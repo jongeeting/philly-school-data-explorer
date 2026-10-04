@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**38 unresolved** of 47 tracked (11 high priority).
+**38 unresolved** of 48 tracked (11 high priority).
 
 **Kinds of gap**
 
@@ -58,8 +58,9 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-017 | No 2020 state test results (state file repeats 2019); 2021 low participation and no growth scores; science waived in 2025 *(Handled with statuses: 2019-20 tests carried_forward, 2024-25 science waived; method breaks recorded in registry/measures.csv)* | `not-collected-by-district` | medium | in-progress | state | Record as measure breaks with status codes; never interpolate |
 | GAP-020 | Student groups under 20 are suppressed at source; enrollment files for 2014-15 to 2018-19 were reposted Aug 2025 under new suppression rules | `not-collected-by-district` | medium | open | district | Keep status codes; archive both versions of reposted files |
 | GAP-044 | The district's 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school; those values are withheld *(corrections/enrollment.csv)* | `not-collected-by-district` | medium | open | district | Ask the district for a corrected file; until then the correction rows stand |
-| GAP-046 | Future Ready starts in 2017-18; earlier school-level test results exist only in district PSSA/Keystone files (2009-10 on, district schools only) and are archived but not loaded | `not-yet-ingested` | medium | open | us | Stage district PSSA/Keystone files with a sector-coverage label |
+| GAP-046 | Future Ready starts in 2017-18; earlier school-level test results exist only in district PSSA/Keystone files (2009-10 on, district schools only) and are archived but not loaded *(District PSSA/Keystone 2009-10 to 2024-25 loaded into assessment_result 2026-10-04 (district schools only))* | `not-yet-ingested` | medium | closed | us | Stage district PSSA/Keystone files with a sector-coverage label |
 | GAP-047 | PDE's persistent attendance definition (2021-22 on) is not documented in the data file; it replaced regular attendance | `unknown` | medium | open | state | Find PDE's published definition and record it in the measure dictionary |
+| GAP-048 | District grades 3-8 proficiency fell about 8 points citywide between 2010-11 and 2011-12 (math 59.1% to 50.9%); the cause is not documented in the data files | `unknown` | medium | open | district | Document the cause from district or state sources before charting across it |
 | GAP-043 | 2019-20 enrollment keys schools by SRC ID; Camelot Academy's SRC ID does not map to a ULCS, so its 2019-20 enrollment is unassigned *(Resolved 2026-10-04: SRC IDs fall back to other years when a year's list omits a program)* | `not-collected-by-district` | low | closed | us | Ask the district or match by name with a correction row |
 | GAP-045 | Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned | `not-collected-by-district` | low | open | district | Ask the district for its ULCS code |
 

@@ -25,3 +25,12 @@ Measures: proficiency (ELA, math, science), PVAAS growth scores (ELA, math, scie
 ## How to read them
 
 Proficiency tracks student poverty closely; growth is fairer to high-poverty schools but noisy for one year. Show them together, with student-group context, and never as a ranking. In 2024-25 the median Philadelphia school had 26.4% of tested students proficient in ELA.
+
+## District PSSA and Keystone (longer history)
+
+`uv run psd build-assessments` loads the district's school files (2009-10 to 2024-25, district schools only) into `core/assessment_result`: one row per school x year x test x subject x grade x student group x performance level, with students tested, count, percent (0 to 100), and status. Grades include `ALL` and `03-08` totals where the district publishes them; never add those to grade rows.
+
+- Uses the "Actual" files (all tested students), not the accountability subset.
+- Schools are keyed by SRC ID through 2017-18 and ULCS after; every school maps.
+- Matches Future Ready ELA proficiency closely for schools in both (r = 0.996 in 2018-19, 0.995 in 2024-25).
+- Breaks: new tests in 2014-15 (grades 3-8 math fell from 46.9% to 17.8% proficient citywide; Reading became ELA); an unexplained 8-point drop in 2011-12; no files for 2019-20 or 2020-21; Keystones from 2012-13.

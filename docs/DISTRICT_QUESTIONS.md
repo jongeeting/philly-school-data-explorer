@@ -38,13 +38,15 @@ Open data gaps that someone at the district could close. Generated from [sources
    - Context: The SRC's March 7, 2013 school closure resolution PDF is not archived (Wayback 404); no minutes found for that meeting
 18. **The 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school. Is a corrected file available?** (GAP-044, medium priority)
    - Context: The district's 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school; those values are withheld
-19. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
+19. **Grades 3-8 PSSA proficiency fell about 8 points citywide between 2010-11 and 2011-12. Is there a district note on what changed that year (for example, testing procedures)?** (GAP-048, medium priority)
+   - Context: District grades 3-8 proficiency fell about 8 points citywide between 2010-11 and 2011-12 (math 59.1% to 50.9%); the cause is not documented in the data files
+20. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
    - Context: NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source
-20. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
+21. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
    - Context: Missing SRC school IDs (39 staged rows)
-21. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
+22. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
    - Context: Board meeting video has no transcripts or captions and cannot be downloaded
-22. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
+23. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
    - Context: 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings
-23. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
+24. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
    - Context: Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned

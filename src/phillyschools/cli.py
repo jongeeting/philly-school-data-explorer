@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 import pandas as pd
 
 from . import ROOT, STAGING
+from .assessment import build_assessments, write_assessments
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
 from .discover import add_file, discover
 from .drive import catalog_drive
@@ -178,6 +179,17 @@ def cmd_build_scores(a):
     print(f"  shared state keys: {len(t['issues'])} (core/future_ready_issues.csv)")
 
 
+def cmd_build_assessments(a):
+    t = build_assessments()
+    write_assessments(t)
+    r = t["assessment_result"]
+    print(
+        f"  assessment_result {len(r)} rows; unmapped schools {len(t['issues'])}; "
+        f"duplicate keys resolved {t['duplicates']}; unmapped groups {t['unmapped_groups']}"
+    )
+    print(r.groupby(["sy", "status"]).size().unstack(fill_value=0).to_string())
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -286,6 +298,9 @@ def main():
         "build-scores", help="Future Ready test scores, growth, attendance, graduation"
     )
     s.set_defaults(fn=cmd_build_scores)
+
+    s = sub.add_parser("build-assessments", help="district PSSA and Keystone results, 2009-10 on")
+    s.set_defaults(fn=cmd_build_assessments)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

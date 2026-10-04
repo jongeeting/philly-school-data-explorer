@@ -60,3 +60,26 @@ def test_real_scores_statuses():
     assert (sci_2025["status"] == "waived").mean() > 0.9  # science waived statewide
     shared = m[m["status"] == "not_separately_measurable"]
     assert shared["value"].isna().all()  # never a blended number for a non-host program
+
+
+@pytest.mark.parametrize(
+    "raw,label",
+    [
+        ("3", "03"),
+        ("11", "11"),
+        ("All Grades", "ALL"),
+        ("3 to 8", "03-08"),
+        ("Grades 3-8", "03-08"),
+    ],
+)
+def test_assessment_grades(raw, label):
+    from phillyschools.assessment import grade_label
+
+    assert grade_label(raw) == label
+
+
+def test_assessment_groups_keep_old_asian_pacific_category_separate():
+    from phillyschools.assessment import GROUPS
+
+    assert GROUPS["asian/pacific islander (not hispanic)"] == "asian_pacific_islander"
+    assert GROUPS["asian (not hispanic)"] == "asian"
