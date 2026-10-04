@@ -8,6 +8,7 @@ import pandas as pd
 from . import ROOT, STAGING
 from .discover import discover
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
+from .gaps import read_gaps, write_markdown
 from .identity import build_identity, load_registry, validate, write_core
 from .sourcetable import build_source
 from .stage import write_staging
@@ -50,9 +51,15 @@ def cmd_snapshot(a):
     print(f"saved {path}")
 
 
+def cmd_gaps(a):
+    write_markdown()
+    gaps = read_gaps()
+    print(f"docs/DATA_GAPS.md written ({len(gaps)} gaps)")
+
+
 def cmd_stage(a):
     out = write_staging()
-    print(out.groupby('year').size().to_string())
+    print(out.groupby("year").size().to_string())
 
 
 def cmd_build_identity(a):
@@ -98,6 +105,9 @@ def main():
     s.add_argument("source")
     s.add_argument("url")
     s.set_defaults(fn=cmd_snapshot)
+
+    s = sub.add_parser("gaps", help="regenerate docs/DATA_GAPS.md from sources/gaps.csv")
+    s.set_defaults(fn=cmd_gaps)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

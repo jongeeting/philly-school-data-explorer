@@ -26,7 +26,7 @@ Built for people and agents equally: a dashboard, an MCP server, a chatbot, and 
 | `registry/` | Permanent `school_id` registry (append-only) | Yes |
 | `src/phillyschools/` | The `psd` command line tool and build code | Yes |
 | `prototype/` | The first-pass scripts and outputs (Oct 3, 2026) that this project grew from | Yes |
-| `docs/` | Data model, findings, methods | Yes |
+| `docs/` | Data model, [data gaps](docs/DATA_GAPS.md), findings, methods | Yes |
 
 ## Quick start
 

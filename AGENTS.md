@@ -9,6 +9,7 @@ Two audiences: agents **using** the data, and agents **working on** this repo.
 - Always report the `sy` (spring year of the school year), the measure's denominator, and the `source_id`.
 - Respect `status`: suppressed, waived, not applicable, and carried-forward values are not zeros or blanks.
 - Show facts and fair comparisons. Do not produce a best-to-worst ranking of schools, and do not state causes the data cannot support. On contested topics, present both sides' measures together.
+- Check `sources/gaps.csv` before saying data does not exist, and when you find a new gap, add a row there and run `uv run psd gaps`.
 - Never derive or report groups under 20 students, including by subtracting or combining queries.
 - Names of individual employees are not in this repo and must not be reconstructed.
 

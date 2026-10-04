@@ -7,6 +7,7 @@
 - [Source manifest](sources/manifest.csv): every upstream dataset, URL, cadence, charter coverage, license
 - [Agent guide](AGENTS.md): rules for querying and for contributing
 - [Contributing and design rules](CONTRIBUTING.md)
+- [Data gaps](docs/DATA_GAPS.md) ([CSV](sources/gaps.csv)): what is missing and why; check before concluding data does not exist
 - [Archiving priorities](docs/ARCHIVING_PRIORITIES.md)
 
 ## Data

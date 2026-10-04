@@ -32,22 +32,24 @@ def stage_sdp_master_lists() -> pd.DataFrame:
         sy = spring_year(path.name)
         d = _read_list(path)
         frames.append(
-            pd.DataFrame({
-                "year": sy,
-                "aun": d["AUN Code"].map(clean_id),
-                "schl": d["PA Code"].map(clean_id),
-                "ulcs": d["ULCS Code"].map(clean_id),
-                "src_id": d["SRC School ID"].map(clean_id),
-                "nces": d["NCES Code"].map(clean_id),
-                "name": d["Publication Name"].str.strip(),
-                "governance": d["Governance"].str.strip(),
-                "category": d["School Reporting Category"].str.strip(),
-                "level": d.get("School Level"),
-                "admission": d.get("Admission Type"),
-                "council_district": d.get("City Council District"),
-                "gps": d.get("GPS Location"),
-                "source_file": path.name,
-            })
+            pd.DataFrame(
+                {
+                    "year": sy,
+                    "aun": d["AUN Code"].map(clean_id),
+                    "schl": d["PA Code"].map(clean_id),
+                    "ulcs": d["ULCS Code"].map(clean_id),
+                    "src_id": d["SRC School ID"].map(clean_id),
+                    "nces": d["NCES Code"].map(clean_id),
+                    "name": d["Publication Name"].str.strip(),
+                    "governance": d["Governance"].str.strip(),
+                    "category": d["School Reporting Category"].str.strip(),
+                    "level": d.get("School Level"),
+                    "admission": d.get("Admission Type"),
+                    "council_district": d.get("City Council District"),
+                    "gps": d.get("GPS Location"),
+                    "source_file": path.name,
+                }
+            )
         )
     out = pd.concat(frames, ignore_index=True)
     # Some CSVs saved NCES codes in scientific notation (4.21899E+11): unusable, treat as missing.
