@@ -1,4 +1,8 @@
 source_key,url,filename,ext,sy,discovered_on
+census_blocks_2020,https://www2.census.gov/geo/tiger/TIGER2020PL/LAYER/TABBLOCK/2020/tl_2020_42101_tabblock20.zip,tl_2020_42101_tabblock20.zip,.zip,,2026-10-04
+census_blocks_2020,https://www2.census.gov/programs-surveys/decennial/2020/data/01-Redistricting_File--PL_94-171/Pennsylvania/pa2020.pl.zip,pa2020.pl.zip,.zip,,2026-10-04
+census_tracts,https://www2.census.gov/geo/tiger/TIGER2020PL/LAYER/TRACT/2020/tl_2020_42101_tract20.zip,tl_2020_42101_tract20.zip,.zip,,2026-10-04
+opendataphilly_neighborhoods,https://raw.githubusercontent.com/opendataphilly/odp-data-storage/master/philadelphia-neighborhoods/philadelphia-neighborhoods.geojson,philadelphia-neighborhoods.geojson,.geojson,,2026-10-04
 sdp_catchments,https://cdn.philasd.org/offices/performance/Open_Data/School_Information/School_Catchment/SDP_Catchment_1213.zip,SDP_Catchment_1213.zip,.zip,,2026-10-04
 sdp_catchments,https://cdn.philasd.org/offices/performance/Open_Data/School_Information/School_Catchment/SDP_Catchment_1314.zip,SDP_Catchment_1314.zip,.zip,,2026-10-04
 sdp_catchments,https://cdn.philasd.org/offices/performance/Open_Data/School_Information/School_Catchment/SDP_Catchment_1415.zip,SDP_Catchment_1415.zip,.zip,,2026-10-04

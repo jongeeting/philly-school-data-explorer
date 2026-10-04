@@ -6,10 +6,12 @@ import sys
 import pandas as pd
 
 from . import ROOT, STAGING
-from .discover import discover
+from .discover import add_file, discover
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
 from .gaps import read_gaps, write_markdown
+from .geography import build_geography, write_geography
 from .identity import build_identity, load_registry, validate, write_core
+from .parcels import build_school_parcel, write_school_parcel
 from .sourcetable import build_source
 from .stage import write_staging
 
@@ -27,6 +29,11 @@ def cmd_discover(a):
     print(f"{len(rows)} files cataloged in sources/files.csv")
     by = pd.DataFrame(rows).groupby("source_key").size()
     print(by.to_string())
+
+
+def cmd_add_file(a):
+    r = add_file(a.source, a.url)
+    print(f"cataloged {r['filename']} under {a.source}")
 
 
 def cmd_fetch(a):
@@ -55,6 +62,23 @@ def cmd_gaps(a):
     write_markdown()
     gaps = read_gaps()
     print(f"docs/DATA_GAPS.md written ({len(gaps)} gaps)")
+
+
+def cmd_build_geography(a):
+    t = build_geography()
+    write_geography(t)
+    for name in ["catchment", "assignment_zone", "geo_unit", "geo_xwalk", "geo_issues"]:
+        print(f"  {name:16} {len(t[name]):>7} rows")
+    print(f"  2020 population in blocks: {t['_block_pop_total']:,}")
+
+
+def cmd_link_parcels(a):
+    attr = pd.read_parquet(ROOT / "core" / "school_year_attr.parquet")
+    df = build_school_parcel(attr)
+    write_school_parcel(df)
+    print(
+        f"  {len(df)} school sites; confidence: {df['confidence'].value_counts(dropna=False).to_dict()}"
+    )
 
 
 def cmd_stage(a):
@@ -95,6 +119,11 @@ def main():
     s.add_argument("--source", nargs="*")
     s.set_defaults(fn=cmd_discover)
 
+    s = sub.add_parser("add-file", help="catalog one direct file URL")
+    s.add_argument("source")
+    s.add_argument("url")
+    s.set_defaults(fn=cmd_add_file)
+
     s = sub.add_parser("fetch", help="download cataloged files into raw/")
     s.add_argument("--source", nargs="*")
     s.add_argument("--sy", nargs="*", help="spring years, e.g. 2025 2026")
@@ -108,6 +137,12 @@ def main():
 
     s = sub.add_parser("gaps", help="regenerate docs/DATA_GAPS.md from sources/gaps.csv")
     s.set_defaults(fn=cmd_gaps)
+
+    s = sub.add_parser("build-geography", help="catchments, zones, geo units, weighted crosswalk")
+    s.set_defaults(fn=cmd_build_geography)
+
+    s = sub.add_parser("link-parcels", help="match school locations to City parcels (OPA)")
+    s.set_defaults(fn=cmd_link_parcels)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = {
     "www.census.gov",
     "www2.census.gov",
     "services.arcgis.com",
+    "raw.githubusercontent.com",
 }
 FILES_FIELDS = ["source_key", "url", "filename", "ext", "sy", "discovered_on"]
 HREF = re.compile(r'href\s*=\s*"([^"]+)"', re.IGNORECASE)
@@ -117,3 +118,20 @@ def _belongs(source_key: str, url: str) -> bool:
     if hints is None:
         return False  # no rule yet: add a hint after reviewing the page, to avoid mis-filing
     return any(h.lower() in url.lower() for h in hints)
+
+
+def add_file(source_key: str, url: str) -> dict:
+    """Catalog one direct file URL (for publishers with no landing page to scan)."""
+    if urlparse(url).hostname not in ALLOWED_HOSTS:
+        raise ValueError(f"host not in ALLOWED_HOSTS: {url}")
+    if source_key not in {r["source_key"] for r in read_manifest()}:
+        raise ValueError(f"unknown source_key {source_key}; add it to sources/manifest.csv first")
+    today = datetime.now(UTC).date().isoformat()
+    catalog = {(r["source_key"], r["url"]): r for r in read_files_catalog()}
+    row = catalog.setdefault((source_key, url), file_row(source_key, url, today))
+    rows = sorted(catalog.values(), key=lambda r: (r["source_key"], r["url"]))
+    with open(SOURCES / "files.csv", "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=FILES_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return row
