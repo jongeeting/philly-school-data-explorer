@@ -11,6 +11,16 @@ Design rules every table follows (full context in [docs/DATA_MODEL.md](docs/DATA
 7. **Raw is never edited.** Every fix is a row in `correction` with a reason.
 8. **Derived is labeled.** Computed values live in `derived/`, tagged with a method version, never mixed into source facts.
 
+**Built for agents as much as people.** Every feature has to work for a person on the dashboard, an agent over MCP, a chatbot, and a researcher with a script. Five more rules follow from that:
+
+9. **Self-describing data.** Every column and measure carries a plain-language description, unit, and denominator in the Parquet metadata and in `schema/*.json`, generated from the `measure` dictionary (one source of truth). An agent should never need a person to explain a column.
+10. **Data equivalent for every page.** Anything shown on the site or in a chart has a stable URL for the same data as JSON, CSV, or Parquet. Nothing is available only as an image, a PDF, or a rendered widget.
+11. **Stable names and addresses.** Permanent IDs, permanent URLs, versioned releases with checksums. Renaming or removing a column requires a major version and a changelog entry.
+12. **Guardrails travel with the data.** Caveats are columns, not footnotes: `status`, small-cell flags, method breaks, and per-measure `usage_notes` (for example "not for ranking"). Tools that read the data, agents included, see them without reading the methods page.
+13. **Tested examples.** Example queries live in `docs/queries/` and run in CI, so documentation an agent copies from never goes stale.
+
+Also ship plural formats (Parquet plus CSV; GeoParquet plus GeoJSON) so researchers on R, Stata, Excel, or Python can all use the data.
+
 Also:
 
 - Apply the state's small-cell rule (suppress groups under 20) to anything derived.

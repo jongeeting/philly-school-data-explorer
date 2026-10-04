@@ -497,7 +497,7 @@ wheels = [
 ]
 
 [[package]]
-name = "philly-school-data"
+name = "philly-school-data-explorer"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [

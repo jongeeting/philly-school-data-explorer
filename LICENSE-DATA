@@ -1,4 +1,4 @@
-Data license for Philly School Data
+Data license for Philly School Data Explorer
 
 Our own compilations and derived tables (the contents of core/, marts/ and
 derived/ as published in releases) are licensed under Creative Commons
@@ -8,7 +8,7 @@ This license covers only the work we created. Source data keeps its
 publisher's own terms, listed per source in sources/manifest.csv; we cannot
 relicense it. Code is licensed separately under the MIT License (see LICENSE).
 
-Suggested attribution: "Philly School Data (github.com/jongeeting/philly-school-data),
+Suggested attribution: "Philly School Data Explorer (github.com/jongeeting/philly-school-data-explorer),
 release <version>". Citation is appreciated; the license requires credit.
 
 =======================================================================

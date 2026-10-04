@@ -1,8 +1,10 @@
-# Philly School Data
+# Philly School Data Explorer
 
 Open, linked data on Philadelphia's public schools: who goes to each school, how the building is doing, how students are doing, and how that has changed over time. Everything comes from data the School District, the Pennsylvania Department of Education, the City, and the Census Bureau already publish. This project links it together and records where every number came from.
 
-**Status:** early. Phase 1 (repo scaffold and identity layer) is underway. The full plan is in [docs/DATA_MODEL.md](docs/DATA_MODEL.md).
+**Status:** early. Scaffold and prototype are in place; the identity layer is next. The full plan is in [docs/DATA_MODEL.md](docs/DATA_MODEL.md).
+
+Built for people and agents equally: a dashboard, an MCP server, a chatbot, and plain files for researchers all read the same self-describing data. See [AGENTS.md](AGENTS.md), [llms.txt](llms.txt), and [docs/DISCOVERABILITY.md](docs/DISCOVERABILITY.md).
 
 ## Principles
 
@@ -24,10 +26,35 @@ Open, linked data on Philadelphia's public schools: who goes to each school, how
 | `prototype/` | The first-pass scripts and outputs (Oct 3, 2026) that this project grew from | Yes |
 | `docs/` | Data model, findings, methods | Yes |
 
+## Roadmap
+
+Data foundation (details in [docs/DATA_MODEL.md](docs/DATA_MODEL.md)):
+
+- [x] Repo scaffold, design rules, source manifest, prototype preserved
+- [ ] Download scripts and archiving of at-risk sources (late-bus list, facilities dashboard)
+- [ ] **Identity:** minted `school_id`, dated code crosswalk, lineage, corrections
+- [ ] **Geography:** catchments by vintage, assignment zones, population-weighted tract crosswalk
+- [ ] **Measures:** measure dictionary, method breaks, `school_metric` and `enrollment` with status codes
+- [ ] **Flows and buildings:** catchment flows, buildings, conditions, facility plans, school events
+- [ ] **Marts and dictionary:** wide tables, generated data dictionary, JSON schemas, tested example queries
+- [ ] **First release:** validation report, version tag, changelog, DOI
+
+Access layers (each reads the same released files):
+
+- [ ] **Files and DuckDB:** Parquet and CSV releases; query straight from release URLs
+- [ ] **Open metadata:** `datapackage.json`, Croissant, Zenodo DOI, Hugging Face and Kaggle mirrors
+- [ ] **MCP server:** read-only, runs locally via `uvx`; tool descriptions enforce the rules (facts not rankings, small cells, cite source and year)
+- [ ] **Dashboard:** static site with one crawlable page per school and place, plus JSON for each
+- [ ] **Chatbot:** answers only from curated marts first, free-form queries later; needs a host that owns the running cost and accountability for answers
+
+## Decisions pending
+
+Repo owner (this account or a neutral org), neighborhood set for display, how far back to build (2012-13 or 2017-18), shared geography package with BPN, and hosting for any live chatbot.
+
 ## Licensing and citing
 
 - **Code:** MIT ([LICENSE](LICENSE)).
-- **Our compiled and derived data:** CC BY 4.0 ([LICENSE-DATA](LICENSE-DATA)). Please credit "Philly School Data" and the release version you used.
+- **Our compiled and derived data:** CC BY 4.0 ([LICENSE-DATA](LICENSE-DATA)). Please credit "Philly School Data Explorer" and the release version you used.
 - **Source data** keeps its publisher's terms, recorded in `sources/manifest.csv`.
 
 ## Relationship to Build Philly Now

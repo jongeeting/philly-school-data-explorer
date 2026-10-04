@@ -1,0 +1,16 @@
+# Philly School Data Explorer
+
+> Open, linked data on Philadelphia's public schools (district and charter): enrollment, catchments and assignment zones, buildings, attendance, outcomes, and how they change over time. Every value carries its source and a status. Facts and fair comparisons, never rankings.
+
+## Start here
+- [Data model](docs/DATA_MODEL.md): tables, grains, design rules
+- [Source manifest](sources/manifest.csv): every upstream dataset, URL, cadence, charter coverage, license
+- [Agent guide](AGENTS.md): rules for querying and for contributing
+- [Contributing and design rules](CONTRIBUTING.md)
+- [Archiving priorities](docs/ARCHIVING_PRIORITIES.md)
+
+## Data
+Released as Parquet/GeoParquet (plus CSV) on the GitHub Releases page. Query directly with DuckDB. License: CC BY 4.0 for our compiled data (LICENSE-DATA); source data keeps its publisher's terms.
+
+## Optional
+- [Prototype findings, Oct 2026](docs/FINDINGS_2026-10-03.md)
