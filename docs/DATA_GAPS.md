@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**32 unresolved** of 36 tracked (12 high priority).
+**38 unresolved** of 42 tracked (13 high priority).
 
 **Kinds of gap**
 
@@ -27,6 +27,7 @@ Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CS
 | GAP-006 | District master lists omit most Alternate Schools in 2020-2025 (2 to 4 programs vs 25 to 28 in 2019 and 2026) *(Shown as listing-gap issues, never as closures)* | `not-collected-by-district` | medium | open | Ask the district why coverage changed; cross-check with enrollment files |
 | GAP-008 | Unknown whether the district ever reassigns a retired ULCS code to a new school *(Minted school_id protects us either way)* | `unknown` | medium | open | Ask the district; add a check once the longitudinal list is staged |
 | GAP-009 | Closure and opening dates come only from list presence; real-world dates are not recorded *(Year Opened and Year Closed now reported (to 2016-17 via longitudinal list); mid-year dates still absent)* | `not-collected-by-district` | medium | open | Use Year Opened/Closed (longitudinal list) and Board resolutions |
+| GAP-038 | The SRC's March 7, 2013 school closure resolution PDF is not archived (Wayback 404); no minutes found for that meeting | `not-in-any-list` | medium | open | Ask the district; check news archives and APPS for copies |
 | GAP-004 | NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source *(Repair and bridge status is in staging nces_source and xwalk evidence)* | `not-collected-by-district` | low | open | Confirm with the district whether alternative programs have NCES codes; bridged values are labeled evidence=includes_bridged_years |
 | GAP-005 | Missing SRC school IDs (39 staged rows) | `not-collected-by-district` | low | open | Check which programs; fill from other years or ask the district |
 
@@ -62,11 +63,16 @@ Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CS
 | GAP-021 | Daily canceled or late bus list: no public history, and we have not started capturing it *(History not captured is gone)* | `not-public` | high | open | Scrape daily with psd snapshot via a scheduled job; needs the exact page URL |
 | GAP-022 | Facilities dashboard (scores for building condition, program alignment, utilization, neighborhood vulnerability, plus per-school recommendations) runs in a Qlik app with no export; scripted access is refused *(Wayback has the page shell only, no data)* | `not-public` | high | open | Ask the district for an export or API access; meanwhile save the master-plan PDFs; keyed by ULCS |
 | GAP-024 | Maintenance work orders, bus on-time history, substitute fill rates, and IEP evaluation timeliness are not public *(Operations is the least covered area)* | `not-public` | high | open | Ask the district what exists internally; consider a data request |
+| GAP-037 | Board minutes for the April 23 and April 30, 2026 meetings (the facilities plan vote) are not posted; the May 28 approval item has no attachment | `not-public` | high | open | Watch later packets; ask the Board office |
 | GAP-023 | AHERA asbestos and lead reports are likely PDFs, not structured | `not-yet-ingested` | medium | open | Download, hash, extract room-level results |
 | GAP-025 | Staff vacancies (due Aug 2025), SPOTlight scorecard (due spring 2025), and Pre-K sites (due spring 2026) are past the district's promised refresh dates *(Per district data page, checked 2026-10-04)* | `not-collected-by-district` | medium | open | Track missed promises in the release table |
 | GAP-026 | Goals and Guardrails results are PDFs, with targets reset in April 2024 | `not-yet-ingested` | medium | open | Extract per-report tables; version targets in the commitment table |
 | GAP-032 | Building condition reports (FCA): 2020-22 reports are PDFs on Google Drive (about 78), 2017 reports and 2018-19 AHERA survive only on the Wayback Machine; the 2022-24 facilities site's API data was never archived | `not-yet-ingested` | medium | open | Recover Drive IDs from the archived FCA page; pull Wayback captures; file names start with ULCS |
 | GAP-033 | Environmental records (AHERA asbestos, lead, water testing) are hundreds of per-school PDFs in Google Drive folders | `not-yet-ingested` | medium | open | List the folders, download and hash, extract results; ULCS in file names |
+| GAP-040 | Since 2025, minutes are not posted as their own documents; they appear only as attachments to the next meeting's packet, and action items have no ID that persists across meetings | `not-collected-by-district` | medium | open | Parse packets; mint our own resolution IDs |
+| GAP-041 | Board records (PrimeGov 2019 on, NovusAgenda, 2013-18 PDFs, SRC on Wayback) are cataloged as sources but not archived | `not-yet-ingested` | medium | open | Archive with the PrimeGov JSON API, sequential NovusAgenda IDs, the WordPress PDF list, and Wayback |
+| GAP-039 | Board meeting video has no transcripts or captions and cannot be downloaded | `not-collected-by-district` | low | open | Store video IDs and titles; consider our own speech-to-text later |
+| GAP-042 | 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings *(core/board_video_catalog.csv has 292)* | `not-public` | low | open | Ask the district for a video list, or find them via search or individual media pages |
 
 ## Workforce
 

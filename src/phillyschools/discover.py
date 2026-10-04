@@ -30,8 +30,23 @@ ALLOWED_HOSTS = {
     "www2.census.gov",
     "services.arcgis.com",
     "raw.githubusercontent.com",
+    "drive.google.com",
+    "drive.usercontent.google.com",
+    "web.archive.org",
+    "philasd.primegov.com",
+    "philasd.novusagenda.com",
 }
-FILES_FIELDS = ["source_key", "url", "filename", "ext", "sy", "discovered_on"]
+FILES_FIELDS = [
+    "source_key",
+    "url",
+    "filename",
+    "ext",
+    "sy",
+    "discovered_on",
+    "subdir",
+    "wayback_timestamp",
+    "original_url",
+]
 HREF = re.compile(r'href\s*=\s*"([^"]+)"', re.IGNORECASE)
 
 
@@ -49,9 +64,11 @@ def extract_file_links(page_html: str, base_url: str) -> list[str]:
 
 def file_row(source_key: str, url: str, today: str) -> dict:
     name = PurePosixPath(unquote(urlparse(url).path)).name
+    upload = re.search(r"/uploads/(?:sites/\d+/)?(\d{4}/\d{2})/", url)
     return {
         "source_key": source_key,
         "url": url,
+        "subdir": upload.group(1) if upload else "",
         "filename": name,
         "ext": PurePosixPath(name).suffix.lower(),
         "sy": spring_year(name) or "",
@@ -91,12 +108,8 @@ def discover(source_keys: list[str] | None = None, pause: float = 1.0) -> list[d
         for url in scanned[page]:
             if _belongs(key, url):
                 catalog.setdefault((key, url), file_row(key, url, today))
-    rows = sorted(catalog.values(), key=lambda r: (r["source_key"], r["url"]))
-    with open(SOURCES / "files.csv", "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FILES_FIELDS)
-        writer.writeheader()
-        writer.writerows(rows)
-    return rows
+    write_files_catalog(catalog.values())
+    return list(catalog.values())
 
 
 # Landing pages list many datasets. A link belongs to a source when its folder or file name
@@ -110,6 +123,7 @@ PATH_HINTS = {
     "sdp_spree": ["SPR", "School_Progress"],
     "sdp_pssa_keystone": ["PSSA", "Keystone"],
     "sdp_pses": ["Survey", "PSES"],
+    "sdp_board_wordpress": ["schoolboard/wp-content/uploads"],
 }
 
 
@@ -129,9 +143,13 @@ def add_file(source_key: str, url: str) -> dict:
     today = datetime.now(UTC).date().isoformat()
     catalog = {(r["source_key"], r["url"]): r for r in read_files_catalog()}
     row = catalog.setdefault((source_key, url), file_row(source_key, url, today))
-    rows = sorted(catalog.values(), key=lambda r: (r["source_key"], r["url"]))
+    write_files_catalog(catalog.values())
+    return row
+
+
+def write_files_catalog(rows) -> None:
+    rows = sorted(rows, key=lambda r: (r["source_key"], r.get("subdir") or "", r["url"]))
     with open(SOURCES / "files.csv", "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FILES_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=FILES_FIELDS, restval="", extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
-    return row

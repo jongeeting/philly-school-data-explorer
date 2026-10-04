@@ -6,6 +6,7 @@ version is saved beside the old one and both stay in sources/downloads.csv.
 
 import csv
 import hashlib
+import re
 import time
 from datetime import UTC, datetime
 from pathlib import Path
@@ -42,11 +43,19 @@ def _write_downloads(rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
-def plan(source_keys=None, years=None) -> list[dict]:
-    """Cataloged files not yet downloaded."""
+def plan(source_keys=None, years=None, subdir=None, match=None, exclude=None) -> list[dict]:
+    """Cataloged files not yet downloaded, optionally filtered by subfolder and file-name regex."""
     done = {r["url"] for r in read_downloads()}
+    inc = re.compile(match, re.IGNORECASE) if match else None
+    exc = re.compile(exclude, re.IGNORECASE) if exclude else None
     out = []
     for r in read_files_catalog():
+        if subdir and not (r.get("subdir") or "").startswith(subdir):
+            continue
+        if inc and not inc.search(r["filename"]):
+            continue
+        if exc and exc.search(r["filename"]):
+            continue
         if r["url"] in done:
             continue
         if source_keys and r["source_key"] not in source_keys:
@@ -83,13 +92,15 @@ def fetch(rows: list[dict], pause: float = 1.0) -> list[dict]:
     session = requests.Session()
     session.headers["User-Agent"] = USER_AGENT
     downloads = read_downloads()
-    new = []
+    new, failures = [], []
     for r in rows:
         stamp = datetime.now(UTC)
-        directory = RAW / r["source_key"]
+        directory = RAW / r["source_key"] / (r.get("subdir") or "")
         directory.mkdir(parents=True, exist_ok=True)
-        resp = session.get(r["url"], timeout=120)
-        resp.raise_for_status()
+        resp = _get_with_retry(session, r["url"])
+        if resp is None:
+            failures.append(r["url"])
+            continue
         sha = hashlib.sha256(resp.content).hexdigest()
         prior = [d for d in downloads if d["url"] == r["url"] and d["sha256"] == sha]
         if prior:
@@ -110,7 +121,41 @@ def fetch(rows: list[dict], pause: float = 1.0) -> list[dict]:
         new.append(record)
         _write_downloads(downloads)  # persist after every file so a crash loses nothing
         time.sleep(pause)
+    if failures:
+        _log_failures(failures)
     return new
+
+
+RETRY_STATUS = {429, 500, 502, 503, 504}
+
+
+def _get_with_retry(session, url: str, attempts: int = 4, backoff: float = 30.0):
+    """GET with backoff on rate limits and server errors. None means give up for now.
+
+    Failed URLs are not recorded as downloaded, so the next `psd fetch` retries them.
+    """
+    for i in range(attempts):
+        try:
+            resp = session.get(url, timeout=180)
+        except requests.RequestException:
+            resp = None
+        if resp is not None and resp.status_code == 200:
+            return resp
+        if resp is not None and resp.status_code not in RETRY_STATUS:
+            return None
+        time.sleep(backoff * (i + 1))
+    return None
+
+
+def _log_failures(urls: list[str]) -> None:
+    path = SOURCES / "fetch_failures.csv"
+    new = not path.exists()
+    with open(path, "a", newline="") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["failed_at_utc", "url"])
+        stamp = datetime.now(UTC).isoformat(timespec="seconds")
+        w.writerows([stamp, u] for u in urls)
 
 
 def fetch_one_snapshot(source_key: str, url: str) -> Path:
@@ -138,3 +183,25 @@ def fetch_one_snapshot(source_key: str, url: str) -> Path:
     )
     _write_downloads(downloads)
     return path
+
+
+def record_local_file(source_key: str, url: str, path: Path) -> dict:
+    """Record a file we saved directly (an API response) with its hash, like any download."""
+    body = path.read_bytes()
+    record = {
+        "source_key": source_key,
+        "url": url,
+        "local_path": str(path.relative_to(RAW.parent)),
+        "retrieved_at_utc": datetime.fromtimestamp(path.stat().st_mtime, UTC).isoformat(
+            timespec="seconds"
+        ),
+        "sha256": hashlib.sha256(body).hexdigest(),
+        "bytes": len(body),
+        "etag": "",
+        "last_modified": "",
+    }
+    downloads = read_downloads()
+    if not any(d["local_path"] == record["local_path"] for d in downloads):
+        downloads.append(record)
+        _write_downloads(downloads)
+    return record
