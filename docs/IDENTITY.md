@@ -22,7 +22,7 @@ Tables (built by `uv run psd build-identity`, written to `core/`):
 
 - **List coverage changes look like gaps.** The district's "Alternate Schools" category is listed in 2019 and 2026 but mostly omitted 2020-2025 (2 to 4 programs instead of 25 to 28). About 24 schools show a "listing gap" for that reason. Absence from a list is not a closure.
 - **Some state keys are shared.** 24 programs share placeholder code 9999, and continuation academies (Stetson, Olney) report under their host school's code, so state data for them is blended.
-- **One ULCS code has two NCES values** (Excel Academy North/related, `sch_00197`); one ULCS appears twice in 2025 (Boys Latin).
+- **One school changed NCES code:** Vaux High School (`sch_00197`) is 421899007634 in 2019 and 421899007661 from 2020. One ULCS (Boys Latin of Philadelphia Charter School) appears twice in 2025; the first row is kept.
 - **Not yet answered:** whether the district ever reassigns a retired ULCS to a new school. The registry protects us either way; ask the district contact.
 
 ## Next
