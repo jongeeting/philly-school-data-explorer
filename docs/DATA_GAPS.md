@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**30 unresolved** of 30 tracked (14 high priority).
+**29 unresolved** of 31 tracked (13 high priority).
 
 **Kinds of gap**
 
@@ -20,14 +20,14 @@ Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CS
 
 | ID | Gap | Kind | Priority | Status | How to close |
 | --- | --- | --- | --- | --- | --- |
-| GAP-001 | School lineage (predecessor/successor) table is empty: no source says which school absorbed a closed school's students *(Longitudinal list has Year Closed but no receiving school)* | `not-in-any-list` | high | open | Derive candidates from 2012-13 vs 2013-14 catchments and enrollment; confirm against Board resolutions; label evidence level (stated, geographic, enrollment) |
-| GAP-002 | Longitudinal School List (2001-02 to 2016-17, 5,070 rows, ULCS keyed) is archived but not staged, so schools before 2019 have no school_id *(298 of its ~398 ULCS already in registry)* | `not-yet-ingested` | high | open | Stage it; mint IDs for pre-2019 schools; replace derived closure events with Year Closed |
+| GAP-001 | School lineage (predecessor/successor) table is empty: no source says which school absorbed a closed school's students *(Longitudinal list has Year Closed but no receiving school; inferred candidates deferred by owner decision)* | `not-in-any-list` | high | open | Derive candidates from 2012-13 vs 2013-14 catchments and enrollment; confirm against Board resolutions; label evidence level (stated, geographic, enrollment) |
+| GAP-002 | Longitudinal School List (2001-02 to 2016-17, 5,070 rows, ULCS keyed) is archived but not staged, so schools before 2019 have no school_id *(Staged 2026-10-04: 444 schools, 2002-2027; 93 district-reported closures)* | `not-yet-ingested` | high | closed | Stage it; mint IDs for pre-2019 schools; replace derived closure events with Year Closed |
 | GAP-007 | 24 alternative or contracted programs share state code 9999 (plus one with 0); continuation academies report under a host school's code *(state_key flagged shared_across_schools)* | `not-collected-by-district` | high | open | Mark state measures 'not separately measurable'; use district files where they exist |
-| GAP-003 | 2017-18 master list (xlsx, different layout) not staged | `not-yet-ingested` | medium | open | Write a loader for its layout |
-| GAP-004 | NCES codes lost to scientific notation in the CSV lists for 2024, 2026, 2027 (984 of 2,793 staged rows have none) *(Raw bytes are intact in raw/; this is our loader's choice)* | `not-yet-ingested` | medium | open | Read NCES from the XLSX versions of those lists when the CSV is damaged |
+| GAP-003 | 2017-18 master list (xlsx, different layout) not staged *(Staged 2026-10-04 from xlsx; header line breaks normalized)* | `not-yet-ingested` | medium | closed | Write a loader for its layout |
 | GAP-006 | District master lists omit most Alternate Schools in 2020-2025 (2 to 4 programs vs 25 to 28 in 2019 and 2026) *(Shown as listing-gap issues, never as closures)* | `not-collected-by-district` | medium | open | Ask the district why coverage changed; cross-check with enrollment files |
 | GAP-008 | Unknown whether the district ever reassigns a retired ULCS code to a new school *(Minted school_id protects us either way)* | `unknown` | medium | open | Ask the district; add a check once the longitudinal list is staged |
-| GAP-009 | Closure and opening dates come only from list presence; real-world dates are not recorded *(Current school_event rows are status=derived)* | `not-collected-by-district` | medium | open | Use Year Opened/Closed (longitudinal list) and Board resolutions |
+| GAP-009 | Closure and opening dates come only from list presence; real-world dates are not recorded *(Year Opened and Year Closed now reported (to 2016-17 via longitudinal list); mid-year dates still absent)* | `not-collected-by-district` | medium | open | Use Year Opened/Closed (longitudinal list) and Board resolutions |
+| GAP-004 | NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source *(Repair and bridge status is in staging nces_source and xwalk evidence)* | `not-collected-by-district` | low | open | Confirm with the district whether alternative programs have NCES codes; bridged values are labeled evidence=includes_bridged_years |
 | GAP-005 | Missing SRC school IDs (39 staged rows) | `not-collected-by-district` | low | open | Check which programs; fill from other years or ask the district |
 
 ## Geography
@@ -37,6 +37,7 @@ Statuses: `open`, `in-progress`, `blocked`, `closed`. Closed gaps stay in the CS
 | GAP-010 | Catchments for 2012-13 through 2024-25 not downloaded (cataloged, about 20 MB) | `not-yet-ingested` | high | open | psd fetch --source sdp_catchments |
 | GAP-013 | No building table or school-to-building link; no OPA parcel numbers on schools *(Shared geography with BPN is a pending decision)* | `not-yet-ingested` | high | open | Build from facilities dashboard and the City schools layer; join to parcels |
 | GAP-011 | Census-to-catchment crosswalk is area-weighted only; population-weighted (census block) version not built *(Prototype used tract area weights)* | `not-yet-ingested` | medium | open | Build from decennial census blocks |
+| GAP-031 | Catchment retention (students by catchment and school, SY 2016-17 on) is aggregated by catchment, not neighborhood, and cannot show where students went after the 2013 closures *(No student-level data is public (FERPA))* | `not-collected-by-district` | medium | open | Derive neighborhood figures by overlaying catchments on neighborhoods; use Board documents and 2012-13/2013-14 catchments for 2013 |
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | Decide (OpenDataPhilly set is the default) |
 
 ## Measures and facts

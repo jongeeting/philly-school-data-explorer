@@ -77,8 +77,8 @@ def cmd_build_identity(a):
         print("VALIDATION FAILED:\n  " + "\n  ".join(problems))
         sys.exit(1)
     write_core(tables)
-    years = sorted(tables["school_year_attr"]["sy"].unique().tolist())
-    src = build_source(years)
+    used = set(tables["school_year_attr"]["source_id"]) | set(tables["school_event"]["source_id"])
+    src = build_source(sorted(used))
     src.to_parquet(ROOT / "core" / "source.parquet", index=False)
     src.to_csv(ROOT / "core" / "source.csv", index=False)
     for name, df in tables.items():

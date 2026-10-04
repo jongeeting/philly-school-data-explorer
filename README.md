@@ -46,7 +46,7 @@ Data foundation (details in [docs/DATA_MODEL.md](docs/DATA_MODEL.md)):
 - [x] Repo scaffold, design rules, source manifest, prototype preserved
 - [x] Download tooling: `psd discover` catalogs files, `psd fetch` archives them with SHA-256, `psd snapshot` archives pages
 - [ ] Archive the at-risk sources (late-bus list, facilities dashboard) on a schedule
-- [~] **Identity:** minted `school_id`, dated code crosswalk, events, corrections, built from archived district lists ([docs/IDENTITY.md](docs/IDENTITY.md)); lineage next. **Blocked for release on the district's data terms** ([docs/SOURCE_TERMS.md](docs/SOURCE_TERMS.md))
+- [x] **Identity:** minted `school_id` (444 schools, 2002 to 2027), dated code crosswalk, reported closures, built from archived district lists ([docs/IDENTITY.md](docs/IDENTITY.md)); lineage deferred. **Blocked for release on the district's data terms** ([docs/SOURCE_TERMS.md](docs/SOURCE_TERMS.md))
 - [ ] **Geography:** catchments by vintage, assignment zones, population-weighted tract crosswalk
 - [ ] **Measures:** measure dictionary, method breaks, `school_metric` and `enrollment` with status codes
 - [ ] **Flows and buildings:** catchment flows, buildings, conditions, facility plans, school events

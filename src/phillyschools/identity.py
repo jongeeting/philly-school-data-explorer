@@ -91,8 +91,13 @@ def _latlon(gps) -> tuple[float | None, float | None]:
         return None, None
 
 
+LONGITUDINAL_SOURCE_ID = "sdp_longitudinal_school_list"
+OPTIONAL_COLUMNS = ["nces_source", "year_opened", "year_closed_sy"]
+
+
 def source_id_for(sy: int) -> str:
-    return f"sdp_master_school_list:sy{sy}"
+    """Lists before 2017-18 come from the single Longitudinal School List file."""
+    return LONGITUDINAL_SOURCE_ID if sy <= 2017 else f"sdp_master_school_list:sy{sy}"
 
 
 # --- build --------------------------------------------------------------------------------
@@ -100,7 +105,7 @@ def source_id_for(sy: int) -> str:
 
 def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """Returns the identity tables plus `issues` (data-quality notes, not a core table)."""
-    d = staged[STAGED_COLUMNS].copy()
+    d = staged.reindex(columns=STAGED_COLUMNS + OPTIONAL_COLUMNS).copy()
     d["year"] = d["year"].astype(int)
     issues: list[dict] = []
 
@@ -123,10 +128,17 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
     # school
     last = d.sort_values("year").groupby("school_id").last()
     span = d.groupby("school_id")["year"].agg(first_sy_in_data="min", last_sy_in_data="max")
+    reported = (
+        d.sort_values("year")
+        .groupby("school_id")[["year_opened", "year_closed_sy"]]
+        .agg(lambda s: s.dropna().iloc[-1] if s.notna().any() else pd.NA)
+        .astype("Int64")
+    )
     school = (
         last[["ulcs", "name"]]
         .rename(columns={"name": "current_name"})
         .join(span)
+        .join(reported)
         .assign(listed_in_latest_year=lambda t: t["last_sy_in_data"] == max_sy)
         .reset_index()
     )
@@ -177,6 +189,11 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
                         "valid_from_sy": first,
                         "valid_to_sy": None if last_y == max_sy else last_y,
                         "shared_across_schools": bool(shared),
+                        "evidence": (
+                            "includes_bridged_years"
+                            if t == "nces" and (g["nces_source"] == "bridged").any()
+                            else "reported"
+                        ),
                         "source_id": source_id_for(last_y),
                     }
                 )
@@ -210,22 +227,33 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
                 events.append((sid, "name_change", cur.sy, f"{prev.name} -> {cur.name}"))
             if cur.level != prev.level:
                 events.append((sid, "level_change", cur.sy, f"{prev.level} -> {cur.level}"))
-    for r in school[~school["listed_in_latest_year"]].itertuples():
-        events.append(
-            (
-                r.school_id,
-                "no_longer_listed",
-                int(r.last_sy_in_data) + 1,
-                f"last listed {r.last_sy_in_data}",
+    # Event `sy` is the first school year the change is in effect. Closures the district
+    # reports (Year Closed) are status=reported; absence from a list alone stays derived.
+    for r in school.itertuples():
+        if pd.notna(r.year_closed_sy):
+            y = int(r.year_closed_sy)
+            events.append((r.school_id, "closed", y + 1, f"closed at end of SY {y - 1}-{y}"))
+        elif not r.listed_in_latest_year:
+            events.append(
+                (
+                    r.school_id,
+                    "no_longer_listed",
+                    int(r.last_sy_in_data) + 1,
+                    f"last listed {r.last_sy_in_data}",
+                )
             )
-        )
     school_event = pd.DataFrame(events, columns=["school_id", "event_type", "sy", "detail"])
     school_event = school_event.sort_values(["school_id", "sy", "event_type"]).reset_index(
         drop=True
     )
     school_event.insert(0, "event_id", [f"evt_{i:05d}" for i in range(1, len(school_event) + 1)])
-    school_event["status"] = "derived"
-    school_event["source_id"] = school_event["sy"].map(lambda s: source_id_for(min(s, max_sy)))
+    school_event["status"] = school_event["event_type"].map(
+        lambda k: "reported" if k == "closed" else "derived"
+    )
+    school_event["source_id"] = [
+        LONGITUDINAL_SOURCE_ID if k == "closed" else source_id_for(min(y, max_sy))
+        for k, y in zip(school_event["event_type"], school_event["sy"], strict=True)
+    ]
 
     # data-quality notes that deserve a person's eyes
     for t in ["ulcs", "src_id", "nces"]:

@@ -27,8 +27,15 @@ Tables (built by `uv run psd build-identity`, written to `core/`):
 
 ## Status
 
-Rebuilt from archived raw lists (`psd stage`, then `psd build-identity`), 2018-19 through 2026-27: 339 schools, 2,792 school-years. Matches the prototype for 2019-2026, all existing IDs unchanged. **Not releasable** until the district's terms are resolved ([SOURCE_TERMS.md](SOURCE_TERMS.md)).
+Built from archived raw files: the 2001-02 to 2016-17 Longitudinal School List, the 2017-18 list, and the 2018-19 to 2026-27 lists. 444 schools, 8,190 school-years, 93 district-reported closures (32 take effect in 2014, the 2013 closure round). All earlier IDs unchanged by each rebuild. **Not releasable** until the district's terms are resolved ([SOURCE_TERMS.md](SOURCE_TERMS.md)).
+
+Notes on the build:
+
+- Vocabulary (`DISTRICT` vs `District`, `ELEMENTARYMIDDLE` vs `Elementary-Middle`) is unified, so the 2017/2018 seam creates no false events.
+- Event `sy` is the first school year the change is in effect. `closed` events come from the district's Year Closed field (status `reported`); `no_longer_listed` is a guess from list absence (status `derived`).
+- NCES codes damaged in CSVs are repaired from the xlsx sibling where it exists, else bridged only when the nearest earlier and later codes agree. The xwalk `evidence` column says `includes_bridged_years` when a bridged year is inside the run.
+- Pre-2019 rows have no AUN or NCES (the longitudinal list lacks them), so they have no `state_key` or `nces` crosswalk rows.
 
 ## Next
 
-Stage the 2017-18 list and derive lineage from the 2017 Longitudinal School List.
+`school_lineage` (who absorbed a closed school) is deferred. See [DATA_GAPS.md](DATA_GAPS.md).
