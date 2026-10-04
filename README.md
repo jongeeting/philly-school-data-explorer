@@ -24,9 +24,11 @@ Open, linked data on Philadelphia's public schools: who goes to each school, how
 | `prototype/` | The first-pass scripts and outputs (Oct 3, 2026) that this project grew from | Yes |
 | `docs/` | Data model, findings, methods | Yes |
 
-## Licensing
+## Licensing and citing
 
-Code is MIT-licensed (see [LICENSE](LICENSE)). Source data keeps its publisher's terms; each is recorded in the source manifest. The license for derived data is not yet chosen.
+- **Code:** MIT ([LICENSE](LICENSE)).
+- **Our compiled and derived data:** CC BY 4.0 ([LICENSE-DATA](LICENSE-DATA)). Please credit "Philly School Data" and the release version you used.
+- **Source data** keeps its publisher's terms, recorded in `sources/manifest.csv`.
 
 ## Relationship to Build Philly Now
 

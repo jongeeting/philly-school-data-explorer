@@ -17,4 +17,5 @@ Also:
 - Store only aggregates for staff data; no named individuals in this repo.
 - Show facts and fair comparisons; never a single default rank.
 - American English.
+- Nothing goes into `derived/` or a release until its manifest row records what its upstream terms allow (SEDA in particular is under a data use agreement).
 - Tests must pass (`uv run pytest`) and `uv run ruff check .` must be clean before merging.
