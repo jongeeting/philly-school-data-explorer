@@ -36,3 +36,12 @@ The share of students attending their own catchment school fell from about 47% i
 - Early years undercount: 15,735 (2016-17) and 27,911 (2017-18) students have addresses the district could not place, against about 2,000 a year recently.
 
 Neighborhoods are for display only. In 2025-26, Northeast neighborhoods such as Somerton and Bustleton have about 64% of public school students in their catchment school; parts of West, Southwest, and Northwest Philadelphia (Germantown-Morton, Carroll Park, Haddington) are at 14% to 20%. Describe these as family choices and seat availability together, not as school quality.
+
+## State demographics (School Fast Facts)
+
+`uv run psd build-fast-facts` loads PDE's School Fast Facts (2017-18 to 2024-25, district and charter schools on one state definition):
+
+- `school_metric` part `fast_facts`: `state_enrollment` and `state_pct_of_enrollment` by student group (economically disadvantaged, English learner, special education, gifted, homeless, foster care, military-connected, female, male, and race and ethnicity groups).
+- `school_state_attr` (school x year): Title I, ESSA school designation (as coded by PDE; CSI, TSI, ATSI, ACSI, DFLT), grades offered, career and technical programs.
+- State enrollment matches the district's October 1 counts closely (r = 0.999, median difference 0.4% per school).
+- Use the state's economically disadvantaged share only with other state measures; the district's CEP rate is a different method. Its rise from a median of 69.5% to 84.9% (2017-18 to 2024-25) is unexplained so far (see DATA_GAPS.md).

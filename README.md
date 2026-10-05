@@ -41,6 +41,7 @@ uv run psd link-parcels          # school locations to City parcels (OPA)
 uv run psd build-enrollment      # enrollment, catchment flows, school metrics
 uv run psd build-scores          # Future Ready scores, growth, attendance, graduation
 uv run psd build-assessments     # district PSSA and Keystone results, 2009-10 on
+uv run psd build-fast-facts      # state demographics and school attributes
 uv run pytest
 ```
 

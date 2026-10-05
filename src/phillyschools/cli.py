@@ -12,6 +12,7 @@ from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
 from .discover import add_file, discover
 from .drive import catalog_drive
 from .enrollment import build_enrollment, validate_enrollment, write_enrollment
+from .fastfacts import build_fast_facts, write_fast_facts
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
@@ -190,6 +191,17 @@ def cmd_build_assessments(a):
     print(r.groupby(["sy", "status"]).size().unstack(fill_value=0).to_string())
 
 
+def cmd_build_fast_facts(a):
+    t = build_fast_facts()
+    combined = write_fast_facts(t)
+    m = t["metric"]
+    print(
+        f"  fast_facts rows {len(m)}; school_metric now {len(combined)}; "
+        f"school_state_attr {len(t['attr'])} rows"
+    )
+    print(m.groupby(["sy", "status"]).size().unstack(fill_value=0).to_string())
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -301,6 +313,11 @@ def main():
 
     s = sub.add_parser("build-assessments", help="district PSSA and Keystone results, 2009-10 on")
     s.set_defaults(fn=cmd_build_assessments)
+
+    s = sub.add_parser(
+        "build-fast-facts", help="state School Fast Facts demographics and attributes"
+    )
+    s.set_defaults(fn=cmd_build_fast_facts)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

@@ -83,3 +83,18 @@ def test_assessment_groups_keep_old_asian_pacific_category_separate():
 
     assert GROUPS["asian/pacific islander (not hispanic)"] == "asian_pacific_islander"
     assert GROUPS["asian (not hispanic)"] == "asian"
+
+
+@pytest.mark.skipif(
+    not (FR_DIR.parent / "pde_fast_facts").exists(), reason="Fast Facts not archived"
+)
+def test_fast_facts_enrollment_matches_district_counts():
+    core = FR_DIR.parents[1] / "core"
+    m = pd.read_parquet(core / "school_metric__fast_facts.parquet")
+    st = m[(m["measure_id"] == "state_enrollment") & (m["status"] == "reported")]
+    e = pd.read_parquet(core / "enrollment.parquet")
+    d = e[(e["grade"] == "ALL") & (e["student_group"] == "all") & (e["status"] == "reported")]
+    x = st.merge(d, on=["school_id", "sy"])
+    assert len(x) > 1000 and x["value"].corr(x["count"]) > 0.99
+    attr = pd.read_parquet(core / "school_state_attr.parquet")
+    assert set(attr["title_i"].dropna()) <= {"Yes", "No"}
