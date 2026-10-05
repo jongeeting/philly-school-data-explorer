@@ -11,6 +11,7 @@ from .acs import build_area_context, write_area_context
 from .assessment import build_assessments, write_assessments
 from .attendance import build_attendance, write_attendance
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
+from .crdc import build_crdc, write_crdc
 from .discipline import build_discipline, write_discipline
 from .discover import add_file, discover
 from .drive import catalog_drive
@@ -246,6 +247,15 @@ def cmd_build_discipline(a):
     )
 
 
+def cmd_build_crdc(a):
+    t = build_crdc()
+    combined = write_crdc(t)
+    print(
+        f"  crdc rows {len(t['metric'])}; school_metric now {len(combined)}; "
+        f"unmapped school-years {len(t['unmapped'])}"
+    )
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -374,6 +384,9 @@ def main():
 
     s = sub.add_parser("build-discipline", help="district suspensions and serious incidents")
     s.set_defaults(fn=cmd_build_discipline)
+
+    s = sub.add_parser("build-crdc", help="federal Civil Rights Data Collection discipline")
+    s.set_defaults(fn=cmd_build_crdc)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

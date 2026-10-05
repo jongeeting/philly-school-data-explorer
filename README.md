@@ -44,6 +44,7 @@ uv run psd build-assessments     # district PSSA and Keystone results, 2009-10 o
 uv run psd build-fast-facts      # state demographics and school attributes
 uv run psd build-attendance      # district attendance detail, 2013-14 on
 uv run psd build-discipline      # district suspensions and serious incidents
+uv run psd build-crdc            # federal CRDC discipline by race, disability, English learner
 uv run psd build-area-context    # ACS neighborhood context by tract, catchment, zone, neighborhood
 uv run psd peer-comparison       # each school vs. its closest-poverty peers, three poverty bases (derived)
 uv run pytest

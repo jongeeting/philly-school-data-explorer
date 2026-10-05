@@ -16,6 +16,10 @@ Applies to every dataset on philasd.org/research and its OpenDataPhilly mirrors 
 
 Other sections disclaim warranties and put indemnity and sole responsibility on the user.
 
+## U.S. Department of Education: Civil Rights Data Collection
+
+Public-use files with a short usage agreement: make no use of the identity of any person discovered inadvertently (and report it to OCR), and do not link the data with individually identifiable data from other datasets. Our use (school-level aggregates joined to school-level data) is consistent; never join CRDC to any individual-level file.
+
 ## What follows
 
 1. **`LICENSE-DATA` (CC BY 4.0) can only cover what is ours.** It cannot relicense district data, and may not be appropriate for tables that are mostly district data. Treat SDP-derived tables as unreleased until the district agrees in writing.

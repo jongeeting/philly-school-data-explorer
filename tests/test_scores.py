@@ -145,3 +145,34 @@ def test_incident_frames_accept_each_archive_header_style():
         and b.loc[0, "incident_type"] == "Assaults"
         and b.loc[0, "raw"] == "3"
     )
+
+
+def test_crdc_groups_are_disjoint_and_add_up():
+    from phillyschools.crdc import collection_rows
+
+    cols = {
+        "TOT_ENR_M": 60,
+        "TOT_ENR_F": 40,
+        "SCH_ENR_IDEA_M": 10,
+        "SCH_ENR_IDEA_F": 5,
+        "SCH_ENR_504_M": 3,
+        "SCH_ENR_504_F": 2,
+        "TOT_DISCWODIS_SINGOOS_M": 4,
+        "TOT_DISCWODIS_SINGOOS_F": 2,
+        "TOT_DISCWODIS_MULTOOS_M": 1,
+        "TOT_DISCWODIS_MULTOOS_F": 0,
+        "TOT_DISCWDIS_SINGOOS_IDEA_M": 2,
+        "TOT_DISCWDIS_SINGOOS_IDEA_F": 1,
+        "TOT_DISCWDIS_MULTOOS_IDEA_M": 1,
+        "TOT_DISCWDIS_MULTOOS_IDEA_F": 0,
+        "SCH_DISCWDIS_SINGOOS_504_M": 1,
+        "SCH_DISCWDIS_SINGOOS_504_F": 0,
+        "SCH_DISCWDIS_MULTOOS_504_M": 0,
+        "SCH_DISCWDIS_MULTOOS_504_F": -2,  # suppressed cell
+    }
+    d = pd.DataFrame([{k: str(v) for k, v in cols.items()}], index=["421899000001"])
+    r = collection_rows(d, 2022).set_index(["measure_id", "student_group"])
+    assert r.loc[("crdc_enrollment", "without_disabilities"), "value"] == 100 - 15 - 5
+    assert r.loc[("crdc_n_oss", "idea"), "value"] == 4
+    assert r.loc[("crdc_n_oss", "all"), "status"] == "suppressed"  # a 504 cell is suppressed
+    assert r.loc[("crdc_n_oss", "without_disabilities"), "value"] == 7

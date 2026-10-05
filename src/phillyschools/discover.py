@@ -35,6 +35,7 @@ ALLOWED_HOSTS = {
     "web.archive.org",
     "philasd.primegov.com",
     "philasd.novusagenda.com",
+    "civilrightsdata.ed.gov",
 }
 FILES_FIELDS = [
     "source_key",
