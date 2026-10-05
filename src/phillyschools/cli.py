@@ -8,6 +8,7 @@ import pandas as pd
 
 from . import ROOT, STAGING
 from .acs import build_area_context, write_area_context
+from .asbestos import build_asbestos, write_asbestos
 from .assessment import build_assessments, write_assessments
 from .attendance import build_attendance, write_attendance
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
@@ -19,6 +20,7 @@ from .enrollment import build_enrollment, validate_enrollment, write_enrollment
 from .environmental import latest_environmental
 from .envresults import build_lead_paint, build_water, write_lead_paint, write_water
 from .fastfacts import build_fast_facts, write_fast_facts
+from .fca import build_fca, write_fca
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan, read_downloads
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
@@ -278,6 +280,28 @@ def cmd_build_env_results(a):
     print(f"  school_metric now {len(combined)}")
 
 
+def cmd_build_asbestos(a):
+    t = build_asbestos()
+    combined = write_asbestos(t)
+    rep = t["report"]
+    print(
+        f"  AHERA reports {len(rep)} for {rep['building_code'].nunique()} buildings; "
+        f"log read for {(rep['status'] == 'reported').sum()}; asbestos items {len(t['item'])}"
+    )
+    print(f"  school_metric now {len(combined)}")
+
+
+def cmd_build_fca(a):
+    t = build_fca()
+    combined = write_fca(t)
+    site = t["site"]
+    print(
+        f"  FCA sites {len(site)} ({site['school_id'].notna().mean():.0%} linked), "
+        f"buildings and grounds {len(t['part'])}, systems {len(t['system'])}"
+    )
+    print(f"  school_metric now {len(combined)}")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -426,6 +450,12 @@ def main():
 
     s = sub.add_parser("build-crdc", help="federal Civil Rights Data Collection discipline")
     s.set_defaults(fn=cmd_build_crdc)
+
+    s = sub.add_parser("build-fca", help="facility condition assessments (2020 cycle)")
+    s.set_defaults(fn=cmd_build_fca)
+
+    s = sub.add_parser("build-asbestos", help="asbestos (AHERA) results from the reports")
+    s.set_defaults(fn=cmd_build_asbestos)
 
     s = sub.add_parser("build-env-results", help="lead paint and water results from the PDFs")
     s.set_defaults(fn=cmd_build_env_results)

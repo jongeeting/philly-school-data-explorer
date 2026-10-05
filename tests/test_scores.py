@@ -308,3 +308,59 @@ def test_xrf_rows_skip_trailing_asbestos_column():
     line = "2  GT2  Restroom 208  W4  CMU  Pink  Flaking   1 N/A   N/A   0.76 Positive   Negative"
     x = xrf_rows(line)
     assert x["positive"].tolist() == [True] and x["damaged_sf"].tolist() == [1]
+
+
+def test_asbestos_room_log_rows():
+    from phillyschools.asbestos import log_rows, material_group, summarize
+
+    lines = [
+        "ROOM-BY-ROOM LOG",
+        '    1          1         001K    Classroom K-1    Floor Tile VAT 9" x 9"    Confirmed    798    SF    0    SF    Multi',
+        "    1          1         001K    Classroom K-1    Paint associated with Convector    NAD    30    SF    N/A    SF",
+        "    1          1         001K    Classroom K-1    Heating Convector    Non Suspect ACM    2    EA    N/A    EA",
+        "    1          B         B-12    Boiler Room    Pipe Fitting Insulation    Assumed    1,200    LF    12    LF",
+    ]
+    log = log_rows("\n".join(lines))
+    assert log["acm_status"].tolist() == ["Confirmed", "NAD", "Non-Suspect", "Assumed"]
+    s = summarize(log)
+    assert (s["acm_items"], s["acm_items_damaged"], s["acm_lf"], s["acm_damaged_lf"]) == (
+        2,
+        1,
+        1200,
+        12,
+    )
+    assert material_group("Pipe Fitting Insulation") == "pipe and boiler insulation"
+    assert material_group("Mastic associated with Floor Tile") == "floor tile and mastic"
+
+
+def test_fca_report_parts_wrap_and_systems():
+    from phillyschools.fca import parse_report
+
+    lines = [
+        "S802001;Northeast",
+        "            Governance               District          Report Type              High",
+        "            Address                  1601 Cottman Ave   Enrollment               3,000",
+        "Building and Grounds",
+        "Overall                 23.47%          $51,098,552          $217,723,791",
+        "B802001;Northeast       23.85%          $44,057,009          $184,721,264",
+        "B802903;Northeast - Stands and",
+        "                         6.66%            $306,088            $4,596,630",
+        "Field",
+        "G802001:Grounds         1.74%             $289,211           $16,667,327",
+        "Major Building Systems",
+        "Exterior Doors          108.99%           $207,751             $190,610",
+        "Please note that some FCIs may be over 100%",
+        "Table of Contents",
+        "  Condition Score:       76.53%",
+    ]
+    text = "\n".join(lines)
+    r = parse_report(text)
+    assert r["site"]["fci_pct"] == 23.47 and r["site"]["report_type"] == "High"
+    assert r["site"]["address"] == "1601 Cottman Ave" and r["site"]["enrollment"] == "3,000"
+    assert [p["part_name"] for p in r["parts"]] == [
+        "Northeast",
+        "Northeast - Stands and Field",
+        "Grounds",
+    ]
+    assert r["systems"][0]["fci_pct"] == 108.99
+    assert r["site"]["condition_score_pct"] == 76.53
