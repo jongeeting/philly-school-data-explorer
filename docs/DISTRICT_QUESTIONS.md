@@ -46,17 +46,21 @@ Open data gaps that someone at the district could close. Generated from [sources
    - Context: Serious incidents for 2012-13 total 15,770, 2.4 times the next year (6,579), with no explanation in the files
 22. **How were referrals to law enforcement counted for the 2013-14 CRDC? It reports 94 referrals and 1,357 school-related arrests.** (GAP-062, medium priority)
    - Context: CRDC referrals to law enforcement are not comparable before 2015-16: 2013-14 reports 94 referrals but 1,357 school-related arrests (arrests are normally a subset); 2015-16 reports 6,834
-23. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
+23. **Which buildings does the lead-safe certification program cover, and is there a schedule for the rest?** (GAP-064, medium priority)
+   - Context: Lead-safe assessments cover 163 schools; it is unclear whether every occupied building has one or which buildings are required to
+24. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
    - Context: NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source
-24. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
+25. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
    - Context: Missing SRC school IDs (39 staged rows)
-25. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
+26. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
    - Context: Board meeting video has no transcripts or captions and cannot be downloaded
-26. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
+27. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
    - Context: 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings
-27. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
+28. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
    - Context: Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned
-28. **Is there a crosswalk between the serious incident types used through 2015-16 and the categories used from 2016-17?** (GAP-057, low priority)
+29. **Is there a crosswalk between the serious incident types used through 2015-16 and the categories used from 2016-17?** (GAP-057, low priority)
    - Context: Serious incident categories changed in 2016-17 (fine-grained types before, grouped categories after); no published crosswalk between the schemes
-29. **Was the 2011-12 CRDC submission complete for students with disabilities and English learners? It shows almost no repeat suspensions for IDEA students.** (GAP-061, low priority)
+30. **Was the 2011-12 CRDC submission complete for students with disabilities and English learners? It shows almost no repeat suspensions for IDEA students.** (GAP-061, low priority)
    - Context: CRDC 2011-12 discipline counts for students with disabilities and English learners look under-reported (almost no repeat suspensions reported for IDEA students; IDEA suspension rate equals the non-disabled rate, unlike every later year)
+31. **Where are drinking water lead results for charter schools after 2019?** (GAP-063, low priority)
+   - Context: Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders

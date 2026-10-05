@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**47 unresolved** of 62 tracked (12 high priority).
+**49 unresolved** of 64 tracked (12 high priority).
 
 **Kinds of gap**
 
@@ -91,11 +91,13 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-025 | Staff vacancies (due Aug 2025), SPOTlight scorecard (due spring 2025), and Pre-K sites (due spring 2026) are past the district's promised refresh dates *(Per district data page, checked 2026-10-04)* | `not-collected-by-district` | medium | open | district | Track missed promises in the release table |
 | GAP-026 | Goals and Guardrails results are PDFs, with targets reset in April 2024 | `not-yet-ingested` | medium | open | district | Extract per-report tables; version targets in the commitment table |
 | GAP-032 | Building condition reports (FCA): 2020-22 reports are PDFs on Google Drive (about 78), 2017 reports and 2018-19 AHERA survive only on the Wayback Machine; the 2022-24 facilities site's API data was never archived | `not-yet-ingested` | medium | open | district | Recover Drive IDs from the archived FCA page; pull Wayback captures; file names start with ULCS |
-| GAP-033 | Environmental records (AHERA asbestos, lead, water testing) are hundreds of per-school PDFs in Google Drive folders *(7,402 files cataloged; the latest report per school and type (1,804 files, about 13 GB: AHERA plan, 6-month, 3-year, plaster letter; current water results; lead-safe files) archived 2026-10-05 via psd fetch-environmental-latest. Bulk sampling, abatement, and archived results are cataloged but not downloaded; results not yet extracted)* | `not-yet-ingested` | medium | in-progress | us | List the folders, download and hash, extract results; ULCS in file names |
+| GAP-033 | Environmental records (AHERA asbestos, lead, water testing) are hundreds of per-school PDFs in Google Drive folders *(7,402 files cataloged; the latest report per school and type (1,804 files, about 13 GB: AHERA plan, 6-month, 3-year, plaster letter; current water results; lead-safe files) archived 2026-10-05 via psd fetch-environmental-latest. Bulk sampling, abatement, and archived results are cataloged but not downloaded; water and lead-paint results extracted 2026-10-05 (docs/ENVIRONMENT.md); AHERA asbestos results not yet extracted)* | `not-yet-ingested` | medium | in-progress | us | List the folders, download and hash, extract results; ULCS in file names |
 | GAP-040 | Since 2025, minutes are not posted as their own documents; they appear only as attachments to the next meeting's packet, and action items have no ID that persists across meetings | `not-collected-by-district` | medium | open | district | Parse packets; mint our own resolution IDs |
 | GAP-041 | Board records (PrimeGov 2019 on, NovusAgenda, 2013-18 PDFs, SRC on Wayback) are cataloged as sources but not archived | `not-yet-ingested` | medium | open | us | Archive with the PrimeGov JSON API, sequential NovusAgenda IDs, the WordPress PDF list, and Wayback |
+| GAP-064 | Lead-safe assessments cover 163 schools; it is unclear whether every occupied building has one or which buildings are required to | `unknown` | medium | open | district | Compare the folder list with all occupied district buildings; ask the district which buildings the lead-safe program covers |
 | GAP-039 | Board meeting video has no transcripts or captions and cannot be downloaded | `not-collected-by-district` | low | open | district | Store video IDs and titles; consider our own speech-to-text later |
 | GAP-042 | 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings *(core/board_video_catalog.csv has 292)* | `not-public` | low | open | district | Ask the district for a video list, or find them via search or individual media pages |
+| GAP-063 | Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders | `not-collected-by-district` | low | open | district | Read the 2019 tables; ask whether charters post newer results elsewhere |
 
 ## Workforce
 

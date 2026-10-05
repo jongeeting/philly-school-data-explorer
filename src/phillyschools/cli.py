@@ -17,6 +17,7 @@ from .discover import add_file, discover
 from .drive import catalog_drive
 from .enrollment import build_enrollment, validate_enrollment, write_enrollment
 from .environmental import latest_environmental
+from .envresults import build_lead_paint, build_water, write_lead_paint, write_water
 from .fastfacts import build_fast_facts, write_fast_facts
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan, read_downloads
 from .futureready import catalog_future_ready
@@ -262,6 +263,21 @@ def cmd_build_discipline(a):
     )
 
 
+def cmd_build_env_results(a):
+    lead = build_lead_paint()
+    combined = write_lead_paint(lead)
+    linked = lead["school_id"].notna().mean()
+    print(f"  lead-safe files {len(lead)} ({linked:.0%} linked to schools)")
+    water = build_water()
+    combined = write_water(water)
+    files = water.drop_duplicates("file")
+    print(
+        f"  water letters {len(files)} ({files['school_id'].notna().mean():.0%} linked), "
+        f"outlet samples {water['lead_ppb'].notna().sum()}"
+    )
+    print(f"  school_metric now {len(combined)}")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -410,6 +426,9 @@ def main():
 
     s = sub.add_parser("build-crdc", help="federal Civil Rights Data Collection discipline")
     s.set_defaults(fn=cmd_build_crdc)
+
+    s = sub.add_parser("build-env-results", help="lead paint and water results from the PDFs")
+    s.set_defaults(fn=cmd_build_env_results)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

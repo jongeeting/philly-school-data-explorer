@@ -238,3 +238,73 @@ def test_environmental_keeps_latest_per_building_and_type():
         "16 7300 Francis Hopkinson ES.pdf",
         "Results 2025.pdf",
     }
+
+
+def test_xrf_rows_read_damage_across_layouts():
+    from phillyschools.envresults import xrf_rows
+
+    lines = [
+        "1  1  108  Classroom 108  W1  Sheetrock  White  Flaking   1   0.1 Negative",
+        "1  1  100  Auditorium  W1  Plaster  White  Peeling  12  N/A  N/A  2.8  Positive",
+        "1  PH  PH-1  Tank Room  no  Door  Wood  Varnish  Chipping  8  0  Negative",
+        "1  1  102  Classroom 102  Ceiling  Concrete  Unpainted  N/A  N/A  N/A  N/A",
+    ]
+    text = "\n".join(lines)
+    x = xrf_rows(text)
+    assert x["damaged_sf"].tolist() == [1, 12, 8]
+    assert x["positive"].tolist() == [False, True, False]
+    assert x["xrf"].tolist() == [0.1, 2.8, 0]
+
+
+@pytest.mark.parametrize(
+    "addr, out",
+    [
+        ("4901-31 CHESTNUT ST", (4901, 4931, "CHESTNUT ST")),
+        ("600 W. Hunting Park Avenue", (600, 600, "W HUNTING PARK AVE")),
+        ("1501 S 7th St", (1501, 1501, "S 07TH ST")),
+        ("1501 S 07th St", (1501, 1501, "S 07TH ST")),
+        ("6501 Limekiln Pike", (6501, 6501, "LIMEKILN PK")),
+    ],
+)
+def test_split_address(addr, out):
+    from phillyschools.envresults import split_address
+
+    assert split_address(addr) == out
+
+
+def test_water_rows_initial_and_follow_up():
+    from phillyschools.envresults import water_rows
+
+    lines = [
+        "07/11/2025    01       01       FT         House kitchen sink             <1.0       1       BA",
+        "08/15/2025    00       10       FT         In kitchen      54       1   AA",
+        "09/09/2025        00       10      FT             In kitchen     3.6    1    Remediation Complete.",
+        "08/22/2025    02       25       HS         Hallway       2.3 J      1       BA",
+    ]
+    w = water_rows("\n".join(lines))
+    assert w["lead_ppb"].tolist() == [1.0, 54.0, 3.6, 2.3]
+    assert w["below_reporting_limit"].tolist() == [True, False, False, False]
+    assert w["above_action_level"].tolist() == [False, True, False, False]
+    assert w["estimated"].tolist() == [False, False, False, True]
+    assert w["corrective_action"].tolist()[2] == "Remediation Complete."
+
+
+def test_water_letter_stated_counts():
+    from phillyschools.envresults import stated_counts
+
+    text = (
+        "There were Three (3) outlets tested at your school. Of those outlets, Three (3) "
+        "outlets produced water that was below the action level of 10 ppb. No water outlets "
+        "were found to have results above the water safety threshold."
+    )
+    assert stated_counts(text) == (3, 0)
+    text = "There were 12 outlets tested at your school. One (1) water outlet was found to have results above"
+    assert stated_counts(text) == (12, 1)
+
+
+def test_xrf_rows_skip_trailing_asbestos_column():
+    from phillyschools.envresults import xrf_rows
+
+    line = "2  GT2  Restroom 208  W4  CMU  Pink  Flaking   1 N/A   N/A   0.76 Positive   Negative"
+    x = xrf_rows(line)
+    assert x["positive"].tolist() == [True] and x["damaged_sf"].tolist() == [1]

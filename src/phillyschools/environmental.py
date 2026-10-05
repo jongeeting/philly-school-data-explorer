@@ -54,7 +54,7 @@ def select_latest(rows: list[dict]) -> list[dict]:
         if r["source_key"] != SOURCE:
             continue
         sub = r.get("subdir") or ""
-        current_water = sub.startswith("water/") and not re.search(r"/Archives?$", sub)
+        current_water = sub.startswith("water/") and not re.search(r"Archives?$", sub)
         if sub.startswith("lead/") or current_water:
             out.append(r)
         elif sub.startswith("ahera/") and sub.endswith("AHERA Management Plan Archive"):
