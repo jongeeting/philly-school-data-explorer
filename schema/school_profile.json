@@ -1,0 +1,907 @@
+{
+ "table": "school_profile",
+ "grain": "one row per school_id",
+ "rows": 494,
+ "columns": [
+  {
+   "name": "school_id",
+   "type": "str",
+   "description": "Permanent minted school ID (sch_NNNNN); never reused. Outside codes are in school_id_xwalk."
+  },
+  {
+   "name": "ulcs",
+   "type": "str",
+   "description": "District Universal Location Code (4 digits); the most recent code, see school_id_xwalk for history."
+  },
+  {
+   "name": "current_name",
+   "type": "str",
+   "description": "Name in the most recent year the school appears in the district's lists."
+  },
+  {
+   "name": "first_sy_in_data",
+   "type": "int64",
+   "description": "First school year the school appears in any district list."
+  },
+  {
+   "name": "last_sy_in_data",
+   "type": "int64",
+   "description": "Last school year the school appears in any district list (2027 means the 2026-27 list)."
+  },
+  {
+   "name": "year_opened",
+   "type": "Int64",
+   "description": "Year the school opened, as the district reports it."
+  },
+  {
+   "name": "listed_in_latest_year",
+   "type": "bool",
+   "description": "True if the school is on the most recent district school list."
+  },
+  {
+   "name": "record_kind",
+   "type": "str",
+   "description": "school for schools on the district's lists; otherwise a placeholder for a program that appears only in state data (for example 'program outside the district list')."
+  },
+  {
+   "name": "governance",
+   "type": "str",
+   "description": "District, Charter, Contracted, or other, as the district's school list gives it."
+  },
+  {
+   "name": "level",
+   "type": "str",
+   "description": "Elementary, Middle, High, or a combination, as the district's school list gives it."
+  },
+  {
+   "name": "admission_type",
+   "type": "str",
+   "description": "Catchment, Citywide, Special Admission, or similar, as the district's school list gives it."
+  },
+  {
+   "name": "council_district",
+   "type": "Int64",
+   "description": "City Council district of the school's location."
+  },
+  {
+   "name": "asbestos_items",
+   "type": "float64",
+   "description": "Asbestos-containing materials on record. Entries in the building's room-by-room asbestos log that are confirmed or assumed to contain asbestos (one entry per material per space), from the most recent 6-month or 3-year AHERA report.",
+   "unit": "items",
+   "denominator": NaN,
+   "usage_notes": "Extracted from the district's AHERA reports. Managed in place, intact asbestos is legal and common in older buildings; the count reflects building age and size as much as risk. Amounts by unit (SF, LF, EA) are in building_asbestos. Annexes have their own building codes and are not added to the main school.",
+   "breaks": "Point-in-time: the most recent report, mostly 2025-26. sy = school year of the report.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "asbestos_items_sy",
+   "type": "Int64",
+   "description": "School year (sy) the asbestos_items value is from."
+  },
+  {
+   "name": "asbestos_items_damaged",
+   "type": "float64",
+   "description": "Asbestos-containing materials with damage. Confirmed or assumed asbestos entries with a damaged amount above zero at the most recent inspection.",
+   "unit": "items",
+   "denominator": "asbestos_items",
+   "usage_notes": "Damage as the inspector recorded it; repairs after the inspection appear in the next report. Damaged amounts by unit are in building_asbestos.",
+   "breaks": "Point-in-time; see asbestos_items.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "asbestos_items_damaged_sy",
+   "type": "Int64",
+   "description": "School year (sy) the asbestos_items_damaged value is from."
+  },
+  {
+   "name": "building_capacity",
+   "type": "float64",
+   "description": "Building capacity. Seats the district counts for the school's building.",
+   "unit": "seats",
+   "denominator": NaN,
+   "usage_notes": "Check co-location before comparing; see facilities data gaps.",
+   "breaks": "Facilities planning capacity figures have shifted between releases",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "building_capacity_sy",
+   "type": "Int64",
+   "description": "School year (sy) the building_capacity value is from."
+  },
+  {
+   "name": "catchment_size",
+   "type": "float64",
+   "description": "Catchment size. Students living in the school's catchment who are enrolled in any public school (district, charter, or cyber).",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "Only neighborhood (catchment) schools have catchments.",
+   "breaks": "Catchment boundaries change by year",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "catchment_size_sy",
+   "type": "Int64",
+   "description": "School year (sy) the catchment_size value is from."
+  },
+  {
+   "name": "cep_econ_disadvantaged_rate",
+   "type": "float64",
+   "description": "Economically disadvantaged rate (CEP). Share of students the district counts as economically disadvantaged under the federal Community Eligibility Provision method.",
+   "unit": "percent",
+   "denominator": "school enrollment",
+   "usage_notes": "A poverty proxy. Do not use alone to rank or label schools.",
+   "breaks": "CEP direct-certification method; not comparable to free/reduced lunch counts from other places",
+   "source_key": "sdp_enrollment"
+  },
+  {
+   "name": "cep_econ_disadvantaged_rate_sy",
+   "type": "Int64",
+   "description": "School year (sy) the cep_econ_disadvantaged_rate value is from."
+  },
+  {
+   "name": "crdc_enrollment",
+   "type": "float64",
+   "description": "Enrollment (CRDC). Students enrolled at the school on the CRDC count, by group.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_enrollment_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_enrollment value is from."
+  },
+  {
+   "name": "crdc_n_arrested",
+   "type": "float64",
+   "description": "Students with a school-related arrest (CRDC). Students who received a school-related arrest.",
+   "unit": "students",
+   "denominator": "crdc_enrollment (same group)",
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_n_arrested_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_n_arrested value is from."
+  },
+  {
+   "name": "crdc_n_expelled",
+   "type": "float64",
+   "description": "Students expelled (CRDC). Students expelled with or without educational services (zero-tolerance expulsions are a subset and not added).",
+   "unit": "students",
+   "denominator": "crdc_enrollment (same group)",
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_n_expelled_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_n_expelled value is from."
+  },
+  {
+   "name": "crdc_n_iss",
+   "type": "float64",
+   "description": "Students with an in-school suspension (CRDC). Students who received at least one in-school suspension.",
+   "unit": "students",
+   "denominator": "crdc_enrollment (same group)",
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_n_iss_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_n_iss value is from."
+  },
+  {
+   "name": "crdc_n_oss",
+   "type": "float64",
+   "description": "Students with one or more out-of-school suspensions (CRDC). Students who received at least one out-of-school suspension during the school year.",
+   "unit": "students",
+   "denominator": "crdc_enrollment (same group)",
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_n_oss_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_n_oss value is from."
+  },
+  {
+   "name": "crdc_n_referred_law",
+   "type": "float64",
+   "description": "Students referred to law enforcement (CRDC). Students referred to a law enforcement agency or official.",
+   "unit": "students",
+   "denominator": "crdc_enrollment (same group)",
+   "usage_notes": "CRDC (federal), district and charter schools. Groups: all, male, female, nonbinary (2021-22), race and ethnicity, idea, section_504, without_disabilities, english_learner. Race groups exclude Section 504-only students (not broken out by race). Counts are rounded by OCR for privacy; small cells are suppressed.",
+   "breaks": "Collections every other year: 2011-12, 2013-14, 2015-16, 2017-18, 2020-21 (mostly virtual: near zero), 2021-22. 2011-12 disability and English learner counts look under-reported; 2013-14 and 2011-12 referrals to law enforcement are not comparable with later years (see docs/DISCIPLINE.md).",
+   "source_key": "ed_crdc"
+  },
+  {
+   "name": "crdc_n_referred_law_sy",
+   "type": "Int64",
+   "description": "School year (sy) the crdc_n_referred_law value is from."
+  },
+  {
+   "name": "enrollment_catchment_ratio",
+   "type": "float64",
+   "description": "Enrollment to catchment ratio. School enrollment divided by catchment size.",
+   "unit": "ratio",
+   "denominator": "catchment_size",
+   "usage_notes": "High values can mean a small catchment or many students from elsewhere.",
+   "breaks": "",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "enrollment_catchment_ratio_sy",
+   "type": "Int64",
+   "description": "School year (sy) the enrollment_catchment_ratio value is from."
+  },
+  {
+   "name": "enrollment_count",
+   "type": "float64",
+   "description": "Enrolled students. Students enrolled at the school on the October 1 count, by grade and student group.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "Groups under the district's threshold are suppressed (2009-10 to 2013-14: whole rows with 20 or fewer students). Economically disadvantaged counts exist only for 2012-13 and 2013-14 and use a different method from the later CEP rate.",
+   "breaks": "Coverage break between 2013-14 and 2014-15: files for 2009-10 to 2013-14 cover district schools only (131,894 students in 2013-14); from 2014-15 they include charter and alternative schools (197,694). Do not draw a trend line across that break without labeling it. 2014-15 to 2018-19 files were reposted in Aug 2025 under new suppression rules. 2010-11 Black, Hispanic, American Indian, and multiracial counts are withheld (zeros in the source; corrections/enrollment.csv).",
+   "source_key": "sdp_enrollment"
+  },
+  {
+   "name": "enrollment_count_sy",
+   "type": "Int64",
+   "description": "School year (sy) the enrollment_count value is from."
+  },
+  {
+   "name": "fca_condition_score_pct",
+   "type": "float64",
+   "description": "Facility condition score. Parsons condition score for the site (100% minus FCI, as reported).",
+   "unit": "percent",
+   "denominator": NaN,
+   "usage_notes": "Higher is better. Site figures: a site's buildings and grounds together; schools sharing a site each get its figures. Detail by building in facility_condition_part and by system in facility_condition_system.",
+   "breaks": "2020 assessment cycle by Parsons; reports dated 2021-22; 76 district sites (the reports the district posted). sy = school year of the report date.",
+   "source_key": "sdp_facility_condition"
+  },
+  {
+   "name": "fca_condition_score_pct_sy",
+   "type": "Int64",
+   "description": "School year (sy) the fca_condition_score_pct value is from."
+  },
+  {
+   "name": "fca_fci_pct",
+   "type": "float64",
+   "description": "Facility condition index (FCI). Cost of the site's assessed repair needs divided by its replacement value.",
+   "unit": "percent",
+   "denominator": "replacement value",
+   "usage_notes": "District tiers: under 15% minimal; 15-25% refurbish systems; 25-45% replace systems; 45-60% consider major renovation; over 60% consider closing or replacement. Higher is worse. Site figures: a site's buildings and grounds together; schools sharing a site each get its figures. Detail by building in facility_condition_part and by system in facility_condition_system.",
+   "breaks": "2020 assessment cycle by Parsons; reports dated 2021-22; 76 district sites (the reports the district posted). sy = school year of the report date.",
+   "source_key": "sdp_facility_condition"
+  },
+  {
+   "name": "fca_fci_pct_sy",
+   "type": "Int64",
+   "description": "School year (sy) the fca_fci_pct value is from."
+  },
+  {
+   "name": "fca_school_score_pct",
+   "type": "float64",
+   "description": "Overall school facility score. Parsons combined score of condition and suitability.",
+   "unit": "percent",
+   "denominator": NaN,
+   "usage_notes": "Higher is better; missing for 8 sites. Site figures: a site's buildings and grounds together; schools sharing a site each get its figures. Detail by building in facility_condition_part and by system in facility_condition_system.",
+   "breaks": "2020 assessment cycle by Parsons; reports dated 2021-22; 76 district sites (the reports the district posted). sy = school year of the report date.",
+   "source_key": "sdp_facility_condition"
+  },
+  {
+   "name": "fca_school_score_pct_sy",
+   "type": "Int64",
+   "description": "School year (sy) the fca_school_score_pct value is from."
+  },
+  {
+   "name": "fca_suitability_score_pct",
+   "type": "float64",
+   "description": "Educational suitability score. How well the building suits its educational program (space, layout, specialized rooms), as Parsons scored it.",
+   "unit": "percent",
+   "denominator": NaN,
+   "usage_notes": "Higher is better; missing for 8 sites. Site figures: a site's buildings and grounds together; schools sharing a site each get its figures. Detail by building in facility_condition_part and by system in facility_condition_system.",
+   "breaks": "2020 assessment cycle by Parsons; reports dated 2021-22; 76 district sites (the reports the district posted). sy = school year of the report date.",
+   "source_key": "sdp_facility_condition"
+  },
+  {
+   "name": "fca_suitability_score_pct_sy",
+   "type": "Int64",
+   "description": "School year (sy) the fca_suitability_score_pct value is from."
+  },
+  {
+   "name": "grad_rate_4yr",
+   "type": "float64",
+   "description": "Four-year graduation rate. Share of the cohort that graduated within four years.",
+   "unit": "percent",
+   "denominator": "adjusted cohort",
+   "usage_notes": "High schools only.",
+   "breaks": "Cohort definitions follow PDE; the reported year is the graduation year.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "grad_rate_4yr_sy",
+   "type": "Int64",
+   "description": "School year (sy) the grad_rate_4yr value is from."
+  },
+  {
+   "name": "grad_rate_5yr",
+   "type": "float64",
+   "description": "Five-year graduation rate. Share of the cohort that graduated within five years.",
+   "unit": "percent",
+   "denominator": "adjusted cohort",
+   "usage_notes": "High schools only.",
+   "breaks": "",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "grad_rate_5yr_sy",
+   "type": "Int64",
+   "description": "School year (sy) the grad_rate_5yr value is from."
+  },
+  {
+   "name": "growth_score_ela",
+   "type": "float64",
+   "description": "Academic growth score, ELA/Literature (PVAAS). PDE's Future Ready score for meeting annual academic growth expectations in ELA, based on PVAAS.",
+   "unit": "score (0-100)",
+   "denominator": NaN,
+   "usage_notes": "Not a percent of students. Fairer to high-poverty schools than proficiency but noisy for a single year; pool years before comparing.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "growth_score_ela_sy",
+   "type": "Int64",
+   "description": "School year (sy) the growth_score_ela value is from."
+  },
+  {
+   "name": "growth_score_math",
+   "type": "float64",
+   "description": "Academic growth score, Mathematics/Algebra 1 (PVAAS). PDE's Future Ready score for meeting annual academic growth expectations in math, based on PVAAS.",
+   "unit": "score (0-100)",
+   "denominator": NaN,
+   "usage_notes": "Not a percent of students. More stable year to year than ELA growth; still pool years.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "growth_score_math_sy",
+   "type": "Int64",
+   "description": "School year (sy) the growth_score_math value is from."
+  },
+  {
+   "name": "growth_score_science",
+   "type": "float64",
+   "description": "Academic growth score, Science/Biology (PVAAS). PDE's Future Ready score for meeting annual academic growth expectations in science, based on PVAAS.",
+   "unit": "score (0-100)",
+   "denominator": NaN,
+   "usage_notes": "Not a percent of students.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "growth_score_science_sy",
+   "type": "Int64",
+   "description": "School year (sy) the growth_score_science value is from."
+  },
+  {
+   "name": "lead_paint_components_positive",
+   "type": "float64",
+   "description": "Painted components with lead paint. Components the inspector called positive for lead-based paint, in the most recent full assessment.",
+   "unit": "components",
+   "denominator": "lead_paint_components_tested",
+   "usage_notes": "The inspector's call as published. Firms cite different cutoffs; school_lead_paint also has the count at or above the federal 1.0 mg/cm2 level. Intact lead paint is managed in place; damaged lead paint is the hazard.",
+   "breaks": "Point-in-time; see lead_paint_components_tested.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "lead_paint_components_positive_sy",
+   "type": "Int64",
+   "description": "School year (sy) the lead_paint_components_positive value is from."
+  },
+  {
+   "name": "lead_paint_components_tested",
+   "type": "float64",
+   "description": "Painted components tested for lead (XRF). Painted surfaces (walls, door frames, sills, radiators, ...) tested with an XRF analyzer in the school's most recent full lead-safe assessment, summed over its buildings.",
+   "unit": "components",
+   "denominator": NaN,
+   "usage_notes": "Extracted from the district's lead-safe assessment PDFs (env results module). Schools sharing a building each get the building's figures. Buildings that are not schools (annexes, field houses, offices) are in school_lead_paint only.",
+   "breaks": "Point-in-time: one assessment per building, done in different years (2017 to 2026). sy = school year the assessment ended.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "lead_paint_components_tested_sy",
+   "type": "Int64",
+   "description": "School year (sy) the lead_paint_components_tested value is from."
+  },
+  {
+   "name": "lead_paint_positive_damaged",
+   "type": "float64",
+   "description": "Lead-painted components with damaged paint. Components positive for lead paint that also had damaged (flaking, peeling, chipping) paint at assessment, the hazard lead-safe certification requires fixing.",
+   "unit": "components",
+   "denominator": "lead_paint_components_positive",
+   "usage_notes": "Damage was recorded before stabilization; a later certification report may show it fixed. Square feet are in school_lead_paint.",
+   "breaks": "Point-in-time; see lead_paint_components_tested.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "lead_paint_positive_damaged_sy",
+   "type": "Int64",
+   "description": "School year (sy) the lead_paint_positive_damaged value is from."
+  },
+  {
+   "name": "participation_ela",
+   "type": "float64",
+   "description": "Test participation, ELA/Literature. Share of eligible students who took the state ELA/Literature test.",
+   "unit": "percent",
+   "denominator": "eligible students",
+   "usage_notes": "Low participation makes proficiency and growth less reliable.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "participation_ela_sy",
+   "type": "Int64",
+   "description": "School year (sy) the participation_ela value is from."
+  },
+  {
+   "name": "participation_math",
+   "type": "float64",
+   "description": "Test participation, Mathematics/Algebra 1. Share of eligible students who took the state math/Algebra 1 test.",
+   "unit": "percent",
+   "denominator": "eligible students",
+   "usage_notes": "Low participation makes proficiency and growth less reliable.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "participation_math_sy",
+   "type": "Int64",
+   "description": "School year (sy) the participation_math value is from."
+  },
+  {
+   "name": "participation_science",
+   "type": "float64",
+   "description": "Test participation, Science/Biology. Share of eligible students who took the state science/Biology test.",
+   "unit": "percent",
+   "denominator": "eligible students",
+   "usage_notes": "",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "participation_science_sy",
+   "type": "Int64",
+   "description": "School year (sy) the participation_science value is from."
+  },
+  {
+   "name": "pct_catchment_students_attending",
+   "type": "float64",
+   "description": "Share of catchment students who attend. Catchment students attending the school as a percent of all students living in the catchment.",
+   "unit": "percent",
+   "denominator": "catchment_size (students living in the catchment)",
+   "usage_notes": "Denominator is residents, not enrollment. Citywide (sum of attending over sum of catchment size, this project's calculation): 47.4% in 2016-17, 38.1% to 38.8% from 2021-22 to 2025-26.",
+   "breaks": "",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "pct_catchment_students_attending_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_catchment_students_attending value is from."
+  },
+  {
+   "name": "pct_enrollment_from_catchment",
+   "type": "float64",
+   "description": "Share of enrollment from the catchment. Catchment students attending the school as a percent of the school's enrollment.",
+   "unit": "percent",
+   "denominator": "retention_total_enrollment (students enrolled)",
+   "usage_notes": "Denominator is the school's enrollment, not catchment residents.",
+   "breaks": "",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "pct_enrollment_from_catchment_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_enrollment_from_catchment value is from."
+  },
+  {
+   "name": "pct_grade3_reading_proficient",
+   "type": "float64",
+   "description": "Grade 3 reading proficiency. Share of grade 3 students proficient or advanced in ELA (Future Ready early indicator).",
+   "unit": "percent",
+   "denominator": "grade 3 tested students",
+   "usage_notes": "",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_grade3_reading_proficient_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_grade3_reading_proficient value is from."
+  },
+  {
+   "name": "pct_grade7_math_proficient",
+   "type": "float64",
+   "description": "Grade 7 math proficiency. Share of grade 7 students proficient or advanced in math (Future Ready early indicator).",
+   "unit": "percent",
+   "denominator": "grade 7 tested students",
+   "usage_notes": "",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_grade7_math_proficient_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_grade7_math_proficient value is from."
+  },
+  {
+   "name": "pct_persistent_attendance",
+   "type": "float64",
+   "description": "Persistent attendance (2021-22 on). PDE's attendance measure from 2021-22 on, which replaced regular attendance.",
+   "unit": "percent",
+   "denominator": "enrolled students (PDE definition)",
+   "usage_notes": "Check PDE's current definition before comparing with other states.",
+   "breaks": "Replaces pct_regular_attendance; definitions differ, so mark the break on any trend.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_persistent_attendance_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_persistent_attendance value is from."
+  },
+  {
+   "name": "pct_proficient_ela",
+   "type": "float64",
+   "description": "Percent proficient or advanced, ELA/Literature. Share of tested students scoring proficient or advanced on the PSSA English language arts or the Keystone Literature exam.",
+   "unit": "percent",
+   "denominator": "tested students",
+   "usage_notes": "Tracks student poverty closely (r about -0.67 in 2024-25 in the prototype). Read with growth and student-group context; never rank on it alone.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_proficient_ela_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_proficient_ela value is from."
+  },
+  {
+   "name": "pct_proficient_math",
+   "type": "float64",
+   "description": "Percent proficient or advanced, Mathematics/Algebra 1. Share of tested students scoring proficient or advanced on PSSA math or the Keystone Algebra 1 exam.",
+   "unit": "percent",
+   "denominator": "tested students",
+   "usage_notes": "Same caution as ELA.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_proficient_math_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_proficient_math value is from."
+  },
+  {
+   "name": "pct_proficient_science",
+   "type": "float64",
+   "description": "Percent proficient or advanced, Science/Biology. Share of tested students scoring proficient or advanced on PSSA science or the Keystone Biology exam.",
+   "unit": "percent",
+   "denominator": "tested students",
+   "usage_notes": "Same caution as ELA.",
+   "breaks": "No spring 2020 state tests: the 2019-20 file repeats 2018-19 results (status carried_forward). 2020-21 had low participation and no growth scores. Science reporting was waived in 2024-25.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_proficient_science_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_proficient_science value is from."
+  },
+  {
+   "name": "pct_regular_attendance",
+   "type": "float64",
+   "description": "Regular attendance (2017-18 to 2020-21). Share of students enrolled 90 or more days who attended at least 90% of the days they were enrolled, as PDE defined it before 2021-22.",
+   "unit": "percent",
+   "denominator": "students enrolled 90+ days",
+   "usage_notes": "Moderately poverty-linked; stable year to year.",
+   "breaks": "Renamed and redefined as persistent attendance (pct_persistent_attendance) in 2021-22: do not join the two into one line without marking the break.",
+   "source_key": "pde_future_ready"
+  },
+  {
+   "name": "pct_regular_attendance_sy",
+   "type": "Int64",
+   "description": "School year (sy) the pct_regular_attendance value is from."
+  },
+  {
+   "name": "retention_total_enrollment",
+   "type": "float64",
+   "description": "Total enrollment (retention file). Total students enrolled at the school as reported in the district's catchment retention file.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "May differ slightly from enrollment_count totals because of snapshot and program rules.",
+   "breaks": "",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "retention_total_enrollment_sy",
+   "type": "Int64",
+   "description": "School year (sy) the retention_total_enrollment value is from."
+  },
+  {
+   "name": "sdp_attendance_students",
+   "type": "float64",
+   "description": "Students in the attendance base (district). Students counted in the district's yearly attendance figures for the group.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_attendance_students_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_attendance_students value is from."
+  },
+  {
+   "name": "sdp_average_daily_attendance",
+   "type": "float64",
+   "description": "Average daily attendance (district). Average share of enrolled students present each school day over the year.",
+   "unit": "percent",
+   "denominator": "enrolled student-days",
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_average_daily_attendance_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_average_daily_attendance value is from."
+  },
+  {
+   "name": "sdp_n_attending_90",
+   "type": "float64",
+   "description": "Students attending 90% or more of days, count (district). Number of students attending at least 90% of enrolled days.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_attending_90_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_attending_90 value is from."
+  },
+  {
+   "name": "sdp_n_attending_95",
+   "type": "float64",
+   "description": "Students attending 95% or more of days, count (district). Number of students attending at least 95% of enrolled days.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_attending_95_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_attending_95 value is from."
+  },
+  {
+   "name": "sdp_n_oss_0",
+   "type": "float64",
+   "description": "Students with no out-of-school suspension (district). Students with no out-of-school suspension during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_oss_0_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_oss_0 value is from."
+  },
+  {
+   "name": "sdp_n_oss_1",
+   "type": "float64",
+   "description": "Students with exactly 1 out-of-school suspension (district). Students with exactly 1 out-of-school suspension during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_oss_1_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_oss_1 value is from."
+  },
+  {
+   "name": "sdp_n_oss_2",
+   "type": "float64",
+   "description": "Students with exactly 2 out-of-school suspensions (district). Students with exactly 2 out-of-school suspensions during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_oss_2_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_oss_2 value is from."
+  },
+  {
+   "name": "sdp_n_oss_3",
+   "type": "float64",
+   "description": "Students with exactly 3 out-of-school suspensions (district). Students with exactly 3 out-of-school suspensions during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_oss_3_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_oss_3 value is from."
+  },
+  {
+   "name": "sdp_n_oss_4plus",
+   "type": "float64",
+   "description": "Students with 4 or more out-of-school suspensions (district). Students with 4 or more out-of-school suspensions during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_n_oss_4plus_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_n_oss_4plus value is from."
+  },
+  {
+   "name": "sdp_oss_students",
+   "type": "float64",
+   "description": "Students in the suspension base (district). Students in the suspension base during the school year.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_oss_students_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_oss_students value is from."
+  },
+  {
+   "name": "sdp_pct_attending_90",
+   "type": "float64",
+   "description": "Students attending 90% or more of days (district). Share of students attending at least 90% of the days they were enrolled (the complement of chronic absence).",
+   "unit": "percent",
+   "denominator": "sdp_attendance_students",
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_pct_attending_90_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_pct_attending_90 value is from."
+  },
+  {
+   "name": "sdp_pct_attending_95",
+   "type": "float64",
+   "description": "Students attending 95% or more of days (district). Share of students attending at least 95% of the days they were enrolled.",
+   "unit": "percent",
+   "denominator": "sdp_attendance_students",
+   "usage_notes": "District schools only; charter attendance is in Future Ready (pct_regular_attendance, pct_persistent_attendance). Groups under the district's threshold are suppressed.",
+   "breaks": "2019-20 covers in-person days only through the March 2020 closure; 2020-21 was mostly virtual. Grade-level groups are stored as student_group grade_K to grade_12.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_pct_attending_95_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_pct_attending_95 value is from."
+  },
+  {
+   "name": "sdp_pct_oss_0",
+   "type": "float64",
+   "description": "Share of students with no out-of-school suspension (district). Share of students with no out-of-school suspension during the school year.",
+   "unit": "percent",
+   "denominator": "sdp_oss_students",
+   "usage_notes": "District schools only. Groups: gender, race and ethnicity, grade (grade_K to grade_12); no disability or English learner groups are published. Students with any suspension = sdp_oss_students - sdp_n_oss_0. Read with serious incidents (the pair is published together, under one frame).",
+   "breaks": "2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_pct_oss_0_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_pct_oss_0 value is from."
+  },
+  {
+   "name": "sdp_serious_incidents_total",
+   "type": "float64",
+   "description": "Serious incidents, total (district). Sum of serious incidents of all types reported at the school during the year; detail by type in school_incident.",
+   "unit": "incidents",
+   "denominator": NaN,
+   "usage_notes": "Counts, not rates: larger schools report more. Includes non-violent categories (accidents, investigations, amnesty box). Read with suspensions.",
+   "breaks": "Incident categories changed in 2016-17 (fine-grained types before, grouped categories after); totals are comparable only if both schemes count the same incidents, which is not documented. 2019-20 ends with the March 2020 closure and 2020-21 was mostly virtual, so suspensions fall sharply those years; mark them as breaks.",
+   "source_key": "sdp_school_performance"
+  },
+  {
+   "name": "sdp_serious_incidents_total_sy",
+   "type": "Int64",
+   "description": "School year (sy) the sdp_serious_incidents_total value is from."
+  },
+  {
+   "name": "state_enrollment",
+   "type": "float64",
+   "description": "Enrollment (state Fast Facts). Students enrolled at the school as reported by PDE in School Fast Facts.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "State count; may differ from the district's October 1 count (enrollment_count) because of snapshot date and program rules. Covers district and charter schools on one definition.",
+   "breaks": "",
+   "source_key": "pde_fast_facts"
+  },
+  {
+   "name": "state_enrollment_sy",
+   "type": "Int64",
+   "description": "School year (sy) the state_enrollment value is from."
+  },
+  {
+   "name": "students_attending_neighborhood_school",
+   "type": "float64",
+   "description": "Catchment students attending. Students who live in the school's catchment and attend the school.",
+   "unit": "students",
+   "denominator": NaN,
+   "usage_notes": "Numerator of both retention percentages.",
+   "breaks": "",
+   "source_key": "sdp_catchment_retention"
+  },
+  {
+   "name": "students_attending_neighborhood_school_sy",
+   "type": "Int64",
+   "description": "School year (sy) the students_attending_neighborhood_school value is from."
+  },
+  {
+   "name": "water_outlets_above_action",
+   "type": "float64",
+   "description": "Drinking water outlets above the lead action level. Outlets whose first sample was above the district's 10 ppb action level in the most recent test (the outlet is shut off, then fixed and retested).",
+   "unit": "outlets",
+   "denominator": "water_outlets_tested",
+   "usage_notes": "The district's action level (10 ppb) is stricter than the federal 15 ppb level for water systems. Follow-up letters (follow_up = true in school_water_lead) record the corrective action and retest result.",
+   "breaks": "Point-in-time; see water_outlets_tested.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "water_outlets_above_action_sy",
+   "type": "Int64",
+   "description": "School year (sy) the water_outlets_above_action value is from."
+  },
+  {
+   "name": "water_outlets_tested",
+   "type": "float64",
+   "description": "Drinking water outlets tested for lead. Water outlets (hydration stations, fountains, faucets, food-prep and ice-maker outlets) sampled in the school's most recent lead-in-water test, summed over its buildings.",
+   "unit": "outlets",
+   "denominator": NaN,
+   "usage_notes": "Extracted from the district's water results letters. Schools sharing a building each get the building's figures. Results for each outlet are in school_water_lead.",
+   "breaks": "Point-in-time: the district retests each school every five years; most current letters are from 2025 and 2026. sy = school year of sampling.",
+   "source_key": "sdp_environmental"
+  },
+  {
+   "name": "water_outlets_tested_sy",
+   "type": "Int64",
+   "description": "School year (sy) the water_outlets_tested value is from."
+  }
+ ]
+}

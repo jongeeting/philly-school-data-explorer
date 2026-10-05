@@ -26,6 +26,7 @@ from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
 from .identity import build_identity, load_registry, validate, write_core
+from .marts import build_marts
 from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
 from .peers import build_peer_comparison, write_peer_comparison
@@ -33,6 +34,7 @@ from .scores import build_scores, write_scores
 from .sourcetable import build_source
 from .stage import write_staging
 from .telvue import catalog_videos
+from .validate import run_validation
 from .wayback import catalog_drive_links_on_archived_page, catalog_wayback
 
 PROTOTYPE_INPUT = ROOT / "prototype" / "data" / "school_years.csv"
@@ -302,6 +304,28 @@ def cmd_build_fca(a):
     print(f"  school_metric now {len(combined)}")
 
 
+def cmd_build_marts(a):
+    t = build_marts()
+    sy, prof = t["school_year"], t["school_profile"]
+    print(f"  school_year {len(sy)} rows x {len(sy.columns)} columns")
+    print(f"  school_profile {len(prof)} rows x {len(prof.columns)} columns")
+    print("  wrote schema/*.json and docs/DATA_DICTIONARY.md")
+
+
+def cmd_validate(a):
+    hard, recon = run_validation()
+    failed = [c for c in hard if not c["ok"]] + [c for c in recon if not c["ok"]]
+    for c in hard:
+        print(f"  {'ok  ' if c['ok'] else 'FAIL'} {c['check']}: {c['detail']}")
+    for c in recon:
+        print(
+            f"  {'ok  ' if c['ok'] else 'FAIL'} {c['check']}: r={c['r']:.3f} ratio={c['ratio']:.3f} (n={c['n']})"
+        )
+    print("  wrote docs/VALIDATION.md")
+    if failed:
+        raise SystemExit(f"{len(failed)} validation checks failed")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -453,6 +477,14 @@ def main():
 
     s = sub.add_parser("build-fca", help="facility condition assessments (2020 cycle)")
     s.set_defaults(fn=cmd_build_fca)
+
+    s = sub.add_parser("build-marts", help="wide tables, schema JSON, and the data dictionary")
+    s.set_defaults(fn=cmd_build_marts)
+
+    s = sub.add_parser(
+        "validate", help="hard checks and reconciliations; writes docs/VALIDATION.md"
+    )
+    s.set_defaults(fn=cmd_validate)
 
     s = sub.add_parser("build-asbestos", help="asbestos (AHERA) results from the reports")
     s.set_defaults(fn=cmd_build_asbestos)

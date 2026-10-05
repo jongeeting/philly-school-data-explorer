@@ -310,16 +310,25 @@ def collection_rows(d: pd.DataFrame, sy: int) -> pd.DataFrame:
             )
         )
     e_all, s_all = _sum(d, enr["all"])
-    e_idea, _ = _sum(d, enr["idea"])
-    e_504, _ = _sum(d, enr["section_504"])
+    e_idea, s_idea = _sum(d, enr["idea"])
+    e_504, s_504 = _sum(d, enr["section_504"])
+    wo = e_all - e_idea - e_504
+    wo_status = pd.Series("derived", index=wo.index)
+    for part in (s_504, s_idea, s_all):  # a missing or suppressed part makes the result so
+        wo_status = wo_status.where(part.isin(["reported", "partial"]), part)
+    wo_status = wo_status.where(wo.notna(), "not_reported")
+    # the parts can exceed the total after OCR's rounding or in a bad submission
+    negative = wo < 0
+    wo = wo.where(~negative)
+    wo_status = wo_status.where(~negative, "invalid_in_source")
     rows.append(
         pd.DataFrame(
             {
                 "nces": d.index,
                 "measure_id": "crdc_enrollment",
                 "student_group": "without_disabilities",
-                "value": (e_all - e_idea - e_504).values,
-                "status": s_all.values,
+                "value": wo.values,
+                "status": wo_status.values,
             }
         )
     )

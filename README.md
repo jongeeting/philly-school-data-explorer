@@ -61,7 +61,7 @@ Data foundation (details in [docs/DATA_MODEL.md](docs/DATA_MODEL.md)):
 - [x] **Geography:** catchments 2012-13 to 2024-25, assignment zones, population-weighted crosswalk, schools linked to City parcels (OPA) ([docs/GEOGRAPHY.md](docs/GEOGRAPHY.md))
 - [~] **Measures:** measure dictionary started (`registry/measures.csv`); `enrollment` 2014-15 to 2025-26, `catchment_flow` 2016-17 to 2025-26, and `school_metric` built with status codes ([docs/ENROLLMENT.md](docs/ENROLLMENT.md)); Future Ready test scores, growth, attendance, and graduation 2017-18 to 2024-25 and district PSSA/Keystone 2009-10 to 2024-25 ([docs/SCORES.md](docs/SCORES.md)); Star and attendance detail next
 - [~] **Flows and buildings:** catchment flows done; lead paint and drinking-water lead results per school ([docs/ENVIRONMENT.md](docs/ENVIRONMENT.md)); 2020 facility condition assessments ([docs/FACILITIES.md](docs/FACILITIES.md)); asbestos results next; facility plans, school events later
-- [ ] **Marts and dictionary:** wide tables, generated data dictionary, JSON schemas, tested example queries
+- [x] **Marts and dictionary:** wide tables (`marts/school_year`, `marts/school_profile`), generated [data dictionary](docs/DATA_DICTIONARY.md), `schema/*.json`, [validation report](docs/VALIDATION.md), tested [example queries](docs/queries/README.md)
 - [ ] **First release:** validation report, version tag, changelog, DOI
 
 Access layers (each reads the same released files):
