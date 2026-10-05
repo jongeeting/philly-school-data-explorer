@@ -364,3 +364,25 @@ def test_fca_report_parts_wrap_and_systems():
     ]
     assert r["systems"][0]["fci_pct"] == 108.99
     assert r["site"]["condition_score_pct"] == 76.53
+
+
+def test_asbestos_metric_adds_buildings_of_one_school():
+    import pandas as pd
+
+    from phillyschools.asbestos import asbestos_metric
+
+    rep = pd.DataFrame(
+        {
+            "school_id": ["sch_1", "sch_1", "sch_2, sch_3"],
+            "is_latest": [True, True, True],
+            "report_year": [2025, 2026, 2025],
+            "report_month": [11, 1, 5],
+            "acm_items": [100, 20, 50],
+            "acm_items_damaged": [3, 1, 0],
+        }
+    )
+    m = asbestos_metric(rep)
+    assert not m.duplicated(["school_id", "sy", "measure_id", "student_group"]).any()
+    one = m[m["school_id"] == "sch_1"].set_index("measure_id")["value"]
+    assert one["asbestos_items"] == 120 and one["asbestos_items_damaged"] == 4
+    assert set(m["school_id"]) == {"sch_1", "sch_2", "sch_3"}

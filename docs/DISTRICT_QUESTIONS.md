@@ -64,3 +64,5 @@ Open data gaps that someone at the district could close. Generated from [sources
    - Context: CRDC 2011-12 discipline counts for students with disabilities and English learners look under-reported (almost no repeat suspensions reported for IDEA students; IDEA suspension rate equals the non-disabled rate, unlike every later year)
 31. **Where are drinking water lead results for charter schools after 2019?** (GAP-063, low priority)
    - Context: Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders
+32. **Do 2023-2026 AHERA reports exist for the buildings whose latest posted report is from 2016 or 2019?** (GAP-065, low priority)
+   - Context: AHERA reports before 2023 use an older layout; the latest report for 18 buildings is from 2016 or 2019, and 6 reports could not be read

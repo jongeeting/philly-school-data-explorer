@@ -27,6 +27,7 @@ from .environmental import ahera_key, report_date
 from .envresults import match_name, pdf_text, school_index, site_corrections, water_site_name
 from .metrics import write_metric_part
 
+MIN_LOG_ROWS = 5  # fewer rows means the log was not read (older layouts)
 AHERA = RAW / "sdp_environmental" / "ahera"
 STATUS = r"Confirmed|Assumed|NAD|Non[\s-]?Suspect(?:\s+ACM)?"
 NUM = r"[\d,]*\.?\d+"
@@ -171,7 +172,7 @@ def build_asbestos() -> dict:
                 "report_month": mo or None,
                 "file": rel,
                 **info,
-                "status": "reported" if info["log_rows"] else "not_reported",
+                "status": "reported" if info["log_rows"] >= MIN_LOG_ROWS else "not_reported",
             }
         )
         if len(log):
@@ -211,22 +212,22 @@ ASBESTOS_MEASURES = {
 
 
 def asbestos_metric(rep: pd.DataFrame) -> pd.DataFrame:
-    """Per school: its building's most recent report (annexes have their own codes)."""
+    """Per school: the latest report of each of its buildings, added together.
+
+    A school with an annex or little school house has more than one building code; counts of
+    items add across buildings, and the school's year is its most recent report's."""
     latest = rep[rep["is_latest"] & rep["school_id"].notna()].copy()
+    latest["school_id"] = latest["school_id"].str.split(", ")
+    latest = latest.explode("school_id")
     latest["sy"] = [
         y + (1 if (m or 0) >= 7 else 0)
         for y, m in zip(latest["report_year"], latest["report_month"], strict=True)
     ]
-    out = latest.melt(
-        ["school_id", "sy"],
-        value_vars=list(ASBESTOS_MEASURES.values()),
-        var_name="col",
-        value_name="value",
+    agg = latest.groupby("school_id").agg(
+        sy=("sy", "max"), **{m: (c, "sum") for m, c in ASBESTOS_MEASURES.items()}
     )
-    out["measure_id"] = out["col"].map({v: k for k, v in ASBESTOS_MEASURES.items()})
-    return out.drop(columns="col").assign(
-        student_group="all", status="reported", source_id="sdp_environmental:ahera"
-    )
+    out = agg.reset_index().melt(["school_id", "sy"], var_name="measure_id", value_name="value")
+    return out.assign(student_group="all", status="reported", source_id="sdp_environmental:ahera")
 
 
 def write_asbestos(t: dict) -> pd.DataFrame:

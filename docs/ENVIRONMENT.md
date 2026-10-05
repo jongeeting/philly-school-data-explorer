@@ -23,3 +23,15 @@ One row per file in each building's lead-safe folder. For assessment files, the 
 
 - Files are linked by the school's street address in the master school lists, then by name; shared buildings link to every school in them. Twelve hand links are in `corrections/env_site_school.csv`. Annexes, field houses, and offices are kept with `site_folder` and no school.
 - Not read: two 2019 water reports covering many charter schools in one table, archived results, and the asbestos (AHERA) reports, which are being archived for later work.
+
+## Asbestos (AHERA) (`building_asbestos`, `building_asbestos_item`, mostly 2025 to 2026)
+
+`uv run psd build-asbestos` reads each building's most recent 6-month periodic surveillance and 3-year re-inspection. Since 2023 both use one template whose Appendix A is a room-by-room log: every material in every space, its status (confirmed, assumed, no asbestos detected, non-suspect), amount, and damaged amount, in square feet, linear feet, or each.
+
+- `building_asbestos`: one row per report with the building's ULCS code, inspection period, year built, and totals from the log: asbestos-containing items (confirmed or assumed), items with damage, and amounts by unit. Amounts are never added across units. `is_latest` marks the report that feeds `school_metric`.
+- `building_asbestos_item`: the confirmed and assumed rows of each building's latest report, with a material group (pipe and boiler insulation, floor tile and mastic, transite, plaster and surfacing, ceiling tile, caulk and sealants, other).
+- `school_metric`: `asbestos_items` and `asbestos_items_damaged`. A school with an annex or little school house has more than one building code; the counts add across its buildings (each building stays separate in `building_asbestos`).
+
+Read this as a record of managed materials, not a risk score. Asbestos left intact in good condition is legal and common in buildings of this age, so the item count tracks building size and age. Damage as recorded at inspection is the actionable figure; repairs show up in the next report.
+
+Limits: reports before 2023 (13 buildings' latest is from 2019, 5 from 2016) use an older layout and are read where the log parses; 12 buildings' newest report could not be downloaded (Drive served a confirmation page), so they use the previous one.
