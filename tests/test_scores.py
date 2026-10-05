@@ -196,3 +196,45 @@ def test_crdc_groups_are_disjoint_and_add_up():
     assert r.loc[("crdc_n_oss", "idea"), "value"] == 4
     assert r.loc[("crdc_n_oss", "all"), "status"] == "suppressed"  # a 504 cell is suppressed
     assert r.loc[("crdc_n_oss", "without_disabilities"), "value"] == 7
+
+
+@pytest.mark.parametrize(
+    "name, out",
+    [
+        ("7300-Hopkinson_11-2025_6-Month Report.pdf", (2025, 11)),
+        ("7300_Hopkinson_ES_2018_2019_3_Year_AHERA_Report.pdf", (2019, 0)),
+        ("2050-Powel_2021_3-Year.pdf", (2021, 0)),  # the building code is not a year
+        ("1290-Hamilton_8-20256-Month Report.pdf", (2025, 8)),
+    ],
+)
+def test_environmental_report_dates(name, out):
+    from phillyschools.environmental import report_date
+
+    assert report_date(name) == out
+
+
+def test_environmental_keeps_latest_per_building_and_type():
+    from phillyschools.environmental import select_latest
+
+    plan_dir = "ahera/Hopkinson, Francis/AHERA Management Plan Archive"
+    names = [
+        ("7300-Hopkinson_5-2025_6-Month Report.pdf", plan_dir),
+        ("7300-Hopkinson_11-2025_6-Month Report.pdf", plan_dir),
+        ("7301-Hopkinson LSH_5-2025_6-Month Report.pdf", plan_dir),
+        ("7300-Hopkinson_2023_3-Year.pdf", plan_dir),
+        ("16 7300 Francis Hopkinson ES.pdf", plan_dir),
+        ("2026-01-20 7300 Bulk PLM Results", "ahera/Hopkinson, Francis/Bulk Sampling"),
+        ("Results 2025.pdf", "water/Search by Site/Elementary/Hopkinson"),
+        ("Results 2021.pdf", "water/Search by Site/Elementary/Hopkinson/Archives"),
+    ]
+    rows = [
+        {"source_key": "sdp_environmental", "url": n, "filename": n, "subdir": d} for n, d in names
+    ]
+    got = {r["filename"] for r in select_latest(rows)}
+    assert got == {
+        "7300-Hopkinson_11-2025_6-Month Report.pdf",
+        "7301-Hopkinson LSH_5-2025_6-Month Report.pdf",
+        "7300-Hopkinson_2023_3-Year.pdf",
+        "16 7300 Francis Hopkinson ES.pdf",
+        "Results 2025.pdf",
+    }

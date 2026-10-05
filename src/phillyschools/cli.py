@@ -16,8 +16,9 @@ from .discipline import build_discipline, write_discipline
 from .discover import add_file, discover
 from .drive import catalog_drive
 from .enrollment import build_enrollment, validate_enrollment, write_enrollment
+from .environmental import latest_environmental
 from .fastfacts import build_fast_facts, write_fast_facts
-from .fetch import fetch, fetch_one_snapshot, head_sizes, plan
+from .fetch import fetch, fetch_one_snapshot, head_sizes, plan, read_downloads
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
@@ -109,6 +110,20 @@ def cmd_fetch(a):
         return
     new = fetch(todo)
     print(f"downloaded {len(new)} files; hashes in sources/downloads.csv")
+
+
+def cmd_fetch_environmental_latest(a):
+    done = {r["url"] for r in read_downloads()}
+    todo = [r for r in latest_environmental() if r["url"] not in done]
+    if a.limit:
+        todo = todo[: a.limit]
+    if a.dry_run:
+        sized = head_sizes(todo)
+        known = [n for _, n in sized if n]
+        print(f"{len(todo)} files; {len(known)} report a size, totaling {_human(sum(known))}")
+        return
+    new = fetch(todo)
+    print(f"downloaded {len(new)} of {len(todo)} files; hashes in sources/downloads.csv")
 
 
 def cmd_snapshot(a):
@@ -338,6 +353,14 @@ def main():
     s.add_argument("--exclude", help="regex the file name must not match")
     s.add_argument("--limit", type=int, help="at most this many files")
     s.set_defaults(fn=cmd_fetch)
+
+    s = sub.add_parser(
+        "fetch-environmental-latest",
+        help="download the most recent environmental report per school and type",
+    )
+    s.add_argument("--dry-run", action="store_true", help="count files and sizes only")
+    s.add_argument("--limit", type=int, help="at most this many files")
+    s.set_defaults(fn=cmd_fetch_environmental_latest)
 
     s = sub.add_parser("snapshot", help="archive a web page (no file to download)")
     s.add_argument("source")
