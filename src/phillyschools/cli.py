@@ -20,6 +20,7 @@ from .geography import build_geography, write_geography
 from .identity import build_identity, load_registry, validate, write_core
 from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
+from .peers import build_peer_comparison, write_peer_comparison
 from .scores import build_scores, write_scores
 from .sourcetable import build_source
 from .stage import write_staging
@@ -202,6 +203,14 @@ def cmd_build_fast_facts(a):
     print(m.groupby(["sy", "status"]).size().unstack(fill_value=0).to_string())
 
 
+def cmd_peer_comparison(a):
+    df = build_peer_comparison()
+    write_peer_comparison(df)
+    d = df[df["status"] == "derived"]
+    print(f"  {len(d)} comparisons; {int((df['status'] == 'not_applicable').sum())} not applicable")
+    print(d.groupby(["window", "measure_id", "position"]).size().unstack(fill_value=0).to_string())
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -318,6 +327,9 @@ def main():
         "build-fast-facts", help="state School Fast Facts demographics and attributes"
     )
     s.set_defaults(fn=cmd_build_fast_facts)
+
+    s = sub.add_parser("peer-comparison", help="compare schools with their closest-poverty peers")
+    s.set_defaults(fn=cmd_peer_comparison)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)
