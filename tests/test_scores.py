@@ -98,3 +98,19 @@ def test_fast_facts_enrollment_matches_district_counts():
     assert len(x) > 1000 and x["value"].corr(x["count"]) > 0.99
     attr = pd.read_parquet(core / "school_state_attr.parquet")
     assert set(attr["title_i"].dropna()) <= {"Yes", "No"}
+
+
+@pytest.mark.parametrize(
+    "cat,grp,out",
+    [
+        ("All Students", "All Students", "all"),
+        ("Grade Level", "00", "grade_K"),
+        ("Grade Level", "9", "grade_09"),
+        ("Race/Ethnicity", "Hispanic/Latino", "hispanic"),
+        ("Gender", "Non-Binary", "non_binary"),
+    ],
+)
+def test_attendance_groups(cat, grp, out):
+    from phillyschools.attendance import _group
+
+    assert _group(cat, grp) == out

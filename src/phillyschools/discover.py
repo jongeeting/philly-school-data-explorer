@@ -125,6 +125,7 @@ PATH_HINTS = {
     "sdp_pses": ["Survey", "PSES"],
     "sdp_board_wordpress": ["schoolboard/wp-content/uploads"],
     "sdp_catchment_retention": ["School_Catchment_Details/", "School_Catchment_Counts/"],
+    "sdp_school_performance": ["School_Performance/"],
 }
 
 

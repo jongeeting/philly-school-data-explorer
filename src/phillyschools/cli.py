@@ -9,6 +9,7 @@ import pandas as pd
 from . import ROOT, STAGING
 from .acs import build_area_context, write_area_context
 from .assessment import build_assessments, write_assessments
+from .attendance import build_attendance, write_attendance
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
 from .discover import add_file, discover
 from .drive import catalog_drive
@@ -219,6 +220,22 @@ def cmd_build_area_context(a):
     print(df.groupby(["unit_type", "status"]).size().unstack(fill_value=0).to_string())
 
 
+def cmd_build_attendance(a):
+    t = build_attendance()
+    combined = write_attendance(t)
+    m = t["metric"]
+    print(
+        f"  sdp_attendance rows {len(m)}; school_metric now {len(combined)}; unmapped {len(t['issues'])}"
+    )
+    print(
+        m[m["student_group"] == "all"]
+        .groupby(["sy", "measure_id"])
+        .size()
+        .unstack(fill_value=0)
+        .to_string()
+    )
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -341,6 +358,9 @@ def main():
 
     s = sub.add_parser("build-area-context", help="ACS neighborhood context by tract and geo unit")
     s.set_defaults(fn=cmd_build_area_context)
+
+    s = sub.add_parser("build-attendance", help="district attendance detail, 2013-14 on")
+    s.set_defaults(fn=cmd_build_attendance)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)
