@@ -8,4 +8,14 @@
 
 **How much weight it bears.** Across non-overlapping periods (2021-23 vs 2023-25), a school's difference from its peers repeats at r = 0.60 for ELA proficiency and only 0.34 (ELA) and 0.45 (math) for growth. Treat positions as descriptive, prefer the averaged window, and never sort schools by them or fold them into a score.
 
-**Not yet.** The poverty basis is the school's own students. Neighborhood context (census poverty, income, and adult education of the catchment) can change the picture for schools whose students differ from their neighborhood; it waits on ACS data (see DATA_GAPS.md).
+**Three poverty bases, side by side** (`basis` column):
+
+| Basis | What it measures | Covers |
+| --- | --- | --- |
+| `school_econ_disadvantaged` | PDE's economically disadvantaged share of the school's own students | all schools with Fast Facts |
+| `catchment_child_poverty` | ACS 2020-2024 child poverty in the school's own catchment | neighborhood schools only |
+| `student_neighborhoods_child_poverty` | enrollment-weighted ACS child poverty of the catchments where the school's students live (catchment flows) | district, charter, and citywide schools, 2016-17 on |
+
+What the bases show (2024-25, ELA proficiency, three-year averages): student poverty and neighborhood child poverty correlate at only 0.54 to 0.59; proficiency tracks student poverty (r = -0.80) more than neighborhood poverty (-0.57 to -0.61); and a school's position is the same on the student and student-neighborhood bases for only 53% of schools. Show the bases together rather than picking one. Example: McCall and Greenberg are above their peer range on every basis; John S. Jenks is above on student poverty but within its range once its neighborhood is taken into account.
+
+Neighborhood figures come from `core/area_context` (ACS 2020-2024, keyless Summary File; tract values with margins of error, rolled up through the population-weighted crosswalk). One ACS period is applied to every year for now.

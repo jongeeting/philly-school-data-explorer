@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 import pandas as pd
 
 from . import ROOT, STAGING
+from .acs import build_area_context, write_area_context
 from .assessment import build_assessments, write_assessments
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
 from .discover import add_file, discover
@@ -211,6 +212,13 @@ def cmd_peer_comparison(a):
     print(d.groupby(["window", "measure_id", "position"]).size().unstack(fill_value=0).to_string())
 
 
+def cmd_build_area_context(a):
+    df = build_area_context()
+    write_area_context(df)
+    print(f"  area_context {len(df)} rows")
+    print(df.groupby(["unit_type", "status"]).size().unstack(fill_value=0).to_string())
+
+
 def cmd_stage(a):
     out = write_staging()
     print(out.groupby("year").size().to_string())
@@ -330,6 +338,9 @@ def main():
 
     s = sub.add_parser("peer-comparison", help="compare schools with their closest-poverty peers")
     s.set_defaults(fn=cmd_peer_comparison)
+
+    s = sub.add_parser("build-area-context", help="ACS neighborhood context by tract and geo unit")
+    s.set_defaults(fn=cmd_build_area_context)
 
     s = sub.add_parser("stage", help="stage raw SDP master lists into staging/")
     s.set_defaults(fn=cmd_stage)

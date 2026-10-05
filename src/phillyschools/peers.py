@@ -6,10 +6,16 @@ Method `poverty_peers_k15_v1` (derived; no ranks, no composite score):
   - The comparison reports the school's value, the peers' median and middle half (25th to
     75th percentile), the difference from the peer median, and a plain position: above the
     peer range, within it, or below it.
-  - Poverty basis (`basis`): `school_econ_disadvantaged` = PDE's economically disadvantaged
-    share of the school's own students (same year, same agency as the scores). The design
-    leaves room for a neighborhood basis (census poverty of the school's catchment) once ACS
-    data is loaded.
+  - Poverty basis (`basis`), three versions side by side:
+      school_econ_disadvantaged             PDE's economically disadvantaged share of the
+                                            school's own students (same year and agency)
+      catchment_child_poverty               ACS 2020-2024 child poverty of the school's own
+                                            catchment (neighborhood schools only)
+      student_neighborhoods_child_poverty   enrollment-weighted ACS child poverty of the
+                                            catchments where the school's students live
+                                            (catchment flows; covers charter and citywide
+                                            schools; 2016-17 on)
+    ACS covers one period (2020-2024) and is applied to every year.
   - Selective-admission schools (criteria-based, citywide with criteria, special admit) are
     neither compared nor used as peers: their results reflect who is admitted. Alternative,
     virtual, and transition programs are left out for the same reason.
@@ -69,10 +75,88 @@ def poverty_basis() -> pd.DataFrame:
     return p[["school_id", "sy", "value"]].rename(columns={"value": "poverty_pct"})
 
 
+def _catchment_child_poverty() -> pd.DataFrame:
+    """Child poverty (ACS 2020-2024) of every catchment, with its school, level, and year."""
+    ac = pd.read_parquet(CORE / "area_context.parquet")
+    ac = ac[(ac["measure_id"] == "acs_pct_children_in_poverty") & (ac["status"] == "derived")]
+    c = pd.read_parquet(CORE / "catchment.parquet")[["catchment_id", "school_id", "level", "sy"]]
+    return c.merge(ac[["unit_id", "value"]], left_on="catchment_id", right_on="unit_id")[
+        ["school_id", "level", "sy", "value"]
+    ].rename(columns={"sy": "vintage", "value": "child_poverty"})
+
+
+def catchment_basis(ctx: pd.DataFrame) -> pd.DataFrame:
+    """Child poverty of the school's own catchment (neighborhood schools only).
+
+    K-8 schools use their elementary catchment (middle if none); high schools their high
+    school catchment. Boundaries: that year's map, or the latest published for later years.
+    """
+    cp = _catchment_child_poverty()
+    latest = int(cp["vintage"].max())
+    pref = {"k8": ["ES", "MS"], "high": ["HS"], "mixed": ["MS", "HS"]}
+    rows = []
+    look = cp.set_index(["school_id", "vintage", "level"])["child_poverty"]
+    for r in ctx.dropna(subset=["band"]).itertuples():
+        v = min(int(r.sy), latest)
+        for level in pref[r.band]:
+            key = (r.school_id, v, level)
+            if key in look.index:
+                rows.append({"school_id": r.school_id, "sy": r.sy, "poverty_pct": look[key]})
+                break
+    return pd.DataFrame(rows, columns=["school_id", "sy", "poverty_pct"])
+
+
+def student_neighborhoods_basis() -> pd.DataFrame:
+    """Enrollment-weighted child poverty of the catchments where a school's students live.
+
+    Uses catchment flows (2016-17 on); a K-8 or 6-12 catchment school's ES/MS/HS areas are
+    weighted by grade span, as in the neighborhood rollup. Students with unplaced addresses
+    are left out of the average.
+    """
+    from .neighborhoods import LEVEL_WEIGHTS
+
+    cp = _catchment_child_poverty()
+    latest = int(cp["vintage"].max())
+    levels = cp.groupby(["school_id", "vintage"])["level"].apply(lambda x: tuple(sorted(set(x))))
+    look = cp.set_index(["school_id", "vintage", "level"])["child_poverty"]
+    combined = {}
+    for (sid, v), lv in levels.items():
+        w = LEVEL_WEIGHTS.get(lv)
+        if w:
+            combined[(sid, v)] = sum(look[(sid, v, level)] * wt for level, wt in w.items())
+    f = pd.read_parquet(CORE / "catchment_flow.parquet")
+    f = f[(f["catchment_status"] == "reported") & f["count"].notna()].copy()
+    f["vintage"] = f["sy"].clip(upper=latest)
+    f["child_poverty"] = [
+        combined.get((c, v)) for c, v in zip(f["catchment_school_id"], f["vintage"], strict=True)
+    ]
+    f = f.dropna(subset=["child_poverty"])
+    f["w"] = f["count"] * f["child_poverty"]
+    g = (
+        f.groupby(["enrolled_school_id", "sy"])
+        .agg(w=("w", "sum"), n=("count", "sum"))
+        .reset_index()
+    )
+    g = g[g["n"] >= 20]
+    g["poverty_pct"] = (g["w"] / g["n"]).round(1)
+    return g.rename(columns={"enrolled_school_id": "school_id"})[["school_id", "sy", "poverty_pct"]]
+
+
 def compare(values: pd.DataFrame, k: int = K) -> pd.DataFrame:
     """values: school_id, band, poverty_pct, value (one year, one measure, one window)."""
     rows = []
     for band, g in values.groupby("band"):
+        missing = g[g["poverty_pct"].isna()]
+        for r in missing.itertuples():
+            rows.append(
+                {
+                    "school_id": r.school_id,
+                    "band": band,
+                    "value": r.value,
+                    "poverty_pct": None,
+                    "exclusion": "no poverty figure on this basis",
+                }
+            )
         g = g.dropna(subset=["poverty_pct", "value"]).reset_index(drop=True)
         for i, r in g.iterrows():
             others = g.drop(index=i)
@@ -157,28 +241,38 @@ def _compare_all(base: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+BASES = {
+    "school_econ_disadvantaged": "pde_future_ready + pde_fast_facts",
+    "catchment_child_poverty": "pde_future_ready + census_acs5 + sdp_catchments",
+    "student_neighborhoods_child_poverty": "pde_future_ready + census_acs5 + sdp_catchment_retention",
+}
+
+
 def build_peer_comparison() -> pd.DataFrame:
-    """One-year and three-year-average comparisons (window column)."""
+    """Comparisons for each poverty basis and window (one year, three-year average)."""
     m = pd.read_parquet(CORE / "school_metric.parquet")
     ctx = school_context()
-    pov = poverty_basis()
     scores = m[
         m["measure_id"].isin(MEASURES)
         & (m["student_group"] == "all")
         & m["status"].isin(["reported", "blended"])
     ]
-    one = scores.merge(pov, on=["school_id", "sy"], how="left")[
-        ["school_id", "sy", "measure_id", "value", "poverty_pct"]
-    ]
+    bases = {
+        "school_econ_disadvantaged": poverty_basis(),
+        "catchment_child_poverty": catchment_basis(ctx),
+        "student_neighborhoods_child_poverty": student_neighborhoods_basis(),
+    }
     frames = []
-    for window, vals in [("1 year", one), ("3-year average", pooled(one))]:
-        df = _compare_all(vals.merge(ctx, on=["school_id", "sy"], how="left"))
-        df["window"] = window
-        frames.append(df)
+    for basis, pov in bases.items():
+        one = scores.merge(pov, on=["school_id", "sy"], how="left")[
+            ["school_id", "sy", "measure_id", "value", "poverty_pct"]
+        ]
+        for window, vals in [("1 year", one), ("3-year average", pooled(one))]:
+            df = _compare_all(vals.merge(ctx, on=["school_id", "sy"], how="left"))
+            df["window"], df["basis"], df["source_id"] = window, basis, BASES[basis]
+            frames.append(df)
     out = pd.concat(frames, ignore_index=True)
-    out["basis"] = "school_econ_disadvantaged"
     out["method"] = METHOD
-    out["source_id"] = "pde_future_ready + pde_fast_facts"
     return out
 
 

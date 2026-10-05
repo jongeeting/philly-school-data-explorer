@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**41 unresolved** of 51 tracked (11 high priority).
+**41 unresolved** of 53 tracked (11 high priority).
 
 **Kinds of gap**
 
@@ -43,8 +43,10 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-031 | Catchment retention (students by catchment and school, SY 2016-17 on) is aggregated by catchment, not neighborhood, and cannot show where students went after the 2013 closures *(No student-level data is public (FERPA))* | `not-collected-by-district` | medium | open | district | Derive neighborhood figures by overlaying catchments on neighborhoods; use Board documents and 2012-13/2013-14 catchments for 2013 |
 | GAP-034 | Catchments for SY 2025-26 and 2026-27 are not published (latest is 2024-25) | `not-collected-by-district` | medium | open | district | Watch for the next release; ask the district |
 | GAP-035 | Council districts, state legislative districts, wards, ZIP codes, and police districts are not yet in geo_unit | `not-yet-ingested` | medium | open | us | Add from City and state publishers; same block weights |
-| GAP-036 | ACS neighborhood context (income, education, homeownership) not loaded; the Census API needs a free key | `not-yet-ingested` | medium | open | us | Load ACS 5-year tables from the keyless Summary File (or the API with a free key); store any key as an env var and GitHub secret, never in recorded URLs |
+| GAP-036 | ACS neighborhood context (income, education, homeownership) not loaded; the Census API needs a free key *(ACS 2020-2024 loaded keyless from the table-based Summary File into area_context 2026-10-04)* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables from the keyless Summary File (or the API with a free key); store any key as an env var and GitHub secret, never in recorded URLs |
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | us | Decide (OpenDataPhilly set is the default) |
+| GAP-052 | Only one ACS period (2020-2024) is loaded and applied to every school year; earlier years (for example 2015-2019) would fit pre-pandemic comparisons better | `not-yet-ingested` | low | open | us | Load the 2015-2019 ACS 5-year tables (2010 tract boundaries need their own crosswalk) |
+| GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error | `not-yet-ingested` | low | open | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |
 
 ## Measures and facts
 
@@ -63,7 +65,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-048 | District grades 3-8 proficiency fell about 8 points citywide between 2010-11 and 2011-12 (math 59.1% to 50.9%); the cause is not documented in the data files | `unknown` | medium | open | district | Document the cause from district or state sources before charting across it |
 | GAP-049 | PDE ESSA school designation codes DFLT and ACSI are not defined in the Fast Facts file (CSI, TSI, and ATSI are the federal categories); 2020-21 shows only DFLT | `unknown` | medium | open | state | Find PDE's code definitions and record them in the dictionary |
 | GAP-050 | PDE's economically disadvantaged share for Philadelphia schools rises from a median of 69.5% (2017-18) to 84.9% (2024-25); the files do not say whether the method changed | `unknown` | medium | open | state | Check PDE's definition history (direct certification, CEP) before trending |
-| GAP-051 | Peer comparison uses only the poverty of a school's own students; a neighborhood basis (census poverty, income, and adult education of the catchment) is not built because ACS data is not loaded *(Crosswalk ready; see GAP-036)* | `not-yet-ingested` | medium | open | us | Load ACS 5-year tables (keyless Summary File or API with a key), push through geo_xwalk, add basis catchment_census to peer comparison |
+| GAP-051 | Peer comparison uses only the poverty of a school's own students; a neighborhood basis (census poverty, income, and adult education of the catchment) is not built because ACS data is not loaded *(Catchment and student-neighborhood bases added 2026-10-04 (docs/PEERS.md))* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables (keyless Summary File or API with a key), push through geo_xwalk, add basis catchment_census to peer comparison |
 | GAP-043 | 2019-20 enrollment keys schools by SRC ID; Camelot Academy's SRC ID does not map to a ULCS, so its 2019-20 enrollment is unassigned *(Resolved 2026-10-04: SRC IDs fall back to other years when a year's list omits a program)* | `not-collected-by-district` | low | closed | us | Ask the district or match by name with a correction row |
 | GAP-045 | Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned | `not-collected-by-district` | low | open | district | Ask the district for its ULCS code |
 

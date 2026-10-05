@@ -42,7 +42,8 @@ uv run psd build-enrollment      # enrollment, catchment flows, school metrics
 uv run psd build-scores          # Future Ready scores, growth, attendance, graduation
 uv run psd build-assessments     # district PSSA and Keystone results, 2009-10 on
 uv run psd build-fast-facts      # state demographics and school attributes
-uv run psd peer-comparison       # each school vs. its closest-poverty peers (derived)
+uv run psd build-area-context    # ACS neighborhood context by tract, catchment, zone, neighborhood
+uv run psd peer-comparison       # each school vs. its closest-poverty peers, three poverty bases (derived)
 uv run pytest
 ```
 
