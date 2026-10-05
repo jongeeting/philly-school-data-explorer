@@ -11,24 +11,26 @@
 
 ## Federal Civil Rights Data Collection (CRDC)
 
-`uv run psd build-crdc` adds the U.S. Department of Education's school-level discipline data (district and charter) for 2015-16, 2017-18, 2020-21, and 2021-22: students with one or more out-of-school suspensions, in-school suspensions, expulsions, referrals to law enforcement, and school-related arrests, with enrollment for each group. Unlike the district files, it breaks discipline out by disability (IDEA and Section 504) and English learner status, which completes the paired release.
+`uv run psd build-crdc` adds the U.S. Department of Education's school-level discipline data (district and charter) for 2011-12, 2013-14, 2015-16, 2017-18, 2020-21, and 2021-22: students with one or more out-of-school suspensions, in-school suspensions, expulsions, referrals to law enforcement, and school-related arrests, with enrollment for each group. Unlike the district files, it breaks discipline out by disability (IDEA and Section 504) and English learner status, which completes the paired release.
 
-How groups are built: the CRDC reports students without disabilities, IDEA students, and Section 504-only students separately and disjointly, so all-student totals add the three; race groups add without-disability and IDEA students (504 counts are not broken out by race). In every collection the race groups plus Section 504 add exactly to the total. OCR rounds counts and suppresses small cells; joined by NCES ID.
+How groups are built: the CRDC reports students without disabilities, IDEA students, and Section 504-only students separately and disjointly, so all-student totals add the three; race groups add without-disability and IDEA students (504 counts are not broken out by race). In every collection the race groups plus Section 504 add exactly to the total. OCR rounds counts and suppresses small cells; joined by NCES ID. 2011-12 and 2013-14 come from Excel workbooks; 2011-12 uses older variable names (one workbook per table, small cells written as "<=2"), translated to the modern names.
 
-Checks: for district schools the CRDC and district suspension counts agree school by school (r = 0.994 to 1.000), though CRDC totals run lower in some years (6% in 2015-16, 14% in 2017-18, about equal in 2021-22), so the two sources use somewhat different counting rules.
+Checks: for district schools the CRDC and district suspension counts agree school by school (r = 0.994 to 1.000 from 2015-16; 0.955 in 2013-14, with totals within 5%), though CRDC totals run lower in some years (6% in 2015-16, 14% in 2017-18, about equal in 2021-22), so the two sources use somewhat different counting rules.
 
 Facts (share of students with an out-of-school suspension):
 
-| | 2015-16 | 2017-18 | 2021-22 |
-| --- | --- | --- | --- |
-| All students | 12.4% | 8.7% | 6.3% |
-| IDEA (disability) | 19.6% | 14.2% | 9.1% |
-| Section 504 | 12.1% | 8.9% | 7.1% |
-| Without disabilities | 11.2% | 7.7% | 7.1% |
-| English learners | 7.9% | 4.3% | 3.4% |
-| Black | 16.8% | 12.5% | 8.7% |
-| White | 4.7% | 2.6% | 2.6% |
+| | 2011-12 | 2013-14 | 2015-16 | 2017-18 | 2021-22 |
+| --- | --- | --- | --- | --- | --- |
+| All students | 11.3% | 12.2% | 12.4% | 8.7% | 6.3% |
+| IDEA (disability) | 11.5%* | 16.9% | 19.6% | 14.2% | 9.1% |
+| Section 504 | 2.2%* | 4.7% | 12.1% | 8.9% | 7.1% |
+| Without disabilities | 11.6% | 11.8% | 11.2% | 7.7% | 7.1% |
+| English learners | 2.8%* | 9.8% | 7.9% | 4.3% | 3.4% |
+| Black | 14.4% | 17.8% | 16.8% | 12.5% | 8.7% |
+| White | 6.0% | 6.4% | 4.7% | 2.6% | 2.6% |
 
-Referrals to law enforcement fell from 6,834 students (35.6 per 1,000) in 2015-16 to 3,844 (21.6 per 1,000) in 2021-22; school-related arrests from 407 to 189; expulsions from 367 to 33. In 2021-22, referrals ran 37.7 per 1,000 for IDEA students, 29.4 for Black students, and 9.7 for White students. 2020-21 was mostly virtual and is near zero.
+\* Looks under-reported in the source: in 2011-12 the district reported almost no repeat suspensions for students with disabilities, so the IDEA rate equals the rate for other students, unlike every later collection. Use the all-student and race figures for 2011-12; treat the disability and English learner figures as a floor.
 
-CRDC usage agreement: never link these data with individually identifiable data. 2011-12 and 2013-14 collections are archived but not loaded.
+Referrals to law enforcement fell from 6,834 students (35.6 per 1,000) in 2015-16 to 3,844 (21.6 per 1,000) in 2021-22; school-related arrests from 407 to 189; expulsions from 367 to 33. Earlier collections are not comparable on referrals: 2013-14 reports only 94 referrals but 1,357 arrests (arrests are normally a subset of referrals), and 2011-12 reports 1,258 referrals and 1,089 arrests. These look like reporting differences, not real changes. In 2021-22, referrals ran 37.7 per 1,000 for IDEA students, 29.4 for Black students, and 9.7 for White students. 2020-21 was mostly virtual and is near zero.
+
+CRDC usage agreement: never link these data with individually identifiable data.

@@ -147,6 +147,26 @@ def test_incident_frames_accept_each_archive_header_style():
     )
 
 
+@pytest.mark.parametrize(
+    "col, action, out",
+    [
+        ("M_BLA_7_MULT_SUS_NO_DIS", "MULTOOS", "SCH_DISCWODIS_MULTOOS_BL_M"),
+        ("F_TOT_7_SINGLE_SUS_NO_DIS", "SINGOOS", "TOT_DISCWODIS_SINGOOS_F"),
+        ("M_2_OR_MORE_7_LAW_DIS", "REF", "SCH_DISCWDIS_REF_IDEA_TR_M"),
+        ("F_TOT_IDEA_7_IN_SCH_SUS_DIS", "ISS", "TOT_DISCWDIS_ISS_IDEA_F"),
+        ("M_504_7_EXP_SERV_DIS", "EXPWE", "SCH_DISCWDIS_EXPWE_504_M"),
+        ("F_HI_PAC_7_ENROL", None, "SCH_ENR_HP_F"),
+        ("M_DIS_IDEA_7_ENROL", None, "SCH_ENR_IDEA_M"),
+        ("M_TOT_7_ENROL", None, "TOT_ENR_M"),
+        ("Incomplete", None, None),
+    ],
+)
+def test_crdc_2011_12_names_translate(col, action, out):
+    from phillyschools.crdc import _rename_2012
+
+    assert _rename_2012(col, action) == out
+
+
 def test_crdc_groups_are_disjoint_and_add_up():
     from phillyschools.crdc import collection_rows
 

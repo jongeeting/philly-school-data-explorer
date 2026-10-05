@@ -22,6 +22,7 @@ KINDS = {
     "not-collected-by-district": "the publisher does not collect or publish it, or changed it",
     "not-public": "exists or likely exists, but is not public",
     "not-yet-ingested": "public, but we have not captured or loaded it yet",
+    "invalid-in-source": "published, but the published values look wrong or incomplete",
     "legal": "terms or permission issue",
     "decision": "needs a project decision",
     "unknown": "we do not know yet",
