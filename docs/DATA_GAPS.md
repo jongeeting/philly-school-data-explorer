@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**40 unresolved** of 54 tracked (11 high priority).
+**44 unresolved** of 58 tracked (12 high priority).
 
 **Kinds of gap**
 
@@ -56,6 +56,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-016 | Prototype score files (PDE Future Ready 2017-18 to 2024-25, School Fast Facts) are not archived here; prototype scripts cannot rerun *(Archived and loaded 2026-10-04: Future Ready 2017-18 to 2024-25 and School Fast Facts (docs/SCORES.md))* | `not-yet-ingested` | high | closed | us | Add PDE sources to the file catalog and archive with hashes |
 | GAP-018 | Charter coverage is uneven: district PSSA, attendance, and employee files exclude charters; SPREE gives charters improvement labels only in 2024-25 | `not-collected-by-district` | high | open | state | Use PDE Future Ready for cross-sector measures; label sector coverage on every measure |
 | GAP-019 | Measure dictionary and method breaks not written (attendance renamed 'persistent' in 2021-22; framework changes) *(registry/measures.csv has 36 measures (enrollment, flows, neighborhood rollup, Future Ready); district PSSA, Star, SPREE next)* | `not-yet-ingested` | high | in-progress | us | Phase 4 of the data model |
+| GAP-055 | District suspension data has no disability (IEP) or English learner groups, so the paired 'suspension disparities by race and disability' release cannot be built from public files | `not-collected-by-district` | high | open | district | Ask the district; or use the federal Civil Rights Data Collection (school-level discipline by disability, every two years) |
 | GAP-015 | Catchment retention (flows) not ingested; roughly 16,000 students in cyber and out-of-city charters appear only in flows *(catchment_flow built 2026-10-04 with 50 placeholder schools (cyber, out-of-city charter, programs, non-public special education))* | `not-yet-ingested` | medium | closed | us | Add placeholder school records for out-of-system destinations so flows sum |
 | GAP-017 | No 2020 state test results (state file repeats 2019); 2021 low participation and no growth scores; science waived in 2025 *(Handled with statuses: 2019-20 tests carried_forward, 2024-25 science waived; method breaks recorded in registry/measures.csv)* | `not-collected-by-district` | medium | in-progress | state | Record as measure breaks with status codes; never interpolate |
 | GAP-020 | Student groups under 20 are suppressed at source; enrollment files for 2014-15 to 2018-19 were reposted Aug 2025 under new suppression rules | `not-collected-by-district` | medium | open | district | Keep status codes; archive both versions of reposted files |
@@ -66,9 +67,12 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-049 | PDE ESSA school designation codes DFLT and ACSI are not defined in the Fast Facts file (CSI, TSI, and ATSI are the federal categories); 2020-21 shows only DFLT | `unknown` | medium | open | state | Find PDE's code definitions and record them in the dictionary |
 | GAP-050 | PDE's economically disadvantaged share for Philadelphia schools rises from a median of 69.5% (2017-18) to 84.9% (2024-25); the files do not say whether the method changed | `unknown` | medium | open | state | Check PDE's definition history (direct certification, CEP) before trending |
 | GAP-051 | Peer comparison uses only the poverty of a school's own students; a neighborhood basis (census poverty, income, and adult education of the catchment) is not built because ACS data is not loaded *(Catchment and student-neighborhood bases added 2026-10-04 (docs/PEERS.md))* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables (keyless Summary File or API with a key), push through geo_xwalk, add basis catchment_census to peer comparison |
+| GAP-056 | Serious incidents for 2012-13 total 15,770, 2.4 times the next year (6,579), with no explanation in the files | `unknown` | medium | open | district | Ask the district what changed in reporting between 2012-13 and 2013-14 |
 | GAP-043 | 2019-20 enrollment keys schools by SRC ID; Camelot Academy's SRC ID does not map to a ULCS, so its 2019-20 enrollment is unassigned *(Resolved 2026-10-04: SRC IDs fall back to other years when a year's list omits a program)* | `not-collected-by-district` | low | closed | us | Ask the district or match by name with a correction row |
 | GAP-045 | Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned | `not-collected-by-district` | low | open | district | Ask the district for its ULCS code |
 | GAP-054 | PDE's 2017-18 School Fast Facts leaves the economically disadvantaged share blank ('- -') for all 217 district schools; charters are reported *(Census-based peer bases cover 2017-18)* | `not-collected-by-district` | low | open | state | Use the district's CEP rate or census bases for that year; ask PDE whether a corrected file exists |
+| GAP-057 | Serious incident categories changed in 2016-17 (fine-grained types before, grouped categories after); no published crosswalk between the schemes | `not-collected-by-district` | low | open | district | Ask the district for the mapping between old types and new categories |
+| GAP-058 | The current serious incident details file (Serious_Incident_Details_School) failed to download; the archived details file is incident-level and was not loaded | `not-yet-ingested` | low | open | us | Retry the download; review the details for privacy before loading anything beyond counts |
 
 ## District operations and buildings
 

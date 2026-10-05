@@ -114,3 +114,34 @@ def test_attendance_groups(cat, grp, out):
     from phillyschools.attendance import _group
 
     assert _group(cat, grp) == out
+
+
+def test_incident_frames_accept_each_archive_header_style():
+    from phillyschools.discipline import _incident_frame
+
+    old = pd.DataFrame(
+        {
+            "ULCS_NO": ["6400"],
+            "SCHOOL_YEAR": ["2012-2013"],
+            "INCIDENT_TYPE": ["BULLYING"],
+            "INCIDENT_COUNT": ["0"],
+            "SCHOOL_ID": ["640"],
+        }
+    )
+    new = pd.DataFrame(
+        {
+            "School Year": ["2024-2025"],
+            "Sector": ["District"],
+            "ULCS Code": ["1010"],
+            "School Name": ["x"],
+            "Incident Type": ["Assaults"],
+            "# of Incidents": ["3"],
+        }
+    )
+    a, b = _incident_frame(old), _incident_frame(new)
+    assert a.loc[0, "sy"] == 2013 and a.loc[0, "ulcs"] == "6400" and a.loc[0, "raw"] == "0"
+    assert (
+        b.loc[0, "sy"] == 2025
+        and b.loc[0, "incident_type"] == "Assaults"
+        and b.loc[0, "raw"] == "3"
+    )
