@@ -51,3 +51,23 @@ def test_area_context_citywide_figures_are_plausible():
     t = a[(a["unit_type"] == "tract") & (a["measure_id"] == "acs_pct_children_in_poverty")]
     city = t["numerator"].sum() / t["denominator"].sum() * 100
     assert 20 < city < 40 and t["unit_id"].nunique() == 408
+
+
+def test_acs_period_matches_school_year():
+    from phillyschools.acs import period_for_sy
+
+    assert period_for_sy(2018) == "2015-2019" and period_for_sy(2020) == "2015-2019"
+    assert period_for_sy(2021) == "2020-2024" and period_for_sy(2026) == "2020-2024"
+
+
+def test_acs_2019_reader_is_internally_consistent():
+    import pytest
+
+    from phillyschools.acs import ACS2019_DIR, tract_counts_2019
+
+    if not (ACS2019_DIR / "g20195pa.csv").exists():
+        pytest.skip("2015-2019 ACS not archived")
+    t = tract_counts_2019()
+    assert len(t) == 384
+    assert (t["B17001_E001"] - t["B17001_E002"] - t["B17001_E031"]).abs().max() == 0
+    assert (t["B25003_E001"] - t["B25003_E002"] - t["B25003_E003"]).abs().max() == 0

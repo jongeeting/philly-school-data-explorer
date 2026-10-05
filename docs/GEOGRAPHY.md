@@ -28,4 +28,8 @@ Current build: 390 school sites; 253 inside a parcel, 100 nearest within 100 m, 
 
 ## Not yet built
 
-Council districts, state house/senate, wards, ZIP codes, and police districts in `geo_unit`; a `building` table (waiting on facilities data, see DATA_GAPS.md); ACS context (needs a Census API key).
+Council districts, state house/senate, wards, ZIP codes, and police districts in `geo_unit`; a `building` table (waiting on facilities data, see DATA_GAPS.md); 
+
+## Census context (ACS)
+
+`uv run psd build-area-context` writes `core/area_context` for two ACS 5-year periods: 2015-2019 (2010 tracts, sequence-based Summary File) and 2020-2024 (2020 tracts, table-based Summary File), both keyless. Measures: people and children in poverty, adults with a bachelor's degree or more, owner-occupied homes, and median household income (tract) or its household-weighted approximation (larger areas). 2010 tracts are included in `geo_unit` and `geo_xwalk` (`tract_2010`), allocated through 2020 blocks by 2020 population. Citywide: children in poverty 34.8% (2015-2019) and 29.0% (2020-2024).

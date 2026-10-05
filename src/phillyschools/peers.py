@@ -15,7 +15,7 @@ Method `poverty_peers_k15_v1` (derived; no ranks, no composite score):
                                             catchments where the school's students live
                                             (catchment flows; covers charter and citywide
                                             schools; 2016-17 on)
-    ACS covers one period (2020-2024) and is applied to every year.
+    Census bases use ACS 2015-2019 for school years through 2019-20 and ACS 2020-2024 after.
   - Selective-admission schools (criteria-based, citywide with criteria, special admit) are
     neither compared nor used as peers: their results reflect who is admitted. Alternative,
     virtual, and transition programs are left out for the same reason.
@@ -75,23 +75,39 @@ def poverty_basis() -> pd.DataFrame:
     return p[["school_id", "sy", "value"]].rename(columns={"value": "poverty_pct"})
 
 
-def _catchment_child_poverty() -> pd.DataFrame:
-    """Child poverty (ACS 2020-2024) of every catchment, with its school, level, and year."""
+def _catchment_child_poverty(period: str) -> pd.DataFrame:
+    """ACS child poverty of every catchment for one ACS period, with school, level, and year."""
     ac = pd.read_parquet(CORE / "area_context.parquet")
-    ac = ac[(ac["measure_id"] == "acs_pct_children_in_poverty") & (ac["status"] == "derived")]
+    ac = ac[
+        (ac["measure_id"] == "acs_pct_children_in_poverty")
+        & (ac["status"] == "derived")
+        & (ac["acs_period"] == period)
+    ]
     c = pd.read_parquet(CORE / "catchment.parquet")[["catchment_id", "school_id", "level", "sy"]]
     return c.merge(ac[["unit_id", "value"]], left_on="catchment_id", right_on="unit_id")[
         ["school_id", "level", "sy", "value"]
     ].rename(columns={"sy": "vintage", "value": "child_poverty"})
 
 
-def catchment_basis(ctx: pd.DataFrame) -> pd.DataFrame:
+def by_period(basis_fn, *args) -> pd.DataFrame:
+    """Run a census basis for each ACS period and keep, for each school year, the period that
+    fits it (2015-2019 through 2019-20, 2020-2024 after)."""
+    from .acs import PERIODS, period_for_sy
+
+    parts = []
+    for period in PERIODS:
+        b = basis_fn(period, *args)
+        parts.append(b[b["sy"].map(period_for_sy) == period].assign(acs_period=period))
+    return pd.concat(parts, ignore_index=True)
+
+
+def catchment_basis(period: str, ctx: pd.DataFrame) -> pd.DataFrame:
     """Child poverty of the school's own catchment (neighborhood schools only).
 
     K-8 schools use their elementary catchment (middle if none); high schools their high
     school catchment. Boundaries: that year's map, or the latest published for later years.
     """
-    cp = _catchment_child_poverty()
+    cp = _catchment_child_poverty(period)
     latest = int(cp["vintage"].max())
     pref = {"k8": ["ES", "MS"], "high": ["HS"], "mixed": ["MS", "HS"]}
     rows = []
@@ -106,7 +122,7 @@ def catchment_basis(ctx: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=["school_id", "sy", "poverty_pct"])
 
 
-def student_neighborhoods_basis() -> pd.DataFrame:
+def student_neighborhoods_basis(period: str) -> pd.DataFrame:
     """Enrollment-weighted child poverty of the catchments where a school's students live.
 
     Uses catchment flows (2016-17 on); a K-8 or 6-12 catchment school's ES/MS/HS areas are
@@ -115,7 +131,7 @@ def student_neighborhoods_basis() -> pd.DataFrame:
     """
     from .neighborhoods import LEVEL_WEIGHTS
 
-    cp = _catchment_child_poverty()
+    cp = _catchment_child_poverty(period)
     latest = int(cp["vintage"].max())
     levels = cp.groupby(["school_id", "vintage"])["level"].apply(lambda x: tuple(sorted(set(x))))
     look = cp.set_index(["school_id", "vintage", "level"])["child_poverty"]
@@ -259,14 +275,14 @@ def build_peer_comparison() -> pd.DataFrame:
     ]
     bases = {
         "school_econ_disadvantaged": poverty_basis(),
-        "catchment_child_poverty": catchment_basis(ctx),
-        "student_neighborhoods_child_poverty": student_neighborhoods_basis(),
+        "catchment_child_poverty": by_period(catchment_basis, ctx),
+        "student_neighborhoods_child_poverty": by_period(student_neighborhoods_basis),
     }
     frames = []
     for basis, pov in bases.items():
-        one = scores.merge(pov, on=["school_id", "sy"], how="left")[
-            ["school_id", "sy", "measure_id", "value", "poverty_pct"]
-        ]
+        one = scores.merge(
+            pov[["school_id", "sy", "poverty_pct"]], on=["school_id", "sy"], how="left"
+        )[["school_id", "sy", "measure_id", "value", "poverty_pct"]]
         for window, vals in [("1 year", one), ("3-year average", pooled(one))]:
             df = _compare_all(vals.merge(ctx, on=["school_id", "sy"], how="left"))
             df["window"], df["basis"], df["source_id"] = window, basis, BASES[basis]

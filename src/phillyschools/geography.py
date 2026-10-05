@@ -207,6 +207,20 @@ def tracts() -> gpd.GeoDataFrame:
     )
 
 
+def tracts_2010() -> gpd.GeoDataFrame:
+    """2010-boundary tracts (TIGER 2019), for ACS periods before 2020 (e.g. 2015-2019)."""
+    t = gpd.read_file(f"zip://{RAW / 'census_tracts' / 'tl_2019_42_tract.zip'}")
+    t = t[t["COUNTYFP"] == "101"].to_crs(CRS_WORK)
+    return gpd.GeoDataFrame(
+        {
+            "unit_id": "tract2010_" + t["GEOID"],
+            "name": "Tract " + t["NAME"] + " (2010)",
+            "geometry": t.geometry,
+        },
+        crs=CRS_WORK,
+    )
+
+
 # --- crosswalk ------------------------------------------------------------------------------
 
 
@@ -292,14 +306,21 @@ def build_geography() -> dict:
             crs=CRS_WORK,
         ),
     ]
-    nb, tr = neighborhoods(), tracts()
+    nb, tr, tr10 = neighborhoods(), tracts(), tracts_2010()
     units.append(nb.assign(unit_type="neighborhood", sy=pd.NA, school_id=None))
     units.append(tr.assign(unit_type="tract", sy=pd.NA, school_id=None))
+    units.append(tr10.assign(unit_type="tract_2010", sy=pd.NA, school_id=None))
     geo_unit = pd.concat(units, ignore_index=True)
     geo_unit["sy"] = geo_unit["sy"].astype("Int64")
 
     b = blocks()
-    base = {"tract": allocate_blocks(b, tr), "neighborhood": allocate_blocks(b, nb)}
+    # 2010 tracts are allocated through 2020 blocks by 2020 population (an approximation for
+    # older ACS periods; documented in the measure dictionary).
+    base = {
+        "tract": allocate_blocks(b, tr),
+        "tract_2010": allocate_blocks(b, tr10),
+        "neighborhood": allocate_blocks(b, nb),
+    }
     xw = []
     for (utype, sy), group in geo_unit[geo_unit["sy"].notna()].groupby(["unit_type", "sy"]):
         alloc = allocate_blocks(b, group)
@@ -309,11 +330,12 @@ def build_geography() -> dict:
             pair.insert(0, "from_type", from_type)
             pair.insert(2, "sy", sy)
             xw.append(pair)
-    pair = crosswalk(base["tract"], base["neighborhood"])
-    pair.insert(0, "to_type", "neighborhood")
-    pair.insert(0, "from_type", "tract")
-    pair.insert(2, "sy", pd.NA)
-    xw.append(pair)
+    for from_type in ["tract", "tract_2010"]:
+        pair = crosswalk(base[from_type], base["neighborhood"])
+        pair.insert(0, "to_type", "neighborhood")
+        pair.insert(0, "from_type", from_type)
+        pair.insert(2, "sy", pd.NA)
+        xw.append(pair)
     geo_xwalk = pd.concat(xw, ignore_index=True)
     geo_xwalk["sy"] = geo_xwalk["sy"].astype("Int64")
     geo_xwalk["method"] = "census_block_2020_pop_area_split_v1"
