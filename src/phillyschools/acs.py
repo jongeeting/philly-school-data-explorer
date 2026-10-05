@@ -11,11 +11,15 @@ neighborhoods are rolled up through the population-weighted crosswalk (status `d
 counts are allocated by each tract's share of 2020 population in the unit, and shares are
 recomputed from the allocated counts. Median household income cannot be combined exactly; the
 rollup is the household-weighted average of tract medians (`median_household_income_approx`),
-in each period's own dollars. Margins of error are not computed for rollups yet.
+in each period's own dollars. Margins of error follow the Census Bureau's approximation
+formulas (root sum of squares for sums; the proportion formula for shares, falling back to
+the ratio formula); rollups treat allocation weights as fixed and ignore correlation between
+tracts, so they are approximate. The income average has no MOE.
 """
 
 import zipfile
 
+import numpy as np
 import pandas as pd
 
 from . import CORE, RAW
@@ -82,36 +86,81 @@ def tract_counts_2019() -> pd.DataFrame:
     return out.apply(pd.to_numeric, errors="coerce")
 
 
+def cells_moe(t: pd.DataFrame, ecols: list[str]) -> pd.Series:
+    """MOE of a sum of table cells, per tract (Census approximation).
+
+    Root sum of squared cell MOEs, except that among cells estimated at zero only the largest
+    MOE is counted, once (Census guidance; otherwise zero cells inflate the MOE). Negative
+    special codes (for example -222222222, "not appropriate") are treated as missing.
+    """
+    e = t[ecols].to_numpy(dtype=float)
+    m = t[[c.replace("_E", "_M") for c in ecols]].to_numpy(dtype=float)
+    m = np.where(np.isnan(m) | (m < 0), 0.0, m)
+    nonzero = np.where(e != 0, m**2, 0.0).sum(axis=1)
+    zero_max = np.where(e == 0, m, 0.0).max(axis=1)
+    return pd.Series(np.sqrt(nonzero + zero_max**2), index=t.index)
+
+
+def pct_moe(x, y, mx, my):
+    """MOE of a percent X/Y*100 where X is a subset of Y (Census proportion formula).
+
+    Falls back to the ratio formula when the proportion formula's radicand is negative.
+    """
+    x, y, mx, my = (np.asarray(v, dtype=float) for v in (x, y, mx, my))
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = x / y
+        rad = mx**2 - p**2 * my**2
+        rad = np.where(rad < 0, mx**2 + p**2 * my**2, rad)
+        out = np.sqrt(rad) / y * 100
+    return np.where(y > 0, np.round(out, 1), np.nan)
+
+
+def reliability(value: pd.Series, moe: pd.Series) -> tuple[pd.Series, pd.Series]:
+    """Coefficient of variation (percent) and a plain label: high under 15%, medium 15-30%,
+    low over 30% (common ACS practice). A zero estimate with any MOE is low; no MOE is blank."""
+    v, m = value.astype(float), moe.astype(float)
+    cv = (m / 1.645 / v * 100).where(v > 0).round(1)
+    label = pd.Series(
+        np.select([cv < 15, cv <= 30, cv > 30], ["high", "medium", "low"], ""), index=value.index
+    )
+    label = label.where(~((v == 0) & (m > 0)), "low").where(m.notna(), "")
+    return cv, label
+
+
 def tract_rows(t: pd.DataFrame) -> pd.DataFrame:
-    rows = []
+    parts = []
     for measure, (num, den) in RATIOS.items():
         n, d = t[num].sum(axis=1), t[den].sum(axis=1)
-        for unit, nv, dv in zip(t.index, n, d, strict=True):
-            rows.append(
+        mn, md = cells_moe(t, num), cells_moe(t, den)
+        parts.append(
+            pd.DataFrame(
                 {
-                    "unit_id": unit,
+                    "unit_id": t.index,
                     "measure_id": measure,
-                    "numerator": nv,
-                    "denominator": dv,
-                    "value": None if dv == 0 else round(nv / dv * 100, 1),
-                    "moe": None,
-                    "status": "reported" if dv > 0 else "not_applicable",
+                    "numerator": n.values,
+                    "denominator": d.values,
+                    "numerator_moe": mn.round(0).values,
+                    "denominator_moe": md.round(0).values,
+                    "value": np.where(d > 0, (n / d * 100).round(1), np.nan),
+                    "moe": pct_moe(n, d, mn, md),
+                    "status": np.where(d > 0, "reported", "not_applicable"),
                 }
             )
-    for unit, v, m in zip(t.index, t["B19013_E001"], t["B19013_M001"], strict=True):
-        ok = pd.notna(v) and v > 0
-        rows.append(
+        )
+    inc, inc_m = t["B19013_E001"], t["B19013_M001"]
+    ok = inc.notna() & (inc > 0)
+    parts.append(
+        pd.DataFrame(
             {
-                "unit_id": unit,
+                "unit_id": t.index,
                 "measure_id": "acs_median_household_income",
-                "numerator": None,
-                "denominator": None,
-                "value": v if ok else None,
-                "moe": m if ok else None,
-                "status": "reported" if ok else "suppressed",
+                "value": inc.where(ok).values,
+                "moe": inc_m.where(ok & (inc_m >= 0)).values,
+                "status": np.where(ok, "reported", "suppressed"),
             }
         )
-    out = pd.DataFrame(rows)
+    )
+    out = pd.concat(parts, ignore_index=True)
     out["unit_type"] = out["unit_id"].map(
         lambda u: "tract_2010" if u.startswith("tract2010_") else "tract"
     )
@@ -120,37 +169,47 @@ def tract_rows(t: pd.DataFrame) -> pd.DataFrame:
 
 
 def rollup(t: pd.DataFrame, from_type: str) -> pd.DataFrame:
+    """Allocate tract counts to units by population share; MOEs by root sum of squares of the
+    weighted tract MOEs (weights treated as fixed; correlation between tracts ignored)."""
     xw = pd.read_parquet(CORE / "geo_xwalk.parquet")
     xw = xw[xw["from_type"] == from_type][
         ["from_unit", "to_unit", "to_type", "sy", "pop_share_of_from"]
     ]
+    keys = ["to_unit", "to_type", "sy"]
     rows = []
     for measure, (num, den) in RATIOS.items():
-        base = pd.DataFrame({"n": t[num].sum(axis=1), "d": t[den].sum(axis=1)})
+        base = pd.DataFrame(
+            {
+                "n": t[num].sum(axis=1),
+                "d": t[den].sum(axis=1),
+                "mn": cells_moe(t, num),
+                "md": cells_moe(t, den),
+            }
+        )
         j = xw.merge(base, left_on="from_unit", right_index=True)
-        j["n"] *= j["pop_share_of_from"]
-        j["d"] *= j["pop_share_of_from"]
-        g = j.groupby(["to_unit", "to_type", "sy"], dropna=False)[["n", "d"]].sum().reset_index()
+        w = j["pop_share_of_from"]
+        j = j.assign(n=j["n"] * w, d=j["d"] * w, mn2=(j["mn"] * w) ** 2, md2=(j["md"] * w) ** 2)
+        g = j.groupby(keys, dropna=False)[["n", "d", "mn2", "md2"]].sum().reset_index()
+        g["numerator_moe"], g["denominator_moe"] = np.sqrt(g["mn2"]), np.sqrt(g["md2"])
         g["measure_id"] = measure
         g["value"] = (g["n"] / g["d"] * 100).round(1).where(g["d"] > 0)
-        rows.append(g.rename(columns={"n": "numerator", "d": "denominator"}))
-    hh = pd.DataFrame(
-        {
-            "inc": t["B19013_E001"].where(t["B19013_E001"] > 0),
-            "hh": t["B25003_E001"],
-        }
-    )
+        g["moe"] = pct_moe(g["n"], g["d"], g["numerator_moe"], g["denominator_moe"])
+        g[["numerator_moe", "denominator_moe"]] = g[["numerator_moe", "denominator_moe"]].round(0)
+        rows.append(
+            g.drop(columns=["mn2", "md2"]).rename(columns={"n": "numerator", "d": "denominator"})
+        )
+    hh = pd.DataFrame({"inc": t["B19013_E001"].where(t["B19013_E001"] > 0), "hh": t["B25003_E001"]})
     j = xw.merge(hh, left_on="from_unit", right_index=True).dropna(subset=["inc"])
     j["w"] = j["hh"] * j["pop_share_of_from"]
     j["iw"] = j["inc"] * j["w"]
-    g = j.groupby(["to_unit", "to_type", "sy"], dropna=False)[["iw", "w"]].sum().reset_index()
+    g = j.groupby(keys, dropna=False)[["iw", "w"]].sum().reset_index()
     g["value"] = (g["iw"] / g["w"]).where(g["w"] > 0).round(0)
     g["measure_id"] = "acs_median_household_income_approx"
+    g["moe"] = np.nan  # no defensible MOE for an average of medians
     rows.append(g.drop(columns=["iw", "w"]))
     out = pd.concat(rows, ignore_index=True).rename(
         columns={"to_unit": "unit_id", "to_type": "unit_type"}
     )
-    out["moe"] = None
     out["status"] = out["value"].notna().map({True: "derived", False: "not_applicable"})
     return out
 
@@ -177,6 +236,7 @@ def build_area_context() -> pd.DataFrame:
         parts.append(p)
     out = pd.concat(parts, ignore_index=True)
     out["sy"] = out["sy"].astype("Int64")
+    out["cv"], out["reliability"] = reliability(out["value"], out["moe"])
     cols = [
         "unit_id",
         "unit_type",
@@ -187,6 +247,10 @@ def build_area_context() -> pd.DataFrame:
         "moe",
         "numerator",
         "denominator",
+        "numerator_moe",
+        "denominator_moe",
+        "cv",
+        "reliability",
         "status",
         "source_id",
     ]

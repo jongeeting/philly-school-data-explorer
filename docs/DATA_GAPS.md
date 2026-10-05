@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**41 unresolved** of 54 tracked (11 high priority).
+**40 unresolved** of 54 tracked (11 high priority).
 
 **Kinds of gap**
 
@@ -46,7 +46,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-036 | ACS neighborhood context (income, education, homeownership) not loaded; the Census API needs a free key *(ACS 2020-2024 loaded keyless from the table-based Summary File into area_context 2026-10-04)* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables from the keyless Summary File (or the API with a free key); store any key as an env var and GitHub secret, never in recorded URLs |
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | us | Decide (OpenDataPhilly set is the default) |
 | GAP-052 | Only one ACS period (2020-2024) is loaded and applied to every school year; earlier years (for example 2015-2019) would fit pre-pandemic comparisons better *(ACS 2015-2019 loaded 2026-10-04 (sequence-based file, 2010 tracts crosswalked through 2020 blocks))* | `not-yet-ingested` | low | closed | us | Load the 2015-2019 ACS 5-year tables (2010 tract boundaries need their own crosswalk) |
-| GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error | `not-yet-ingested` | low | open | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |
+| GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error *(MOEs, CV, and reliability added 2026-10-04 (Census approximation formulas; median income average has no MOE))* | `not-yet-ingested` | low | closed | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |
 
 ## Measures and facts
 

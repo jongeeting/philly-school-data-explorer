@@ -16,6 +16,11 @@ Method `poverty_peers_k15_v1` (derived; no ranks, no composite score):
                                             (catchment flows; covers charter and citywide
                                             schools; 2016-17 on)
     Census bases use ACS 2015-2019 for school years through 2019-20 and ACS 2020-2024 after.
+    They carry the poverty figure's margin of error (`basis_moe`) and `position_robust`: true
+    when the school's position is the same with its poverty at both edges of that margin.
+    K-8 census-based positions are robust only about half the time for proficiency (peer
+    groups span a few points; catchment child poverty is +/- 8 to 10 points), so show a
+    census-based position only where it is robust.
   - Selective-admission schools (criteria-based, citywide with criteria, special admit) are
     neither compared nor used as peers: their results reflect who is admitted. Alternative,
     virtual, and transition programs are left out for the same reason.
@@ -31,6 +36,7 @@ Method `poverty_peers_k15_v1` (derived; no ranks, no composite score):
     averaged window, and never use them to label a school.
 """
 
+import numpy as np
 import pandas as pd
 
 from . import CORE, ROOT
@@ -84,8 +90,8 @@ def _catchment_child_poverty(period: str) -> pd.DataFrame:
         & (ac["acs_period"] == period)
     ]
     c = pd.read_parquet(CORE / "catchment.parquet")[["catchment_id", "school_id", "level", "sy"]]
-    return c.merge(ac[["unit_id", "value"]], left_on="catchment_id", right_on="unit_id")[
-        ["school_id", "level", "sy", "value"]
+    return c.merge(ac[["unit_id", "value", "moe"]], left_on="catchment_id", right_on="unit_id")[
+        ["school_id", "level", "sy", "value", "moe"]
     ].rename(columns={"sy": "vintage", "value": "child_poverty"})
 
 
@@ -111,15 +117,23 @@ def catchment_basis(period: str, ctx: pd.DataFrame) -> pd.DataFrame:
     latest = int(cp["vintage"].max())
     pref = {"k8": ["ES", "MS"], "high": ["HS"], "mixed": ["MS", "HS"]}
     rows = []
+    look_moe = cp.set_index(["school_id", "vintage", "level"])["moe"]
     look = cp.set_index(["school_id", "vintage", "level"])["child_poverty"]
     for r in ctx.dropna(subset=["band"]).itertuples():
         v = min(int(r.sy), latest)
         for level in pref[r.band]:
             key = (r.school_id, v, level)
             if key in look.index:
-                rows.append({"school_id": r.school_id, "sy": r.sy, "poverty_pct": look[key]})
+                rows.append(
+                    {
+                        "school_id": r.school_id,
+                        "sy": r.sy,
+                        "poverty_pct": look[key],
+                        "basis_moe": look_moe[key],
+                    }
+                )
                 break
-    return pd.DataFrame(rows, columns=["school_id", "sy", "poverty_pct"])
+    return pd.DataFrame(rows, columns=["school_id", "sy", "poverty_pct", "basis_moe"])
 
 
 def student_neighborhoods_basis(period: str) -> pd.DataFrame:
@@ -135,11 +149,16 @@ def student_neighborhoods_basis(period: str) -> pd.DataFrame:
     latest = int(cp["vintage"].max())
     levels = cp.groupby(["school_id", "vintage"])["level"].apply(lambda x: tuple(sorted(set(x))))
     look = cp.set_index(["school_id", "vintage", "level"])["child_poverty"]
+    look_moe = cp.set_index(["school_id", "vintage", "level"])["moe"]
+    combined_moe = {}
     combined = {}
     for (sid, v), lv in levels.items():
         w = LEVEL_WEIGHTS.get(lv)
         if w:
             combined[(sid, v)] = sum(look[(sid, v, level)] * wt for level, wt in w.items())
+            combined_moe[(sid, v)] = np.sqrt(
+                sum((look_moe[(sid, v, level)] * wt) ** 2 for level, wt in w.items())
+            )
     f = pd.read_parquet(CORE / "catchment_flow.parquet")
     f = f[(f["catchment_status"] == "reported") & f["count"].notna()].copy()
     f["vintage"] = f["sy"].clip(upper=latest)
@@ -147,15 +166,36 @@ def student_neighborhoods_basis(period: str) -> pd.DataFrame:
         combined.get((c, v)) for c, v in zip(f["catchment_school_id"], f["vintage"], strict=True)
     ]
     f = f.dropna(subset=["child_poverty"])
+    f["child_poverty_moe"] = [
+        combined_moe.get((c, v))
+        for c, v in zip(f["catchment_school_id"], f["vintage"], strict=True)
+    ]
     f["w"] = f["count"] * f["child_poverty"]
+    # MOE of an enrollment-weighted average, treating catchments as independent
+    f["m2"] = (f["count"] * f["child_poverty_moe"]) ** 2
     g = (
         f.groupby(["enrolled_school_id", "sy"])
-        .agg(w=("w", "sum"), n=("count", "sum"))
+        .agg(w=("w", "sum"), n=("count", "sum"), m2=("m2", "sum"))
         .reset_index()
     )
     g = g[g["n"] >= 20]
     g["poverty_pct"] = (g["w"] / g["n"]).round(1)
-    return g.rename(columns={"enrolled_school_id": "school_id"})[["school_id", "sy", "poverty_pct"]]
+    g["basis_moe"] = (np.sqrt(g["m2"]) / g["n"]).round(1)
+    return g.rename(columns={"enrolled_school_id": "school_id"})[
+        ["school_id", "sy", "poverty_pct", "basis_moe"]
+    ]
+
+
+def _position(others: pd.DataFrame, poverty: float, value: float, k: int):
+    peers = others.loc[(others["poverty_pct"] - poverty).abs().nsmallest(k).index]
+    q = peers["value"].quantile([0.25, 0.5, 0.75])
+    if value > q.iloc[2]:
+        position = "above peer range"
+    elif value < q.iloc[0]:
+        position = "below peer range"
+    else:
+        position = "within peer range"
+    return peers, tuple(q), position
 
 
 def compare(values: pd.DataFrame, k: int = K) -> pd.DataFrame:
@@ -187,15 +227,15 @@ def compare(values: pd.DataFrame, k: int = K) -> pd.DataFrame:
                     }
                 )
                 continue
-            dist = (others["poverty_pct"] - r["poverty_pct"]).abs()
-            peers = others.loc[dist.nsmallest(k).index]
-            q25, med, q75 = peers["value"].quantile([0.25, 0.5, 0.75])
-            if r["value"] > q75:
-                position = "above peer range"
-            elif r["value"] < q25:
-                position = "below peer range"
-            else:
-                position = "within peer range"
+            peers, (q25, med, q75), position = _position(others, r["poverty_pct"], r["value"], k)
+            moe = r.get("basis_moe")
+            robust = None
+            if pd.notna(moe):
+                # Same position with the school's poverty at both edges of its margin of error?
+                robust = all(
+                    _position(others, r["poverty_pct"] + shift, r["value"], k)[2] == position
+                    for shift in (-moe, moe)
+                )
             rows.append(
                 {
                     "school_id": r["school_id"],
@@ -211,6 +251,8 @@ def compare(values: pd.DataFrame, k: int = K) -> pd.DataFrame:
                     "diff_from_peer_median": round(r["value"] - med, 1),
                     "position": position,
                     "peer_school_ids": "|".join(peers["school_id"]),
+                    "basis_moe": moe,
+                    "position_robust": robust,
                     "exclusion": None,
                 }
             )
@@ -231,6 +273,7 @@ def pooled(values: pd.DataFrame, years: int = 3, min_years: int = 2) -> pd.DataF
                         "measure_id": measure,
                         "sy": sy,
                         "value": round(w["value"].mean(), 1),
+                        "basis_moe": w["basis_moe"].mean() if "basis_moe" in w else np.nan,
                         "poverty_pct": w["poverty_pct"].mean(),
                         "years_used": int(w["value"].notna().sum()),
                     }
@@ -280,9 +323,11 @@ def build_peer_comparison() -> pd.DataFrame:
     }
     frames = []
     for basis, pov in bases.items():
+        if "basis_moe" not in pov:
+            pov = pov.assign(basis_moe=np.nan)
         one = scores.merge(
-            pov[["school_id", "sy", "poverty_pct"]], on=["school_id", "sy"], how="left"
-        )[["school_id", "sy", "measure_id", "value", "poverty_pct"]]
+            pov[["school_id", "sy", "poverty_pct", "basis_moe"]], on=["school_id", "sy"], how="left"
+        )[["school_id", "sy", "measure_id", "value", "poverty_pct", "basis_moe"]]
         for window, vals in [("1 year", one), ("3-year average", pooled(one))]:
             df = _compare_all(vals.merge(ctx, on=["school_id", "sy"], how="left"))
             df["window"], df["basis"], df["source_id"] = window, basis, BASES[basis]
