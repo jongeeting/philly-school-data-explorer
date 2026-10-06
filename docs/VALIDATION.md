@@ -20,10 +20,10 @@ Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; recon
 | marts cover every metric school | pass |  |
 | facility parts add up to site totals | pass | 0 sites differ by more than $1,000 |
 | enrollment grades add to the all-grades row (within 1%) | pass | grades/all = 0.9986 over 5145 school-years |
-| building_id is unique | pass | 467 buildings |
-| every crosswalk key points at a building | pass | 899 keys |
+| building_id is unique | pass | 414 buildings |
+| every crosswalk key points at a building | pass | 896 keys |
 | no outside key maps to two buildings | pass |  |
-| school_building points at real schools and buildings | pass | 505 rows |
+| school_building points at real schools and buildings | pass | 482 rows |
 | most listed schools have a building from the district list (95%) | pass | 324 of 324 |
 | every latest asbestos report has a building | pass | 0 without |
 | every assessed building has a building_id | pass | 0 without |

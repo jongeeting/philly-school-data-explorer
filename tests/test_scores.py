@@ -478,3 +478,138 @@ def test_building_ids_are_stable_and_never_reused_for_a_split():
         {0: g1.assign(ahera_code="8420"), 1: g1.assign(key="8420x", ahera_code="8420")}, reg
     )
     assert len(set(split_ids.values())) == 2  # a split cluster cannot reuse a taken ID
+
+
+def _cand(method, opa, addr, owner="X LLC"):
+    return {"method": method, "opa_account": opa, "parcel_address": addr, "parcel_owner": owner}
+
+
+def test_resolve_parcel_prefers_address_text_over_a_map_point():
+    from phillyschools.buildings import resolve_parcel
+
+    r = resolve_parcel(
+        [
+            _cand("school_map_point", "111", "1500 W CUMBERLAND ST"),  # a neighbor's parcel
+            _cand("opa_property_address", "222", "2539 N 16TH ST"),
+            _cand("city_address_overlap", "222", "2539-49 N 16TH ST"),
+        ],
+        "2539 N 16TH ST",
+    )
+    assert r["opa_account"] == "222" and r["confidence"] == "high" and r["conflict"] == "111"
+
+
+def test_resolve_parcel_treats_subaccounts_of_one_parcel_as_one():
+    from phillyschools.buildings import resolve_parcel
+
+    r = resolve_parcel(
+        [
+            _cand("school_map_point", "786002100", "9125 ACADEMY RD", "SCHOOL DISTRICT OF PHILA"),
+            _cand("opa_property_address", "786002105", "9125 ACADEMY RD"),
+        ],
+        "9125 Academy Rd",
+    )
+    assert r["opa_account"] == "786002100" and r["confidence"] == "high" and r["conflict"] is None
+
+
+def test_resolve_parcel_confidence_levels():
+    from phillyschools.buildings import resolve_parcel
+
+    corner = resolve_parcel(
+        [_cand("school_map_point", "5", "4201 SPRUCE ST", "SCHOOL DISTRICT OF PHILA")],
+        "4209 Spruce St",
+    )
+    assert corner["confidence"] == "medium"  # a School District parcel at a school's point
+    weak = resolve_parcel([_cand("school_map_point", "6", "3900 JASPER ST")], "1840 Torresdale Ave")
+    assert weak["confidence"] == "low"
+    assert resolve_parcel([], "1 Main St") == {}
+
+
+def test_judge_accepts_only_trustworthy_geocode_results():
+    from phillyschools.building_parcels import judge
+
+    overlap = lambda a, b: a.split()[0] == str(b).split()[0]
+    base = {"opa_account": "1", "distance_m": 3.0, "match": "nearest", "geocode": "Exact"}
+    assert judge(
+        {**base, "parcel_address": "800 X ST", "parcel_owner": "A"}, "N", "800 X ST", overlap
+    )
+    assert (
+        judge(
+            {**base, "parcel_address": "4431 ALMOND ST", "parcel_owner": "ARCHDIOCESE"},
+            "Annex",
+            "4435 ALMOND ST",
+            overlap,
+        )
+        is None
+    )
+    door = judge(
+        {**base, "parcel_address": "4431 ALMOND ST", "parcel_owner": "ARCHDIOCESE"},
+        "Annex",
+        "4435 ALMOND ST",
+        overlap,
+        near_number=True,
+    )
+    assert door == "geocode_next_door"
+    private = {**base, "parcel_address": "324 H ST", "parcel_owner": "SPINKS JOHN"}
+    assert judge(private, "Field House", "342 H ST", overlap) is None
+
+
+def test_cover_parser_reads_both_layouts():
+    from phillyschools.buildings import parse_cover
+
+    new = (
+        "  JOHN BARTRAM HIGH SCHOOL\n     ULCS # 1010\n  2401 South 67th Street\n"
+        "  Philadelphia, Pennsylvania 19142\n  Year Built: 1939\n"
+    )
+    c = parse_cover(new)
+    assert (c["address"], c["zip"], c["year_built"], c["ulcs_codes"]) == (
+        "2401 South 67th Street",
+        "19142",
+        1939,
+        ["1010"],
+    )
+    old = (
+        "for the\nPaul Robeson High School\nULCS# 1050\nBuilding # B105001-1\n"
+        "4125 Ludlow Street\nPhiladelphia, Pennsylvania\n19104\n"
+    )
+    o = parse_cover(old)
+    assert (o["address"], o["zip"], o["fca_ref"]) == ("4125 Ludlow Street", "19104", "B105001")
+    multi = parse_cover(
+        "PLA WEST\nULCS # 1590/8460/1450\n4300 Westminster Avenue\nPhiladelphia, PA 19104"
+    )
+    assert multi["ulcs_codes"] == ["1590", "8460", "1450"]
+
+
+def test_building_ids_follow_anchors_when_a_building_splits():
+    import pandas as pd
+
+    from phillyschools.buildings import assign_ids
+
+    empty = pd.DataFrame(columns=["building_id", "anchor_type", "anchor_value", "minted_on"])
+    both = pd.DataFrame(
+        {
+            "source": ["ahera", "master"],
+            "key": ["5330", "sch_1|1 A ST"],
+            "ahera_code": ["5330", None],
+        }
+    )
+    ids, reg = assign_ids({0: both}, empty)
+    first = ids[0]
+    assert set(reg["building_id"]) == {first}
+    # the building later splits in two: each part keeps a distinct ID and records its anchors
+    a = both.iloc[[0]]
+    b = both.iloc[[1]]
+    ids2, reg2 = assign_ids({0: a, 1: b}, reg)
+    assert ids2[0] != ids2[1] and first in ids2.values()
+    homes = dict(
+        zip(
+            zip(reg2["anchor_type"], reg2["anchor_value"], strict=True),
+            reg2["building_id"],
+            strict=True,
+        )
+    )
+    assert (
+        homes[("ahera_code", "5330")] == ids2[0]
+        and homes[("master_address", "sch_1|1 A ST")] == ids2[1]
+    )
+    ids3, reg3 = assign_ids({0: a, 1: b}, reg2)  # the next run finds the same IDs
+    assert ids3 == ids2 and len(reg3) == len(reg2)

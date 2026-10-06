@@ -112,18 +112,45 @@ def tidy_name(name: str) -> str:
     return " ".join(words)
 
 
-def cover_info(path) -> dict:
-    t = pdf_text(RAW.parent / path, 1, 3)
-    m = COVER.search(t)
-    if not m:
+def parse_cover(text: str) -> dict:
+    """Name, address, ZIP, year built, ULCS codes, and building code from an AHERA cover.
+
+    Two layouts: the 2023+ template (name, "ULCS # 1010", address, "Philadelphia, Pennsylvania
+    19142", "Year Built") and the older one (adds "Building # B105001-1", and the ZIP can sit
+    on its own line). Several ULCS codes ("1590/8460/1450") mean a shared building."""
+    lines = [ln.strip() for ln in text.splitlines()]
+    at = next((i for i, ln in enumerate(lines) if re.match(r"ULCS\s*#?", ln, re.IGNORECASE)), None)
+    if at is None:
         return {}
-    name, _ulcs, addr, zp, built = m.groups()
+    codes = re.findall(r"\d{4}", lines[at])
+    name_parts = []
+    k = at - 1
+    while k >= 0 and lines[k] and not re.match(r"(for( the)?|and)$", lines[k], re.IGNORECASE):
+        name_parts.insert(0, lines[k])
+        k -= 1
+    after = [ln for ln in lines[at + 1 : at + 14] if ln]
+    building = next(
+        (m.group(1) for ln in after if (m := re.match(r"Building\s*#\s*(B\d{6})", ln))), None
+    )
+    addr_i = next((i for i, ln in enumerate(after) if re.match(r"\d+\S*\s+\S", ln)), None)
+    if addr_i is None:
+        return {"ulcs_codes": codes, "fca_ref": building}
+    address = after[addr_i]
+    rest = " ".join(after[addr_i + 1 : addr_i + 4])
+    zp = re.search(r"\b(\d{5})\b", rest)
+    built = re.search(r"Year Built:\s*(\d{4})", " ".join(after))
     return {
-        "cover_name": tidy_name(name),
-        "address": addr.strip(),
-        "zip": zp,
-        "year_built": int(built) if built else None,
+        "cover_name": tidy_name(" ".join(name_parts)) if name_parts else None,
+        "address": address,
+        "zip": zp.group(1) if zp else None,
+        "year_built": int(built.group(1)) if built else None,
+        "ulcs_codes": codes,
+        "fca_ref": building,
     }
+
+
+def cover_info(path) -> dict:
+    return parse_cover(pdf_text(RAW.parent / path, 1, 3))
 
 
 def _cover_or_folder(cover: str | None, folder: str) -> str:
@@ -136,9 +163,15 @@ def _cover_or_folder(cover: str | None, folder: str) -> str:
 def ahera_claims() -> pd.DataFrame:
     a = pd.read_parquet(CORE / "building_asbestos.parquet")
     latest = a[a["is_latest"]]
+    reg = pd.read_csv(ROOT / "registry" / "school_id_registry.csv", dtype=str)
+    to_id = reg.set_index("ulcs")["school_id"]
     rows = []
     for r in latest.itertuples():
         info = cover_info(r.file)
+        schools = {r.school_id} if isinstance(r.school_id, str) else set()
+        for part in str(r.school_id).split(", ") if isinstance(r.school_id, str) else []:
+            schools.add(part)
+        schools |= {to_id[c] for c in info.get("ulcs_codes", []) if c in to_id}
         rows.append(
             {
                 "source": "ahera",
@@ -148,8 +181,9 @@ def ahera_claims() -> pd.DataFrame:
                 "address": info.get("address"),
                 "zip": info.get("zip"),
                 "year_built": info.get("year_built"),
-                "school_ids": r.school_id,
+                "school_ids": ", ".join(sorted(schools)) or None,
                 "ahera_code": r.building_code,
+                "fca_ref": info.get("fca_ref"),
             }
         )
     return pd.DataFrame(rows)
@@ -158,7 +192,18 @@ def ahera_claims() -> pd.DataFrame:
 def load_link_fixes() -> pd.DataFrame:
     if LINKS_FILE.exists():
         return pd.read_csv(LINKS_FILE, dtype=str)
-    return pd.DataFrame(columns=["link_id", "source", "key", "ahera_code", "reason"])
+    return pd.DataFrame(columns=["link_id", "source", "key", "ahera_code", "address", "reason"])
+
+
+def apply_address_fixes(claims: pd.DataFrame, fixes: pd.DataFrame) -> pd.DataFrame:
+    """Hand-set street addresses for records the sources leave blank (each with its evidence)."""
+    claims = claims.copy()
+    if "address" not in fixes:
+        return claims
+    for r in fixes[fixes["address"].notna()].itertuples():
+        mask = (claims["source"] == r.source) & (claims["key"] == r.key)
+        claims.loc[mask, "address"] = r.address
+    return claims
 
 
 def fca_claims(fixes: pd.DataFrame) -> pd.DataFrame:
@@ -179,9 +224,9 @@ def fca_claims(fixes: pd.DataFrame) -> pd.DataFrame:
                 "key": r.part_code,
                 "name": r.part_name,
                 "folder": r.part_name,
-                "address": s["address"]
-                if main
-                else None,  # the site address is the main building's
+                # the main building and field parts take the site's address; an annex does not
+                # (a combined site's header address can belong to the other school)
+                "address": s["address"] if (seq == 1 or seq >= 100) else None,
                 "zip": None,
                 "year_built": s["year_built"] if main and pd.notna(s["year_built"]) else None,
                 "school_ids": r.school_ids,
@@ -216,6 +261,7 @@ def lead_claims() -> pd.DataFrame:
 
 def water_claims() -> pd.DataFrame:
     d = pd.read_parquet(CORE / "school_water_lead.parquet")
+    d = d[d.groupby("site_folder")["lead_ppb"].transform("count") > 0]  # folders with results only
     rows = []
     for folder, g in d.groupby("site_folder"):
         street = re.search(r"\((\d+[^)]*)\)", folder)
@@ -260,6 +306,7 @@ def _overlap(a: tuple, b: tuple) -> bool:
     return a[2] == b[2] and a[0] <= b[1] and b[0] <= a[1]
 
 
+NEXT_DOOR = 6  # a parcel this many numbers away counts as next door for an annex in a neighbor
 NEAR_NUMBERS = 10  # one school's two address numbers this close on a street are one building
 DIRECTIONS = {"N", "S", "E", "W"}
 SUFFIXES = {"ST", "AVE", "RD", "LN", "DR", "BLVD", "PK", "PL", "WAY", "CT", "TER", "PKWY"}
@@ -299,6 +346,16 @@ def cluster(claims: pd.DataFrame) -> pd.Series:
     for idx in by_code.values():
         for j in idx[1:]:
             uf.union(idx[0], j)
+    # an AHERA cover that names its facility-assessment building code ties the two together
+    if "fca_ref" in c:
+        fca_at = {
+            k: i
+            for i, (src, k) in enumerate(zip(c["source"], c["key"], strict=True))
+            if src == "fca"
+        }
+        for i, ref in enumerate(c["fca_ref"]):
+            if isinstance(ref, str) and ref in fca_at:
+                uf.union(i, fca_at[ref])
     parsed = [split_address(clean_address(a)) if isinstance(a, str) else None for a in c["address"]]
     kinds = [kind_of(n) for n in c["name"]]
     schools = [set(str(x).split(", ")) if isinstance(x, str) else set() for x in c["school_ids"]]
@@ -335,8 +392,9 @@ def anchors_for(group: pd.DataFrame) -> list[tuple[str, str]]:
         out.append(("ahera_code", code))
     for key in sorted(group.loc[group["source"] == "fca", "key"]):
         out.append(("fca_part_code", key))
-    for key in sorted(group.loc[group["source"].isin(["lead", "water"]), "key"]):
-        out.append(("site_folder", key))
+    for source in ["lead", "water"]:  # per source: a lead and a water folder can share a name
+        for key in sorted(group.loc[group["source"] == source, "key"]):
+            out.append((f"{source}_folder", key))
     for key in sorted(group.loc[group["source"] == "master", "key"]):
         out.append(("master_address", key))
     return out
@@ -345,33 +403,48 @@ def anchors_for(group: pd.DataFrame) -> list[tuple[str, str]]:
 def assign_ids(
     groups: dict[int, pd.DataFrame], registry: pd.DataFrame
 ) -> tuple[dict, pd.DataFrame]:
-    """Reuse an ID when any anchor is already registered; mint a new one otherwise."""
+    """Reuse an ID when any anchor is already registered; mint a new one otherwise.
+
+    A building keeps its ID when it merges or splits: the ID goes to the first cluster
+    holding one of its anchors, a second cluster gets a new ID, and every anchor is then
+    recorded against the building that holds it now, so the next run finds the same IDs."""
     known = {(r.anchor_type, r.anchor_value): r.building_id for r in registry.itertuples()}
     top = max((int(b.split("_")[1]) for b in registry["building_id"]), default=0)
     today = datetime.now(UTC).date().isoformat()
-    added, ids, used = [], {}, set()
+    ids, used = {}, set()
     for cid in sorted(groups):
         anchors = anchors_for(groups[cid])
         found = [b for b in sorted({known[a] for a in anchors if a in known}) if b not in used]
-        if found:  # a split cluster must not reuse an ID another cluster already took
+        if found:
             bid = found[0]
         else:
             top += 1
             bid = f"bld_{top:05d}"
         ids[cid] = bid
         used.add(bid)
-        for a in anchors:
-            if a not in known:
-                known[a] = bid
+    moved, added = {}, []
+    for cid in sorted(groups):
+        for a in anchors_for(groups[cid]):
+            if known.get(a) == ids[cid]:
+                continue
+            if a in known:
+                moved[a] = ids[cid]
+            else:
                 added.append(
                     {
-                        "building_id": bid,
+                        "building_id": ids[cid],
                         "anchor_type": a[0],
                         "anchor_value": a[1],
                         "minted_on": today,
                     }
                 )
-    reg = pd.concat([registry, pd.DataFrame(added)], ignore_index=True) if added else registry
+            known[a] = ids[cid]
+    reg = registry.copy()
+    if moved:
+        key = list(zip(reg["anchor_type"], reg["anchor_value"], strict=True))
+        reg["building_id"] = [moved.get(k, b) for k, b in zip(key, reg["building_id"], strict=True)]
+    if added:
+        reg = pd.concat([reg, pd.DataFrame(added)], ignore_index=True)
     return ids, reg
 
 
@@ -423,6 +496,7 @@ def build_buildings(offline: bool = False) -> dict:
     for col in ["ahera_code", "site_code"]:
         if col not in claims:
             claims[col] = None
+    claims = apply_address_fixes(claims, fixes)
     claims["cluster"] = cluster(claims)
 
     # records with no address join their school's main building
@@ -442,10 +516,13 @@ def build_buildings(offline: bool = False) -> dict:
     for sid, addr in latest.items():
         main_cluster[sid] = key_cluster.get(f"{sid}|{addr}", main_cluster.get(sid))
     attached = []
+    cluster_size = claims["cluster"].value_counts()
     for i, r in claims.iterrows():
         main_code = r["source"] == "ahera" and str(r["key"]).endswith("0")
         if isinstance(r["address"], str) or r["source"] == "master":
             continue
+        if cluster_size[r["cluster"]] > 1:
+            continue  # already tied to other records by a code or an address: leave it there
         if r["source"] == "ahera" and not main_code:
             continue
         first = str(r["school_ids"]).split(", ")[0] if isinstance(r["school_ids"], str) else None
@@ -454,6 +531,9 @@ def build_buildings(offline: bool = False) -> dict:
             attached.append(i)
     claims["link_method"] = "address_or_code"
     claims.loc[attached, "link_method"] = "school_main_building"
+    for i, cl in _attach_by_surname(claims).items():
+        claims.at[i, "cluster"] = cl
+        claims.at[i, "link_method"] = "surname_match"
 
     groups = {cid: g for cid, g in claims.groupby("cluster")}
     registry = load_registry()
@@ -462,17 +542,58 @@ def build_buildings(offline: bool = False) -> dict:
 
     opa = _parcels()
     school_pt = _school_point_parcels(claims, ids)
-    addresses = [
-        a
-        for a in claims["address"].dropna().unique()
-        if split_address(a) and not _parcel_for(a, opa)
-    ][:0]  # filled below, only for buildings the school points do not resolve
-    unresolved = [
-        g["address"].dropna().iloc[0]
-        for cid, g in groups.items()
-        if ids[cid] not in school_pt and g["address"].notna().any()
+    city = query_addresses(
+        sorted(
+            {g["address"].dropna().iloc[0] for g in groups.values() if g["address"].notna().any()}
+        ),
+        offline=offline,
+    )
+    # every method answers for every building; they then vote (see resolve_parcel)
+    cands = defaultdict(list)
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        for method, p in [
+            ("school_map_point", school_pt.get(ids[cid])),
+            ("address_overlap", _parcel_for(addr, opa) if addr else {}),
+            ("city_address_overlap", _parcel_from_city(addr, city) if addr else {}),
+        ]:
+            if p and p.get("opa_account"):
+                cands[cid].append({**p, "method": method})
+    none_yet: dict = {cid: {} for cid in groups}  # no building is skipped as already placed
+    for cid, p in _opa_property_parcels(groups, ids, none_yet, offline).items():
+        cands[cid].append({**p, "method": "opa_property_address"})
+    geo, review = _geocode_parcels(groups, ids, none_yet, offline)
+    for cid, p in geo.items():
+        cands[cid].append({**p, "method": p["match"]})
+    chosen = {}
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        chosen[cid] = resolve_parcel(cands.get(cid, []), addr)
+    parcel_of = {cid: r for cid, r in chosen.items() if r.get("opa_account")}
+    # buildings no method placed: a lone school parcel on the street, or the site's main building
+    left = {cid: {} for cid in groups if cid not in parcel_of}
+    parcel_of_all = {cid: parcel_of.get(cid, {}) for cid in groups}
+    only_school = _only_school_parcel_on_street(groups, ids, parcel_of_all, review, offline)
+    for cid, p in only_school.items():
+        chosen[cid] = {**p, "confidence": "low", "methods": p["match"], "conflict": None}
+        parcel_of_all[cid] = chosen[cid]
+    same_site = _site_code_parcels(groups, parcel_of_all, ids)
+    same_site.update(
+        {
+            c: p
+            for c, p in _same_site_parcels(groups, ids, parcel_of_all).items()
+            if c not in same_site
+        }
+    )
+    for cid, p in same_site.items():
+        if cid in left:
+            chosen[cid] = {**p, "confidence": "medium", "methods": p["match"], "conflict": None}
+    review = [
+        r
+        for r in review
+        if r["building_id"] not in {ids[c] for c, v in chosen.items() if v.get("opa_account")}
     ]
-    city = query_addresses(sorted(set(addresses + unresolved)), offline=offline)
+    parcel_of = {cid: chosen.get(cid, {}) for cid in groups}
     rows = []
     for cid, g in groups.items():
         name, _ = _best(g, "name")
@@ -484,11 +605,7 @@ def build_buildings(offline: bool = False) -> dict:
         yb, _ = _best(g, "year_built")
         kinds = {kind_of(n) for n in g["name"]}
         kind = next((k for k in kinds if k != "school_building"), "school_building")
-        parcel = (
-            school_pt.get(ids[cid])
-            or _parcel_for(addr, opa)
-            or (_parcel_from_city(addr, city) if addr else {})
-        )
+        parcel = parcel_of[cid]
         rows.append(
             {
                 "building_id": ids[cid],
@@ -502,6 +619,9 @@ def build_buildings(offline: bool = False) -> dict:
                 "parcel_address": parcel.get("parcel_address"),
                 "parcel_owner": parcel.get("parcel_owner"),
                 "parcel_match": parcel.get("match", "none"),
+                "parcel_confidence": parcel.get("confidence", "none"),
+                "parcel_methods": parcel.get("methods"),
+                "parcel_conflict": parcel.get("conflict"),
                 "n_records": len(g),
                 "sources": ", ".join(sorted(set(g["source"]))),
                 "status": "derived",
@@ -509,6 +629,7 @@ def build_buildings(offline: bool = False) -> dict:
             }
         )
     building = pd.DataFrame(rows).sort_values("building_id").reset_index(drop=True)
+    review = _parcel_review(building, review)
 
     xwalk = claims.loc[
         claims["source"] != "master", ["building_id", "source", "key", "link_method"]
@@ -530,6 +651,7 @@ def build_buildings(offline: bool = False) -> dict:
 
     sb = _school_building(mc, claims, key_cluster, school_names)
     return {
+        "review": review,
         "building": building,
         "building_xwalk": xwalk.reset_index(drop=True),
         "school_building": sb,
@@ -635,6 +757,356 @@ def _parcel_from_city(address: str, cache: dict) -> dict:
     if len(accounts) > 1:
         return {"match": "city_address_ambiguous"}
     return {}
+
+
+def _person_name(name: str) -> tuple[str, str] | None:
+    """'Kinsey, John Site 1_NW38KNJ1' -> ('KINSEY', 'JOHN'); folders are 'Surname, First'."""
+    head = re.sub(r"\s*\bSite\b.*$", "", str(name).split("_")[0], flags=re.IGNORECASE)
+    head = head.split("|")[0]
+    if "," not in head:
+        return None
+    last, first = (x.strip() for x in head.split(",", 1))
+    first = first.split()[0].upper() if first.split() else ""
+    return (last.upper(), first.strip(".")) if len(last) >= 4 and first.strip(".") else None
+
+
+def _attach_by_surname(claims: pd.DataFrame) -> dict:
+    """Water and lead folders with no address join the one addressed building whose names
+    carry both the folder's surname and its first name (Abraham and Abram match; John does
+    not). Two schools can share a surname, so the surname alone is never enough."""
+    by_cluster = defaultdict(
+        lambda: {"words": set(), "addr": False, "kinds": set(), "schools": set(), "names": set()}
+    )
+
+    def norm(n: str) -> str:
+        return re.sub(r"[^A-Z0-9]", "", str(n).upper())
+
+    for r in claims.itertuples():
+        d = by_cluster[r.cluster]
+        d["names"].add(norm(r.name))
+        # asbestos folders use the same "Surname, First" names as water folders
+        text = f"{r.name} {r.folder}".upper()
+        d["words"] |= set(re.sub(r"[^A-Z ]", " ", text).split())
+        d["addr"] |= isinstance(r.address, str)
+        d["kinds"].add(kind_of(r.name))
+        if r.source != "water" and isinstance(r.school_ids, str):
+            d["schools"] |= set(r.school_ids.split(", "))
+    out = {}
+    for i, r in claims.iterrows():
+        if r["source"] not in {"water", "lead"} or isinstance(r["address"], str):
+            continue
+        if by_cluster[r["cluster"]]["addr"]:
+            continue  # already in an addressed building
+        same_name = {
+            cl
+            for cl, d in by_cluster.items()
+            if d["addr"] and cl != r["cluster"] and norm(r["name"]) in d["names"]
+        }
+        if len(same_name) == 1:  # the same structure under the same name in another source
+            out[i] = next(iter(same_name))
+            continue
+        if kind_of(r["name"]) != "school_building":
+            continue  # annexes and outdoor sites stay apart
+        mine = set(str(r["school_ids"]).split(", ")) if isinstance(r["school_ids"], str) else set()
+        by_school = {
+            cl
+            for cl, d in by_cluster.items()
+            if d["addr"]
+            and "school_building" in d["kinds"]
+            and cl != r["cluster"]
+            and mine & d["schools"]
+        }
+        if len(by_school) == 1:
+            out[i] = next(iter(by_school))
+            continue
+        who = _person_name(r["name"])
+        if not who:
+            continue
+        last, first = who
+        if len(first) < 3:  # an initial: the surname must be in exactly one addressed building
+            only = {
+                cl
+                for cl, d in by_cluster.items()
+                if d["addr"] and "school_building" in d["kinds"] and last in d["words"]
+            }
+            if len(only) == 1:
+                out[i] = next(iter(only))
+            continue
+        hits = {
+            cl
+            for cl, d in by_cluster.items()
+            if d["addr"]
+            and "school_building" in d["kinds"]
+            and cl != r["cluster"]
+            and last in d["words"]
+            and any(w.startswith(first[:4]) for w in d["words"])
+        }
+        if len(hits) == 1:
+            out[i] = next(iter(hits))
+    return out
+
+
+def _opa_property_parcels(groups: dict, ids: dict, parcel_of: dict, offline: bool) -> dict:
+    """Buildings still without a parcel: the City's OPA property records by street address."""
+    from .building_parcels import opa_by_address
+
+    todo = {}
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        if not parcel_of[cid] and addr and split_address(clean_address(addr)):
+            todo[cid] = clean_address(addr)
+    answers = opa_by_address(sorted(set(todo.values())), offline=offline)
+    out = {}
+    for cid, addr in todo.items():
+        pa = split_address(addr)
+        hits = {}
+        for row in answers.get(f"{addr}|block", answers.get(addr, [])):
+            pb = split_address(clean_address(row.get("location") or ""))
+            if pb and _loose_overlap(pa, pb):
+                hits[row["parcel_number"]] = row
+        if len(hits) == 1:
+            row = next(iter(hits.values()))
+            owner = " ".join(o for o in [row.get("owner_1"), row.get("owner_2")] if o)
+            out[cid] = {
+                "opa_account": row["parcel_number"],
+                "parcel_address": row["location"],
+                "parcel_owner": owner or None,
+                "match": "opa_property_address",
+            }
+    return out
+
+
+def _geocode_parcels(groups: dict, ids: dict, parcel_of: dict, offline: bool) -> tuple[dict, list]:
+    """Geocode buildings still without a parcel; accept what passes `judge`, list the rest."""
+    from .building_parcels import judge, parcels_by_geocode
+
+    todo = {}
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        if parcel_of[cid] or not addr:
+            continue
+        zp, _ = _best(g, "zip")
+        todo[cid] = (clean_address(addr), str(zp) if zp else None, _best(g, "name")[0] or "")
+    answers = parcels_by_geocode(sorted({(a, z) for a, z, _ in todo.values()}), offline=offline)
+    accepted, review = {}, []
+    for cid, (addr, _z, name) in todo.items():
+        r = answers.get(addr)
+        if not r:
+            review.append(
+                {
+                    "building_id": ids[cid],
+                    "building_name": name,
+                    "address": addr,
+                    "why": "not geocoded",
+                }
+            )
+            continue
+        pa, pp = split_address(addr), split_address(clean_address(r.get("parcel_address") or ""))
+        next_door = bool(
+            pa
+            and pp
+            and street_parts(pa[2])[1] == street_parts(pp[2])[1]
+            and min(abs(pa[0] - pp[0]), abs(pa[0] - pp[1])) <= NEXT_DOOR
+        )
+        why = judge(r, name, addr, _addresses_overlap, near_number=next_door)
+        if why:
+            accepted[cid] = {
+                "opa_account": r["opa_account"],
+                "parcel_address": r["parcel_address"],
+                "parcel_owner": r["parcel_owner"] or None,
+                "match": why,
+            }
+        else:
+            review.append(
+                {
+                    "building_id": ids[cid],
+                    "building_name": name,
+                    "address": addr,
+                    "candidate_opa": r.get("opa_account"),
+                    "candidate_address": r.get("parcel_address"),
+                    "candidate_owner": r.get("parcel_owner"),
+                    "distance_m": r.get("distance_m"),
+                    "why": "candidate parcel is not school-owned, does not share the address, and the owner name does not match",
+                }
+            )
+    return accepted, review
+
+
+METHOD_WEIGHT = {
+    "address_overlap": 2,
+    "city_address_overlap": 2,
+    "opa_property_address": 2,
+    "geocode_address_overlap": 2,
+    "school_map_point": 1,
+}
+PRIMARY_METHODS = [
+    "school_map_point",
+    "address_overlap",
+    "city_address_overlap",
+    "geocode_address_overlap",
+    "geocode_school_owned",
+    "geocode_contains_public",
+    "geocode_owner_name",
+    "geocode_next_door",
+    "opa_property_address",
+]
+
+
+def resolve_parcel(cands: list[dict], address: str | None) -> dict:
+    """Pick the parcel the methods agree on, and say how sure we are.
+
+    Each method's answer is a vote: a parcel whose address text overlaps the building's
+    (City address, OPA record, or geocode with overlap) counts 2, a map point counts 1 (2 if its
+    parcel address also overlaps), and the other geocode rules count 1. Accounts on the same
+    parcel address (sub-accounts) are one parcel. Confidence is high when two or more
+    methods agree and the runner-up trails by 2 or more, medium for a single address-text
+    match with no rival of equal weight, low otherwise (the other candidates are listed)."""
+    cands = [c for c in cands if c.get("opa_account")]
+    if not cands:
+        return {}
+    pa = split_address(clean_address(address)) if address else None
+
+    def overlaps(c: dict) -> bool:
+        pb = split_address(clean_address(c.get("parcel_address") or ""))
+        return bool(pa and pb and _loose_overlap(pa, pb))
+
+    groups: list[list[dict]] = []
+    for c in cands:
+        pb = split_address(clean_address(c.get("parcel_address") or ""))
+        for g in groups:
+            gb = split_address(clean_address(g[0].get("parcel_address") or ""))
+            same = c["opa_account"] == g[0]["opa_account"] or (pb and gb and _loose_overlap(pb, gb))
+            if same:
+                g.append(c)
+                break
+        else:
+            groups.append([c])
+    scored = []
+    for g in groups:
+        best = {}
+        for c in g:
+            w = METHOD_WEIGHT.get(c["method"], 1)
+            if c["method"] == "school_map_point" and overlaps(c):
+                w = 2
+            best[c["method"]] = max(best.get(c["method"], 0), w)
+        scored.append((sum(best.values()), len(best), g))
+    scored.sort(key=lambda t: (-t[0], -t[1]))
+    top_score, n_methods, top = scored[0]
+    rival = scored[1][0] if len(scored) > 1 else 0
+    if n_methods >= 2 and top_score - rival >= 2:
+        confidence = "high"
+    elif top_score >= 2 and top_score > rival:
+        confidence = "medium"
+    else:
+        confidence = "low"
+    owner = str(top[0].get("parcel_owner") or "").upper()
+    if confidence == "low" and "SCHOOL DIST" in owner and n_methods == 1:
+        confidence = "medium"  # a School District-owned parcel at a school's map point
+    top.sort(
+        key=lambda c: PRIMARY_METHODS.index(c["method"]) if c["method"] in PRIMARY_METHODS else 99
+    )
+    pick = next((c for c in top if c["method"] != "opa_property_address"), top[0])
+    others = sorted({c["opa_account"] for _, _, g in scored[1:] for c in g} - {pick["opa_account"]})
+    return {
+        "opa_account": pick["opa_account"],
+        "parcel_address": pick.get("parcel_address"),
+        "parcel_owner": pick.get("parcel_owner"),
+        "match": pick["method"],
+        "confidence": confidence,
+        "methods": ", ".join(sorted({c["method"] for c in top})),
+        "conflict": ", ".join(others) or None,
+    }
+
+
+def _only_school_parcel_on_street(groups, ids, parcel_of, review, offline) -> dict:
+    """A held school building whose street has exactly one School District-owned parcel within
+    80 house numbers takes it (a school listed at a different number than its parcel)."""
+    from .building_parcels import school_owned_on_street
+
+    held = {r["building_id"] for r in review}
+    todo = {}
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        pa = split_address(clean_address(addr)) if addr else None
+        kind = kind_of(_best(g, "name")[0] or "")
+        if ids[cid] in held and pa and kind == "school_building":
+            todo[cid] = pa
+    cache = school_owned_on_street(
+        sorted({street_parts(p[2])[1] for p in todo.values()}), offline=offline
+    )
+    out = {}
+    for cid, pa in todo.items():
+        close = []
+        for row in cache.get(street_parts(pa[2])[1], []):
+            pb = split_address(clean_address(row.get("address") or ""))
+            if pb and street_parts(pb[2])[1] == street_parts(pa[2])[1] and abs(pb[0] - pa[0]) <= 80:
+                close.append(row)
+        if len({r["brt_id"] for r in close}) == 1:
+            row = close[0]
+            out[cid] = {
+                "opa_account": row["brt_id"],
+                "parcel_address": row["address"],
+                "parcel_owner": " ".join(o for o in [row.get("owner1"), row.get("owner2")] if o)
+                or None,
+                "match": "only_school_owned_parcel_on_street",
+            }
+    return out
+
+
+def _site_code_parcels(claims_by_cluster: dict, parcel_of: dict, ids: dict) -> dict:
+    """An FCA annex with no parcel takes the parcel of the same site's main building."""
+    main_of = {}
+    for cid, g in claims_by_cluster.items():
+        for r in g[g["source"] == "fca"].itertuples():
+            if str(r.key)[4:] == "001" and parcel_of.get(cid):
+                main_of[r.site_code] = cid
+    out = {}
+    for cid, g in claims_by_cluster.items():
+        if parcel_of.get(cid):
+            continue
+        for r in g[g["source"] == "fca"].itertuples():
+            if r.site_code in main_of and main_of[r.site_code] != cid:
+                out[cid] = {
+                    **parcel_of[main_of[r.site_code]],
+                    "match": f"same_site_as_{ids[main_of[r.site_code]]}",
+                }
+                break
+    return out
+
+
+def _same_site_parcels(groups: dict, ids: dict, parcel_of: dict) -> dict:
+    """An annex, little school house, or field house with no parcel of its own sits on the
+    parcel of the building of the same school at the same address (within ten numbers)."""
+    placed = []
+    for cid, g in groups.items():
+        addr, _ = _best(g, "address")
+        pa = split_address(clean_address(addr)) if addr else None
+        if parcel_of[cid] and pa and parcel_of[cid].get("match") != "city_address_ambiguous":
+            schools = {x for v in g["school_ids"].dropna() for x in str(v).split(", ")}
+            placed.append((cid, pa, schools))
+    out = {}
+    for cid, g in groups.items():
+        if parcel_of[cid]:
+            continue
+        addr, _ = _best(g, "address")
+        pa = split_address(clean_address(addr)) if addr else None
+        if not pa or kind_of(_best(g, "name")[0] or "") == "school_building":
+            continue
+        schools = {x for v in g["school_ids"].dropna() for x in str(v).split(", ")}
+        for other, pb, other_schools in placed:
+            near = street_parts(pa[2]) == street_parts(pb[2]) and (
+                _loose_overlap(pa, pb) or abs(pa[0] - pb[0]) <= NEAR_NUMBERS
+            )
+            if near and schools & other_schools:
+                out[cid] = {**parcel_of[other], "match": f"same_site_as_{ids[other]}"}
+                break
+    return out
+
+
+def _addresses_overlap(a: str, b: str | None) -> bool:
+    pa = split_address(clean_address(a)) if isinstance(a, str) else None
+    pb = split_address(clean_address(b)) if isinstance(b, str) else None
+    return bool(pa and pb and _loose_overlap(pa, pb))
 
 
 def _school_point_parcels(claims: pd.DataFrame, ids: dict) -> dict:
@@ -753,6 +1225,7 @@ def _school_building(mc, claims, key_cluster, school_names) -> pd.DataFrame:
 
 
 def write_buildings(t: dict) -> None:
+    pd.DataFrame(t["review"]).to_csv(CORE / "building_parcel_review.csv", index=False)
     for name in ["building", "building_xwalk", "school_building"]:
         t[name].to_parquet(CORE / f"{name}.parquet", index=False)
         t[name].to_csv(CORE / f"{name}.csv", index=False)
@@ -771,7 +1244,10 @@ MART_DOCS = {
     "opa_account": "OPA account of the City parcel the building sits on, when matched; blank otherwise.",
     "parcel_address": "The City's address for that parcel.",
     "parcel_owner": "Owner of that parcel as the City records it.",
-    "parcel_match": "How the parcel was found: school_map_point, address_overlap, city_address_overlap, or none.",
+    "parcel_match": "The method that supplied the parcel (school_map_point, city_address_overlap, opa_property_address, a geocode rule, same_site_as_<building>, or none).",
+    "parcel_confidence": "high: two or more methods agree and no close rival; medium: one address-text match, a School District-owned parcel at the school's map point, or a same-site parcel; low: one weak method (see building_parcel_review); none: no parcel found.",
+    "parcel_methods": "All methods that agree on the chosen parcel, comma-separated.",
+    "parcel_conflict": "OPA accounts other methods suggested for this building, if any.",
     "schools_current": "school_ids listed at this building in the most recent district list, comma-separated.",
     "n_schools_current": "Number of schools listed at this building in the most recent list.",
     "asbestos_items": "Confirmed or assumed asbestos-containing entries in the latest report's room log (sums codes if the building has several).",
@@ -892,3 +1368,86 @@ def write_building_mart(t: dict) -> pd.DataFrame:
     write_documented(mart, MARTS / "building.parquet", docs)
     write_schema_json("building", mart, "one row per building_id", docs)
     return mart
+
+
+def _parcel_review(building: pd.DataFrame, held: list) -> list:
+    """Buildings to check by hand: no parcel, low confidence, or methods that disagree."""
+    out = []
+    held_by_id = {r["building_id"]: r for r in held}
+    for r in building.itertuples():
+        low = r.parcel_confidence in {"low", "none"}
+        if not (low or isinstance(r.parcel_conflict, str)):
+            continue
+        h = held_by_id.get(r.building_id, {})
+        out.append(
+            {
+                "building_id": r.building_id,
+                "building_name": r.building_name,
+                "address": r.address,
+                "chosen_opa": r.opa_account,
+                "chosen_parcel_address": r.parcel_address,
+                "chosen_owner": r.parcel_owner,
+                "methods": r.parcel_methods,
+                "confidence": r.parcel_confidence,
+                "other_accounts": r.parcel_conflict,
+                "held_candidate_address": h.get("candidate_address"),
+                "held_candidate_owner": h.get("candidate_owner"),
+            }
+        )
+    return out
+
+
+def audit_parcels(t: dict, offline: bool = False) -> pd.DataFrame:
+    """Run the independent address-based methods for every building with an address and
+    compare each result with the chosen parcel. Returns one row per building and method."""
+    from .building_parcels import judge, opa_by_address, parcels_by_geocode
+
+    b = t["building"].dropna(subset=["address"]).copy()
+    b["clean"] = b["address"].map(clean_address)
+    b = b[[bool(split_address(a)) for a in b["clean"]]]
+    opa_ans = opa_by_address(sorted(set(b["clean"])), offline=offline)
+    geo = parcels_by_geocode(
+        sorted(
+            {
+                (a, str(z) if pd.notna(z) else None)
+                for a, z in zip(b["clean"], b["zip"], strict=True)
+            }
+        ),
+        offline=offline,
+    )
+    rows = []
+    for r in b.itertuples():
+        pa = split_address(r.clean)
+        hits = {}
+        for row in opa_ans.get(f"{r.clean}|block", []):
+            pb = split_address(clean_address(row.get("location") or ""))
+            if pb and _loose_overlap(pa, pb):
+                hits[row["parcel_number"]] = row
+        if len(hits) == 1:
+            rows.append((r.building_id, "opa_property_address", next(iter(hits))))
+        g = geo.get(r.clean)
+        if g:
+            pp = split_address(clean_address(g.get("parcel_address") or ""))
+            door = bool(
+                pp
+                and street_parts(pa[2])[1] == street_parts(pp[2])[1]
+                and min(abs(pa[0] - pp[0]), abs(pa[0] - pp[1])) <= NEXT_DOOR
+            )
+            why = judge(g, r.building_name, r.clean, _addresses_overlap, near_number=door)
+            if why:
+                rows.append((r.building_id, why, g["opa_account"]))
+    out = pd.DataFrame(rows, columns=["building_id", "method", "opa_account"])
+    return out.merge(
+        t["building"][
+            [
+                "building_id",
+                "building_name",
+                "address",
+                "opa_account",
+                "parcel_match",
+                "parcel_address",
+            ]
+        ],
+        on="building_id",
+        suffixes=("_alt", ""),
+    )

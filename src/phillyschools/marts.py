@@ -117,9 +117,18 @@ TABLES = {
         "one row per confirmed or assumed asbestos material",
         "Materials, spaces, amounts, and damage from each building's latest report.",
     ),
-    "building": ("one row per building_id", "One physical building: name, kind, address, year built, and the City parcel (OPA account) when known."),
-    "building_xwalk": ("building_id x outside key", "Asbestos code, assessment part code, and lead and water folder keys, with how each link was made."),
-    "school_building": ("school_id x building_id x years", "Which schools were in which buildings, from the street address in each year's district list, plus annex links."),
+    "building": (
+        "one row per building_id",
+        "One physical building: name, kind, address, year built, and the City parcel (OPA account) when known.",
+    ),
+    "building_xwalk": (
+        "building_id x outside key",
+        "Asbestos code, assessment part code, and lead and water folder keys, with how each link was made.",
+    ),
+    "school_building": (
+        "school_id x building_id x years",
+        "Which schools were in which buildings, from the street address in each year's district list, plus annex links.",
+    ),
     "facility_condition": (
         "one row per assessed site",
         "Facility condition index, costs, and scores (2020 cycle).",

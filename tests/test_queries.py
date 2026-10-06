@@ -29,3 +29,13 @@ def test_every_query_is_listed_in_the_readme():
     readme = (ROOT / "docs" / "queries" / "README.md").read_text()
     for path in QUERIES:
         assert path.name in readme
+
+
+@pytest.mark.skipif(not BUILT, reason="needs the built core/ and marts/ tables")
+def test_building_registry_covers_every_building_with_unique_anchors():
+    import pandas as pd
+
+    reg = pd.read_csv(ROOT / "registry" / "building_id_registry.csv", dtype=str)
+    b = pd.read_parquet(ROOT / "core" / "building.parquet")
+    assert set(b["building_id"]) <= set(reg["building_id"])
+    assert not reg.duplicated(["anchor_type", "anchor_value"]).any()

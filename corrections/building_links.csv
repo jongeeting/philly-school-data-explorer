@@ -1,3 +1,11 @@
-link_id,source,key,ahera_code,reason
-bl_001,fca,B722002,7222,"FCA Carnell LSH maps to AHERA Carnell Little School House (7222); the sequence rule gives 7221"
-bl_002,fca,B526002,5262,"FCA Elkin LSH maps to AHERA Elkin Little School House (5262); the sequence rule gives 5261"
+link_id,source,key,ahera_code,address,reason
+bl_001,fca,B722002,7222,,FCA Carnell LSH maps to AHERA Carnell Little School House (7222); the sequence rule gives 7221
+bl_002,fca,B526002,5262,,FCA Elkin LSH maps to AHERA Elkin Little School House (5262); the sequence rule gives 5261
+bl_003,water,Alternative Education Center Site 1_N-40AEC1,,4224 N Front St,Same building as the asbestos folder '...(Alt Ed Center)' at 4224 N Front St
+bl_004,water,"Boone, Daniel Site 2_N-21BOD2",,1435 N 26th St,"Achieve Academy at Boone School; the only Boone building in the data is Camelot Academy at Boone, 1435 N 26th St"
+bl_005,water,"Hill, LP Site 1_N-21HSM1",,3133 Ridge Ave,Leslie Pinckney Hill Elementary shares 3133 Ridge Ave with Strawberry Mansion (asbestos code 4450)
+bl_006,water,"Rivera, Ramonita Site 1_N-33RRN1",,2603-2611 N 5th St,Matches the asbestos folder 'Rivera School (Bright Futures)' at 2603-2611 N 5th St
+bl_007,water,"Trinidad, Felix Site 1_N-33TRN1",,1038-48 W Sedgley Ave,Trinidad Head Start; the City parcel at 1038-48 W Sedgley Ave is School District-owned and the asbestos folder is Trinidad Head Start
+bl_008,water,Samuel Powel Administration Building,,301 N 36th St,Same as the asbestos folder 'Samuel Powel Admin Building' at 301 N 36th St
+bl_009,water,Germantown Field (Fieldhouse),,1100 E Sedgwick St,Same name as the assessment part 'Germantown Field (Fieldhouse)' at 1100 E Sedgwick St
+bl_010,fca,B702902,,100 W Duncannon Ave,Olney Stands: the Olney High School field site (the assessment header address is blank); Olney High School is at 100 W Duncannon Ave

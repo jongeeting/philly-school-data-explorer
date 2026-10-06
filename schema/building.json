@@ -1,7 +1,7 @@
 {
  "table": "building",
  "grain": "one row per building_id",
- "rows": 467,
+ "rows": 414,
  "columns": [
   {
    "name": "building_id",
@@ -51,7 +51,22 @@
   {
    "name": "parcel_match",
    "type": "str",
-   "description": "How the parcel was found: school_map_point, address_overlap, city_address_overlap, or none."
+   "description": "The method that supplied the parcel (school_map_point, city_address_overlap, opa_property_address, a geocode rule, same_site_as_<building>, or none)."
+  },
+  {
+   "name": "parcel_confidence",
+   "type": "str",
+   "description": "high: two or more methods agree and no close rival; medium: one address-text match, a School District-owned parcel at the school's map point, or a same-site parcel; low: one weak method (see building_parcel_review); none: no parcel found."
+  },
+  {
+   "name": "parcel_methods",
+   "type": "str",
+   "description": "All methods that agree on the chosen parcel, comma-separated."
+  },
+  {
+   "name": "parcel_conflict",
+   "type": "str",
+   "description": "OPA accounts other methods suggested for this building, if any."
   },
   {
    "name": "schools_current",
