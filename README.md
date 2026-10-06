@@ -82,6 +82,10 @@ Repo owner (this account or a neutral org), neighborhood set for display, how fa
 - **Our compiled and derived data:** CC BY 4.0 ([LICENSE-DATA](LICENSE-DATA)). Please credit "Philly School Data Explorer" and the release version you used.
 - **Source data** keeps its publisher's terms, recorded in `sources/manifest.csv`.
 
+## Cite
+
+Geeting, J. (2026). *Philly School Data Explorer* (version 0.1.0). DOI [10.5281/zenodo.23189127](https://doi.org/10.5281/zenodo.23189127) (all versions). The Zenodo record archives the repository snapshot; the data tables are attached to the [GitHub release](https://github.com/jongeeting/philly-school-data-explorer/releases/tag/v0.1.0).
+
 ## Relationship to Build Philly Now
 
 This project began inside [Build Philly Now](https://buildphillynow.com)'s workspace and shares parcel and boundary data with its property platform. The two are separate projects with separate branding.

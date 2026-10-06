@@ -4,7 +4,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions are for
 
 ## [0.1.0] - 2026-10-06
 
-First public data release (a release candidate: the structure is stable, coverage will grow).
+First public data release (a release candidate: the structure is stable, coverage will grow). Zenodo DOI (all versions): 10.5281/zenodo.23189127.
 
 ### Added
 
