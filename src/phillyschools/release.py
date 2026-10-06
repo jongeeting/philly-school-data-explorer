@@ -247,6 +247,26 @@ No student-level data and no named employees are included.
 """
 
 
+def release_notes(version: str, n_measures: int) -> str:
+    base = f"https://github.com/{REPO}/releases/download/v{version}"
+    return f"""First public data release of Philly School Data Explorer: open, linked data on Philadelphia's public schools, built to be read by people, dashboards, and AI agents alike. This is a release candidate: the structure is stable and coverage will grow.
+
+**Start here:** `README.md` (guardrails), `DATA_DICTIONARY.md` ({n_measures} measures), `VALIDATION.md` (what was checked).
+
+**Get the data**
+- Everything in one file: `{NAME}-v{version}.zip` (core and marts as Parquet and CSV, GeoJSON, schemas, registries, docs, example queries, `datapackage.json`, `SHA256SUMS`).
+- One table at a time, readable from its URL, for example in DuckDB: `read_parquet('{base}/marts__school_year.parquet')`. Files are named `<layer>__<table>.parquet`; `datapackage.json` here lists them all with column descriptions.
+
+**What is in it:** 444 schools and 414 buildings with permanent IDs; enrollment, test scores, attendance, discipline (district and federal), catchments, neighborhood context; buildings, parcels, facility condition, lead paint, drinking-water lead, and asbestos records. 1.03 million school-level measure rows, each with a status and a source. Building-level results are in `marts__building.parquet`.
+
+**Read before you use a number:** read `status` before `value`; environmental, condition, and parcel results are point-in-time; groups under 20 students are suppressed; the October 1 enrollment count can be affected by late re-enrollments; there is no ranking or composite score. 69 open gaps are listed in `docs/DATA_GAPS.md`.
+
+**Terms:** our compilation is CC BY 4.0. The data come from the School District of Philadelphia, the Pennsylvania Department of Education, the U.S. Department of Education, the U.S. Census Bureau, and the City of Philadelphia and remain subject to their terms (`docs/SOURCE_TERMS.md`). Not endorsed by any source.
+
+Verify downloads with `SHA256SUMS`. See `CHANGELOG.md` for details and known limits.
+"""
+
+
 def _copy_tree(pattern_dir: Path, glob: str, dest: Path) -> list[Path]:
     dest.mkdir(parents=True, exist_ok=True)
     out = []
@@ -306,6 +326,7 @@ def build_release(version: str, skip_validation: bool = False) -> dict:
     (pkg / "datapackage.json").write_text(
         json.dumps(datapackage(version, created), indent=1) + "\n"
     )
+    (out / "RELEASE_NOTES.md").write_text(release_notes(version, n_measures))
 
     sums = []
     for p in sorted(pkg.rglob("*")):
