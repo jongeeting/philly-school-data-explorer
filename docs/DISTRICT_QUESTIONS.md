@@ -23,7 +23,7 @@ Open data gaps that someone at the district could close. Generated from [sources
 10. **How are student withdrawals and re-enrollments recorded around the October 1 count, and were past years' counts affected by late re-enrollments or by withdrawals that were not processed?** (GAP-069, high priority)
    - Context: The October 1 enrollment count may include students re-enrolled just before the state funding deadline who had left earlier (Inquirer, 2026-10-06: about 720 re-added, about 2,000 improper withdrawals acknowledged); how withdrawals and re-enrollments are recorded is not published
 11. **Can the district share school-level budget allotments, position counts, and actual spending by school and fiscal year as a data file?** (GAP-070, high priority)
-   - Context: School-level budgets: the district's School Budgets tool (FY16 to FY27, about 240 schools) is interactive and has no export; each school-year is a PDF report from a public URL but a bulk pull has not been done
+   - Context: School-level budgets: allotment detail for FY16 to FY27 is loaded (2,759 school-years from the district's School Budgets tool); the same tool's purchase-summary and position reports are not pulled, and actual spending by school is not published
 12. **Why do the 2019-20 to 2024-25 master lists include only 2 to 4 'Alternate Schools' when 2018-19 and 2025-26 list 25 to 28? Is there a fuller list for those years?** (GAP-006, medium priority)
    - Context: District master lists omit most Alternate Schools in 2020-2025 (2 to 4 programs vs 25 to 28 in 2019 and 2026)
 13. **Has the district ever reassigned a retired ULCS code to a new school?** (GAP-008, medium priority)
