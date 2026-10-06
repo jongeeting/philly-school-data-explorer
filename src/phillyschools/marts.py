@@ -173,6 +173,14 @@ TABLES = {
         "aun x payable year x component",
         "Ready to Learn Block Grant (and earlier PA Accountability Grant) allocations by school district; from 2024-25 split into a foundation amount and the enacted adequacy and tax equity supplements.",
     ),
+    "school_budget": (
+        "school x sy x line",
+        "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",
+    ),
+    "school_budget_report": (
+        "ulcs x sy",
+        "One row per budget report requested, with the printed school total, the sum of line items, and whether the district published a budget for that school and year.",
+    ),
     "building": (
         "one row per building_id",
         "One physical building: name, kind, address, year built, and the City parcel (OPA account) when known.",

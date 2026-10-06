@@ -97,3 +97,33 @@ def test_finance_tables_reconcile_with_the_commission_report():
     m = pd.read_parquet(ROOT / "marts" / "district_finance.parquet")
     p = m[(m["lea_name"] == "Philadelphia City SD") & (m["sy"] == 2024)].iloc[0]
     assert abs(p["basic_education_funding_7110"] - 1_486_042_268) / 1_486_042_268 < 0.001
+
+
+def test_school_budget_parser_handles_both_total_layouts():
+    from phillyschools.school_budgets import parse_budget_text
+
+    body = """
+   2024-2025 School Budget Allotment Detail
+   School Managed Allotments
+        Basic Operating
+          Teacher Allotment                                  1,000
+        Basic Operating Total                                1,000
+   School Managed Allotments Sub-total:                      1,000
+   Centrally Managed Allotments
+        Facilities Total                                       200
+   Centrally Managed Allotments Sub-total:                     200
+"""
+    with_code = parse_budget_text(body + "   Test High School (1234) Total:      1,200\n")
+    without = parse_budget_text(body + "   Test Career High School      1,200\n")
+    for res in (with_code, without):
+        assert res["sy"] == 2025
+        kinds = [r["line_type"] for r in res["rows"]]
+        assert kinds == [
+            "item",
+            "group_total",
+            "scope_subtotal",
+            "group_total",
+            "scope_subtotal",
+            "school_total",
+        ]
+        assert res["rows"][-1]["amount"] == 1200

@@ -364,6 +364,16 @@ def cmd_catalog_afr(a):
     )
 
 
+def cmd_build_school_budget(a):
+    from .school_budgets import write_school_budget
+
+    sb, log = write_school_budget()
+    print(
+        f"  {int(log['has_budget'].sum())} school-years with a budget of {len(log)} reports; "
+        f"{len(sb)} rows"
+    )
+
+
 def cmd_build_finance(a):
     t = build_finance()
     mart = write_finance(t)
@@ -548,6 +558,11 @@ def main():
 
     s = sub.add_parser("catalog-afr", help="catalog the PDE Annual Financial Report files")
     s.set_defaults(fn=cmd_catalog_afr)
+
+    s = sub.add_parser(
+        "build-school-budget", help="parse the district's school budget allotment PDFs"
+    )
+    s.set_defaults(fn=cmd_build_school_budget)
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)

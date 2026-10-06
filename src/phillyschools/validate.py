@@ -154,6 +154,60 @@ def hard_checks() -> list[dict]:
     out += building_checks()
     if (CORE / "finance_lea_line.parquet").exists():
         out += finance_checks()
+    if (CORE / "school_budget.parquet").exists():
+        out += school_budget_checks()
+    return out
+
+
+def school_budget_checks() -> list[dict]:
+    """The budget PDFs against their own printed totals."""
+    sb = pd.read_parquet(CORE / "school_budget.parquet")
+    log = pd.read_parquet(CORE / "school_budget_report.parquet")
+    out = []
+    key = ["ulcs", "sy"]
+    groups = sb[sb["line_type"] == "group_total"].groupby([*key, "scope"])["amount"].sum()
+    subs = sb[sb["line_type"] == "scope_subtotal"].set_index([*key, "scope"])["amount"]
+    bad = int(((groups - subs).dropna() != 0).sum())
+    out.append(
+        _check("school budget group totals add to the scope subtotals", bad == 0, f"{bad} off")
+    )
+    scopes = sb[sb["line_type"] == "scope_subtotal"].groupby(key)["amount"].sum()
+    totals = sb[sb["line_type"] == "school_total"].set_index(key)["amount"]
+    bad = int(((scopes - totals).dropna() != 0).sum())
+    out.append(
+        _check("school budget scope subtotals add to the school total", bad == 0, f"{bad} off")
+    )
+    items = sb[sb["line_type"] == "item"]
+    grouped = items.groupby([*key, "scope", "allotment_group"])["amount"].sum()
+    gt = sb[sb["line_type"] == "group_total"].set_index([*key, "scope", "allotment_group"])[
+        "amount"
+    ]
+    both = pd.concat([grouped, gt], axis=1, join="inner").dropna()
+    bad = int((both.iloc[:, 0] != both.iloc[:, 1]).sum())
+    out.append(
+        _check(
+            "school budget line items add to their group totals",
+            bad == 0,
+            f"{bad} of {len(both)} off",
+        )
+    )
+    empty = log[~log["has_budget"]]
+    out.append(
+        _check(
+            "reports without a budget are empty ('No data available') pages",
+            (empty["n_rows"] == 0).all(),
+            f"{len(empty)} reports without a budget",
+        )
+    )
+    unmapped = sb[sb["school_id"].isna()]["ulcs"].nunique()
+    out.append(
+        _check(
+            "school budget ULCS codes link to a school_id (a few non-school programs excepted)",
+            unmapped <= 3,
+            f"{unmapped} codes without a school_id",
+            hard=False,
+        )
+    )
     return out
 
 

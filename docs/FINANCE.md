@@ -56,3 +56,10 @@ The five spending functions add to total expenditures for all 7,422 agency-years
 - The current year (2024-25) is the state's unaudited data.
 - Charter school finances come from each charter's own report; charter tuition paid by districts and charter revenue are different views of the same money, and they are not netted.
 - Not yet loaded: enrollment by charter school (so per-pupil charter figures are not possible), school-level budgets (in progress), debt, and years before 2014-15 (older AFR files are on the state's FTP site).
+
+## School budgets
+
+`school_budget` holds the district's School Budget Allotment Detail for each school and fiscal year from FY16 to FY27: 2,759 school-years, about 74,000 lines, parsed from the public reports in the district's School Budgets tool (`psd build-school-budget`). Each report lists school-managed and centrally managed allotments by group (basic operating, Title I, special education, and so on). Rows carry `line_type` (`item`, `group_total`, `scope_subtotal`, `school_total`); sum only one type to avoid double counting. Every report reconciles exactly: items add to group totals, groups to scope subtotals, scopes to the school total.
+
+These are budgets set in the spring or summer, not actual spending; principals decide purchases within the school-managed allotments, and centrally managed allotments are money the district spends on a school's behalf. The district's purchase-summary and position reports are not loaded yet, and 145 school-year requests returned "No data available". Two codes in the tool (Al-Aqsa Islamic School, Fox Chase Farm) are not in the district school list and have no `school_id`. FY26 and FY27 are plans for the current and coming year.
+
