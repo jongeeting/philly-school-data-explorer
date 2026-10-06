@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**50 unresolved** of 65 tracked (12 high priority).
+**53 unresolved** of 68 tracked (13 high priority).
 
 **Kinds of gap**
 
@@ -45,6 +45,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-034 | Catchments for SY 2025-26 and 2026-27 are not published (latest is 2024-25) | `not-collected-by-district` | medium | open | district | Watch for the next release; ask the district |
 | GAP-035 | Council districts, state legislative districts, wards, ZIP codes, and police districts are not yet in geo_unit | `not-yet-ingested` | medium | open | us | Add from City and state publishers; same block weights |
 | GAP-036 | ACS neighborhood context (income, education, homeownership) not loaded; the Census API needs a free key *(ACS 2020-2024 loaded keyless from the table-based Summary File into area_context 2026-10-04)* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables from the keyless Summary File (or the API with a free key); store any key as an env var and GitHub secret, never in recorded URLs |
+| GAP-066 | 115 of 467 buildings have no City parcel (OPA) match; the district's street address is often not the parcel's address, and annexes, field houses, and buildings known only from an environmental folder have no map point | `not-yet-ingested` | medium | open | us | Geocode the 65 buildings with no address from their reports; match unmatched addresses against the City parcel layer by proximity |
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | us | Decide (OpenDataPhilly set is the default) |
 | GAP-052 | Only one ACS period (2020-2024) is loaded and applied to every school year; earlier years (for example 2015-2019) would fit pre-pandemic comparisons better *(ACS 2015-2019 loaded 2026-10-04 (sequence-based file, 2010 tracts crosswalked through 2020 blocks))* | `not-yet-ingested` | low | closed | us | Load the 2015-2019 ACS 5-year tables (2010 tract boundaries need their own crosswalk) |
 | GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error *(MOEs, CV, and reliability added 2026-10-04 (Census approximation formulas; median income average has no MOE))* | `not-yet-ingested` | low | closed | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |
@@ -87,6 +88,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-022 | Facilities dashboard (scores for building condition, program alignment, utilization, neighborhood vulnerability, plus per-school recommendations) runs in a Qlik app with no export; scripted access is refused *(Wayback has the page shell only, no data)* | `not-public` | high | open | district | Ask the district for an export or API access; meanwhile save the master-plan PDFs; keyed by ULCS |
 | GAP-024 | Maintenance work orders, bus on-time history, substitute fill rates, and IEP evaluation timeliness are not public *(Operations is the least covered area)* | `not-public` | high | open | district | Ask the district what exists internally; consider a data request |
 | GAP-037 | Board minutes for the April 23 and April 30, 2026 meetings (the facilities plan vote) are not posted; the May 28 approval item has no attachment | `not-public` | high | open | district | Watch later packets; ask the Board office |
+| GAP-067 | No building-level list from the district: which structures it owns or uses, their addresses, and which schools occupy each; buildings here are inferred from school lists and environmental and assessment records | `not-public` | high | open | district | Ask the district for its building inventory (building ID, address, parcel or OPA number) and school-to-building assignments |
 | GAP-023 | AHERA asbestos and lead reports are likely PDFs, not structured *(Duplicate of GAP-033)* | `not-yet-ingested` | medium | closed | us | Download, hash, extract room-level results |
 | GAP-025 | Staff vacancies (due Aug 2025), SPOTlight scorecard (due spring 2025), and Pre-K sites (due spring 2026) are past the district's promised refresh dates *(Per district data page, checked 2026-10-04)* | `not-collected-by-district` | medium | open | district | Track missed promises in the release table |
 | GAP-026 | Goals and Guardrails results are PDFs, with targets reset in April 2024 | `not-yet-ingested` | medium | open | district | Extract per-report tables; version targets in the commitment table |
@@ -99,6 +101,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-042 | 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings *(core/board_video_catalog.csv has 292)* | `not-public` | low | open | district | Ask the district for a video list, or find them via search or individual media pages |
 | GAP-063 | Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders | `not-collected-by-district` | low | open | district | Read the 2019 tables; ask whether charters post newer results elsewhere |
 | GAP-065 | AHERA reports before 2023 use an older layout; the latest report for 18 buildings is from 2016 or 2019, and 6 reports could not be read | `not-yet-ingested` | low | open | district | Check whether the district has newer reports for these buildings; read the older layout |
+| GAP-068 | School-to-building history before 2019 is unavailable (2017-18 and earlier school lists are not read for addresses), so moves and co-locations before 2019 are not shown | `not-yet-ingested` | low | open | us | Read street addresses from the 2017-18 Excel master list and the longitudinal list if it has them |
 
 ## Workforce
 

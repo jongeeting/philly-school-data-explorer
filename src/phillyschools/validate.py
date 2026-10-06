@@ -151,6 +151,63 @@ def hard_checks() -> list[dict]:
             f"grades/all = {ratio:.4f} over {len(j)} school-years",
         )
     )
+    out += building_checks()
+    return out
+
+
+def building_checks() -> list[dict]:
+    b = pd.read_parquet(CORE / "building.parquet")
+    xw = pd.read_parquet(CORE / "building_xwalk.parquet")
+    sb = pd.read_parquet(CORE / "school_building.parquet")
+    school = pd.read_parquet(CORE / "school.parquet")
+    placeholder = pd.read_parquet(CORE / "school_placeholder.parquet")
+    out = [
+        _check("building_id is unique", b["building_id"].is_unique, f"{len(b)} buildings"),
+        _check(
+            "every crosswalk key points at a building",
+            xw["building_id"].isin(b["building_id"]).all(),
+            f"{len(xw)} keys",
+        ),
+        _check(
+            "no outside key maps to two buildings",
+            not xw.duplicated(["key_type", "key_value"]).any(),
+            "",
+        ),
+        _check(
+            "school_building points at real schools and buildings",
+            sb["building_id"].isin(b["building_id"]).all()
+            and sb["school_id"]
+            .str.split(", ")
+            .explode()
+            .isin(set(school["school_id"]) | set(placeholder["school_id"]))
+            .all(),
+            f"{len(sb)} rows",
+        ),
+    ]
+    listed = set(school.loc[school["listed_in_latest_year"], "school_id"])
+    placed = set(sb.loc[sb["role"] == "primary", "school_id"])
+    out.append(
+        _check(
+            "most listed schools have a building from the district list (95%)",
+            len(listed & placed) / len(listed) >= 0.95,
+            f"{len(listed & placed)} of {len(listed)}",
+            hard=False,
+        )
+    )
+    a = pd.read_parquet(CORE / "building_asbestos.parquet")
+    lost = a[
+        a["is_latest"]
+        & ~a["building_code"].isin(xw.loc[xw["key_type"] == "ahera_code", "key_value"])
+    ]
+    out.append(
+        _check("every latest asbestos report has a building", lost.empty, f"{len(lost)} without")
+    )
+    fp = pd.read_parquet(CORE / "facility_condition_part.parquet")
+    fb = fp[fp["part_code"].str[0] == "B"]
+    miss = fb[~fb["part_code"].isin(xw.loc[xw["key_type"] == "fca_part_code", "key_value"])]
+    out.append(
+        _check("every assessed building has a building_id", miss.empty, f"{len(miss)} without")
+    )
     return out
 
 

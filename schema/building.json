@@ -1,0 +1,137 @@
+{
+ "table": "building",
+ "grain": "one row per building_id",
+ "rows": 467,
+ "columns": [
+  {
+   "name": "building_id",
+   "type": "str",
+   "description": "Permanent minted building ID (bld_NNNNN); never reused. Outside keys are in building_xwalk."
+  },
+  {
+   "name": "building_name",
+   "type": "str",
+   "description": "Name on the asbestos report cover, else the school list or folder name."
+  },
+  {
+   "name": "building_kind",
+   "type": "str",
+   "description": "school_building, annex, little_school_house, field_house, pool, garage_or_barn, office_or_center, or farm_or_outdoor, from the name."
+  },
+  {
+   "name": "address",
+   "type": "str",
+   "description": "Street address: the district school list first, else the asbestos report, assessment, or lead folder."
+  },
+  {
+   "name": "zip",
+   "type": "str",
+   "description": "ZIP code where a source gives one."
+  },
+  {
+   "name": "year_built",
+   "type": "float64",
+   "description": "Year built from the asbestos report cover or the facility assessment."
+  },
+  {
+   "name": "opa_account",
+   "type": "str",
+   "description": "OPA account of the City parcel the building sits on, when matched; blank otherwise."
+  },
+  {
+   "name": "parcel_address",
+   "type": "str",
+   "description": "The City's address for that parcel."
+  },
+  {
+   "name": "parcel_owner",
+   "type": "str",
+   "description": "Owner of that parcel as the City records it."
+  },
+  {
+   "name": "parcel_match",
+   "type": "str",
+   "description": "How the parcel was found: school_map_point, address_overlap, city_address_overlap, or none."
+  },
+  {
+   "name": "schools_current",
+   "type": "str",
+   "description": "school_ids listed at this building in the most recent district list, comma-separated."
+  },
+  {
+   "name": "n_schools_current",
+   "type": "int64",
+   "description": "Number of schools listed at this building in the most recent list."
+  },
+  {
+   "name": "asbestos_items",
+   "type": "float64",
+   "description": "Confirmed or assumed asbestos-containing entries in the latest report's room log (sums codes if the building has several)."
+  },
+  {
+   "name": "asbestos_items_damaged",
+   "type": "float64",
+   "description": "Of those, entries with damage recorded at inspection."
+  },
+  {
+   "name": "asbestos_report_sy",
+   "type": "Int64",
+   "description": "School year of the asbestos report."
+  },
+  {
+   "name": "lead_components_tested",
+   "type": "float64",
+   "description": "Painted components tested by XRF in the latest full lead-safe survey."
+  },
+  {
+   "name": "lead_components_positive",
+   "type": "float64",
+   "description": "Components the inspector called positive for lead paint."
+  },
+  {
+   "name": "lead_positive_damaged",
+   "type": "float64",
+   "description": "Positive components with damaged paint at assessment."
+  },
+  {
+   "name": "lead_survey_sy",
+   "type": "Int64",
+   "description": "School year the lead survey ended."
+  },
+  {
+   "name": "water_outlets_tested",
+   "type": "float64",
+   "description": "Drinking water outlets tested in the latest initial lead-in-water test."
+  },
+  {
+   "name": "water_outlets_above_action",
+   "type": "object",
+   "description": "Outlets above the district's 10 ppb action level on first sample."
+  },
+  {
+   "name": "water_sample_sy",
+   "type": "Int64",
+   "description": "School year of the water sampling."
+  },
+  {
+   "name": "fca_fci_pct",
+   "type": "float64",
+   "description": "Facility condition index of this building from the 2020 assessment (repair cost / replacement value)."
+  },
+  {
+   "name": "fca_repair_cost",
+   "type": "float64",
+   "description": "Assessed repair cost in dollars."
+  },
+  {
+   "name": "fca_replacement_value",
+   "type": "float64",
+   "description": "Replacement value in dollars."
+  },
+  {
+   "name": "fca_report_sy",
+   "type": "Int64",
+   "description": "School year of the assessment report."
+  }
+ ]
+}

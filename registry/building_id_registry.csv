@@ -1,0 +1,1602 @@
+building_id,anchor_type,anchor_value,minted_on
+bld_00001,ahera_code,1010,2026-10-06
+bld_00001,site_folder,"Bartram, John Site 1_SW42BAJ1",2026-10-06
+bld_00001,site_folder,John Bartram_2401 S 67th St_19142,2026-10-06
+bld_00001,master_address,sch_00001|2401 S 67TH ST,2026-10-06
+bld_00001,master_address,sch_00001|2401 S. 67TH ST.,2026-10-06
+bld_00002,ahera_code,1020,2026-10-06
+bld_00002,site_folder,West Philadelphia Site 2_W-39WPA2,2026-10-06
+bld_00002,master_address,sch_00002|4901 CHESTNUT ST,2026-10-06
+bld_00002,master_address,sch_00002|4901 CHESTNUT ST.,2026-10-06
+bld_00003,ahera_code,1030,2026-10-06
+bld_00003,site_folder,School of the Future Site 1_W-04SOF1,2026-10-06
+bld_00003,master_address,sch_00003|4021 PARKSIDE AVE,2026-10-06
+bld_00003,master_address,sch_00003|4021 PARKSIDE AVE.,2026-10-06
+bld_00004,ahera_code,1050,2026-10-06
+bld_00004,site_folder,Paul Robeson_4125 Ludlow St_19104,2026-10-06
+bld_00004,site_folder,"Robeson, Paul Site 1_W-04RPL1",2026-10-06
+bld_00004,master_address,sch_00004|4125 LUDLOW ST,2026-10-06
+bld_00004,master_address,sch_00004|4125 LUDLOW ST.,2026-10-06
+bld_00005,ahera_code,1100,2026-10-06
+bld_00005,site_folder,"Sayre, William Site 1_W-39SAW1",2026-10-06
+bld_00005,site_folder,William L. Sayre_5800 Walnut St_19139,2026-10-06
+bld_00005,master_address,sch_00005|5800 WALNUT ST,2026-10-06
+bld_00005,master_address,sch_00005|5800 WALNUT ST.,2026-10-06
+bld_00006,ahera_code,1130,2026-10-06
+bld_00006,site_folder,"Tilden, William Site 1_SW42TWT1",2026-10-06
+bld_00006,site_folder,Tilden_6601 Elmwood Avenue_19142,2026-10-06
+bld_00006,master_address,sch_00006|6601 ELMWOOD AVE,2026-10-06
+bld_00006,master_address,sch_00006|6601 ELMWOOD AVE.,2026-10-06
+bld_00007,ahera_code,1160,2026-10-06
+bld_00007,site_folder,Motivation HS - KIPP West Philadelphia (old Turner)_5900 Baltimore Ave_19143,2026-10-06
+bld_00007,site_folder,"Turner, John Site 1_SW43TJP1",2026-10-06
+bld_00007,master_address,sch_00007|5900 BALTIMORE AVE,2026-10-06
+bld_00007,master_address,sch_00007|5900 BALTIMORE AVE.,2026-10-06
+bld_00007,master_address,sch_00124|5900 BALTIMORE AVE,2026-10-06
+bld_00007,master_address,sch_00124|5900 BALTIMORE AVE.,2026-10-06
+bld_00008,ahera_code,1200,2026-10-06
+bld_00008,site_folder,"Barry, John Site 1_W-39BAR1",2026-10-06
+bld_00008,site_folder,John Barry_5900 Race St_19139,2026-10-06
+bld_00008,master_address,sch_00008|5900 RACE ST,2026-10-06
+bld_00008,master_address,sch_00008|5900 RACE ST.,2026-10-06
+bld_00009,ahera_code,1230,2026-10-06
+bld_00009,site_folder,"Bryant, William Site 1_W-43BWC1",2026-10-06
+bld_00009,site_folder,William C. Bryant Promise Academy_6001 Cedar Ave_19143,2026-10-06
+bld_00009,master_address,sch_00009|6001 CEDAR AVE,2026-10-06
+bld_00009,master_address,sch_00009|6001 CEDAR AVE.,2026-10-06
+bld_00010,ahera_code,1250,2026-10-06
+bld_00010,site_folder,"Catharine, Joseph Site 1_SW42CJW1",2026-10-06
+bld_00010,site_folder,Joseph Catharine_6600 Chester Ave_19142,2026-10-06
+bld_00010,master_address,sch_00010|6600 CHESTER AVE,2026-10-06
+bld_00010,master_address,sch_00010|6600 CHESTER AVE.,2026-10-06
+bld_00011,site_folder,"Comegys, Benjamin Site 1_SW43CBB1",2026-10-06
+bld_00011,master_address,sch_00011|5100 GREENWAY AVE,2026-10-06
+bld_00011,master_address,sch_00011|5100 GREENWAY AVE.,2026-10-06
+bld_00012,ahera_code,1280,2026-10-06
+bld_00012,site_folder,"Alexander, Sadie Site 1_W-04AST1",2026-10-06
+bld_00012,master_address,sch_00012|4209 SPRUCE ST,2026-10-06
+bld_00012,master_address,sch_00012|4209 SPRUCE ST.,2026-10-06
+bld_00013,ahera_code,1290,2026-10-06
+bld_00013,fca_part_code,B129001,2026-10-06
+bld_00013,site_folder,Andrew Hamilton_5640 Spruce St_19139,2026-10-06
+bld_00013,site_folder,"Hamilton, Andrew Site 1_W-39HAM1",2026-10-06
+bld_00013,master_address,sch_00013|5640 SPRUCE ST,2026-10-06
+bld_00013,master_address,sch_00013|5640 SPRUCE ST.,2026-10-06
+bld_00014,ahera_code,1300,2026-10-06
+bld_00014,site_folder,Avery D. Harrington_5300-34 Baltimore Ave_19143,2026-10-06
+bld_00014,site_folder,"Harrington, Avery Site 1_SW43HAD1",2026-10-06
+bld_00014,master_address,sch_00014|5300 BALTIMORE AVE,2026-10-06
+bld_00014,master_address,sch_00014|5300 BALTIMORE AVE.,2026-10-06
+bld_00015,ahera_code,1340,2026-10-06
+bld_00015,site_folder,Henry C. Lea_4700 Locust St_19139,2026-10-06
+bld_00015,site_folder,"Lea, Henry Site 1_W-39LHC1",2026-10-06
+bld_00015,master_address,sch_00015|4700 LOCUST ST,2026-10-06
+bld_00015,master_address,sch_00015|4700 LOCUST ST.,2026-10-06
+bld_00016,ahera_code,1350,2026-10-06
+bld_00016,site_folder,"Longstreth, William Site 1_SW43LWC1",2026-10-06
+bld_00016,site_folder,William C. Longstreth_5700 Willows Ave_19143,2026-10-06
+bld_00016,master_address,sch_00016|5700 WILLOWS AVE,2026-10-06
+bld_00016,master_address,sch_00016|5700 WILLOWS AVE.,2026-10-06
+bld_00017,ahera_code,1360,2026-10-06
+bld_00017,site_folder,"McMichael, Morton Site 1_W-04MCM1",2026-10-06
+bld_00017,site_folder,Morton McMichael_3543 Fairmount Ave_19104,2026-10-06
+bld_00017,master_address,sch_00017|3543 FAIRMOUNT AVE,2026-10-06
+bld_00017,master_address,sch_00017|3543 FAIRMOUNT AVE.,2026-10-06
+bld_00018,ahera_code,1370,2026-10-06
+bld_00018,site_folder,"Mitchell, Silas Site 1_SW43MAH1",2026-10-06
+bld_00018,site_folder,S. Weir Mitchell_5500 Kingsessing Ave_19143,2026-10-06
+bld_00018,master_address,sch_00018|5500 KINGSESSING AVE,2026-10-06
+bld_00018,master_address,sch_00018|5500 KINGSESSING AVE.,2026-10-06
+bld_00019,ahera_code,1380,2026-10-06
+bld_00019,site_folder,"Morton, Thomas Site 1_SW42MTG1",2026-10-06
+bld_00019,site_folder,Thomas G. Morton_2501 S 63rd Street_19122,2026-10-06
+bld_00019,master_address,sch_00019|2501 S 63RD ST,2026-10-06
+bld_00019,master_address,sch_00019|2501 S. 63RD ST.,2026-10-06
+bld_00020,master_address,sch_00020|301 N 36TH ST,2026-10-06
+bld_00020,master_address,sch_00020|301 N. 36TH ST.,2026-10-06
+bld_00021,site_folder,"Powel, Samuel | Science Leadership Academy Site 1_W-04PSL1",2026-10-06
+bld_00021,master_address,sch_00020|3610 WARREN ST,2026-10-06
+bld_00021,master_address,sch_00032|3610 WARREN ST,2026-10-06
+bld_00022,ahera_code,1400,2026-10-06
+bld_00022,site_folder,John M. Patterson_7001 Buist Ave_19142,2026-10-06
+bld_00022,site_folder,"Patterson, John Site 1_SW42PJM1",2026-10-06
+bld_00022,master_address,sch_00021|7000 BUIST AVE,2026-10-06
+bld_00022,master_address,sch_00021|7000 BUIST AVE.,2026-10-06
+bld_00023,ahera_code,1410,2026-10-06
+bld_00023,site_folder,James Rhoads_4901 Parrish St_19139,2026-10-06
+bld_00023,site_folder,"Rhoads, James Site 1_W-39RJA1",2026-10-06
+bld_00023,master_address,sch_00022|4901 PARRISH ST,2026-10-06
+bld_00023,master_address,sch_00022|4901 PARRISH ST.,2026-10-06
+bld_00024,ahera_code,1420,2026-10-06
+bld_00024,site_folder,Martha Washington_766 N 44th St_19104,2026-10-06
+bld_00024,site_folder,"Washington, Martha Site 1_W-04WMD1",2026-10-06
+bld_00024,master_address,sch_00023|766 N 44TH ST,2026-10-06
+bld_00024,master_address,sch_00023|766 N. 44TH ST.,2026-10-06
+bld_00025,ahera_code,1440,2026-10-06
+bld_00025,site_folder,"Penrose | Read, Thomas Site 1_SW53PER1",2026-10-06
+bld_00025,site_folder,Penrose_2515 S 78th St_19153,2026-10-06
+bld_00025,master_address,sch_00024|2515 S 78TH ST,2026-10-06
+bld_00025,master_address,sch_00024|2515 S. 78TH ST.,2026-10-06
+bld_00026,ahera_code,1460,2026-10-06
+bld_00026,site_folder,Add B. Anderson_1034 S 60th St_19143,2026-10-06
+bld_00026,site_folder,"Anderson, Add Site 1_W-43AAB1",2026-10-06
+bld_00026,master_address,sch_00025|1034 S 60TH ST,2026-10-06
+bld_00026,master_address,sch_00025|1034 S. 60TH ST.,2026-10-06
+bld_00027,ahera_code,1470,2026-10-06
+bld_00027,site_folder,Alain Locke_4550 Haverford Ave_19139,2026-10-06
+bld_00027,site_folder,"Locke, Alain Site 1_W-39LOA1",2026-10-06
+bld_00027,master_address,sch_00026|4550 HAVERFORD AVE,2026-10-06
+bld_00027,master_address,sch_00026|4550 HAVERFORD AVE.,2026-10-06
+bld_00028,ahera_code,1490,2026-10-06
+bld_00028,site_folder,"Blankenburg, Rudolph Site 1_W-31BLR1",2026-10-06
+bld_00028,site_folder,Rudolph Blankenburg_4600 W Girard Ave_19131,2026-10-06
+bld_00028,master_address,sch_00027|4600 W GIRARD AVE,2026-10-06
+bld_00028,master_address,sch_00027|4600 W. GIRARD AVE.,2026-10-06
+bld_00029,ahera_code,1120,2026-10-06
+bld_00029,site_folder,Parkway West_4725 Fairmount Ave_19139,2026-10-06
+bld_00029,master_address,sch_00028|4725 FAIRMOUNT AVE,2026-10-06
+bld_00029,master_address,sch_00028|4725 FAIRMOUNT AVE.,2026-10-06
+bld_00029,master_address,sch_00193|4725 FAIRMOUNT AVE,2026-10-06
+bld_00029,master_address,sch_00193|4725 FAIRMOUNT AVE.,2026-10-06
+bld_00030,ahera_code,2000,2026-10-06
+bld_00030,site_folder,South Philadelphia Site 1_S-48SPA1,2026-10-06
+bld_00030,site_folder,South Philadelphia_2101 S Broad St_19148,2026-10-06
+bld_00030,master_address,sch_00029|2101 S BROAD ST,2026-10-06
+bld_00030,master_address,sch_00029|2101 S. BROAD ST.,2026-10-06
+bld_00030,master_address,sch_00165|2101 S BROAD ST,2026-10-06
+bld_00030,master_address,sch_00165|2101 S. BROAD ST.,2026-10-06
+bld_00031,ahera_code,2650,2026-10-06
+bld_00031,site_folder,Ben Franklin-Science Leadership_550 N Broad St_19130,2026-10-06
+bld_00031,site_folder,"Franklin, Benjamin Site 1 (548 North Broad Street)_N-30FBN1",2026-10-06
+bld_00031,master_address,sch_00030|550 N BROAD ST,2026-10-06
+bld_00031,master_address,sch_00030|550 N. BROAD ST.,2026-10-06
+bld_00031,master_address,sch_00060|550 N BROAD ST,2026-10-06
+bld_00031,master_address,"sch_00060|550 N BROAD ST, SCIENCE LEADERSHIP ACADEMY, SUITE 202",2026-10-06
+bld_00031,master_address,sch_00067|550 N BROAD ST,2026-10-06
+bld_00031,master_address,sch_00067|550 N. BROAD ST.,2026-10-06
+bld_00032,ahera_code,2020,2026-10-06
+bld_00032,site_folder,Creative and Performing Arts Site 1_S-47CPA1,2026-10-06
+bld_00032,site_folder,Creative and Performing Arts_901 S Broad St_19147,2026-10-06
+bld_00032,master_address,sch_00031|901 S BROAD ST,2026-10-06
+bld_00032,master_address,sch_00031|901 S. BROAD ST.,2026-10-06
+bld_00033,master_address,sch_00032|3600 MARKET ST,2026-10-06
+bld_00033,master_address,sch_00032|3600 MARKET ST.,2026-10-06
+bld_00034,ahera_code,2140,2026-10-06
+bld_00034,site_folder,Julia R. Masterman_1699 Spring Garden St_19130,2026-10-06
+bld_00034,site_folder,"Masterman, Julia Site 1_N-30MSJ1",2026-10-06
+bld_00034,master_address,sch_00033|1699 SPRING GARDEN ST,2026-10-06
+bld_00034,master_address,sch_00033|1699 SPRING GARDEN ST.,2026-10-06
+bld_00035,ahera_code,2160,2026-10-06
+bld_00035,site_folder,"Furness, Horace Site 1_S-48FHH1",2026-10-06
+bld_00035,site_folder,Horace Furness_1900 S 03rd St_19148,2026-10-06
+bld_00035,master_address,sch_00034|1900 S 3RD ST,2026-10-06
+bld_00035,master_address,sch_00034|1900 S. 3RD ST.,2026-10-06
+bld_00036,ahera_code,2190,2026-10-06
+bld_00036,site_folder,D. Newlin Fell_900 W Oregon Ave_19148,2026-10-06
+bld_00036,site_folder,Delaplaine McDaniel_900 W Oregon Ave_19148,2026-10-06
+bld_00036,site_folder,"Fell, David Site 1_S-48FDN1",2026-10-06
+bld_00036,master_address,sch_00035|900 W OREGON AVE,2026-10-06
+bld_00036,master_address,sch_00035|900 W. OREGON AVE.,2026-10-06
+bld_00037,ahera_code,2360,2026-10-06
+bld_00037,site_folder,"Bache, Alexander Site 1_N-30BAD1",2026-10-06
+bld_00037,site_folder,Bache-Martin (Martin Building)_2201 Brown St_19130,2026-10-06
+bld_00037,site_folder,"Martin, Willis and Elizabeth Site 1_N-30MAW1",2026-10-06
+bld_00037,master_address,sch_00036|2201 BROWN ST,2026-10-06
+bld_00037,master_address,sch_00036|2201 BROWN ST.,2026-10-06
+bld_00038,ahera_code,2240,2026-10-06
+bld_00038,site_folder,"Bregy, Francois Site 1_S-45BFA1",2026-10-06
+bld_00038,site_folder,F. Amedee Bregy_1700 Bigler St_19145,2026-10-06
+bld_00038,master_address,sch_00037|1700 BIGLER ST,2026-10-06
+bld_00038,master_address,sch_00037|1700 BIGLER ST.,2026-10-06
+bld_00039,ahera_code,2110,2026-10-06
+bld_00039,site_folder,"Barratt, Norris Site 1_S-46BNS1",2026-10-06
+bld_00039,site_folder,Norris S. Barratt_1599 Wharton St_19146,2026-10-06
+bld_00039,master_address,sch_00038|1599 WHARTON ST,2026-10-06
+bld_00039,master_address,sch_00038|1599 WHARTON ST.,2026-10-06
+bld_00040,ahera_code,2290,2026-10-06
+bld_00040,site_folder,Franklin Learning Center Site 1_N-30FLC1,2026-10-06
+bld_00040,site_folder,Franklin Learning Center_616 N 15th St_19130,2026-10-06
+bld_00040,master_address,sch_00039|616 N 15TH ST,2026-10-06
+bld_00040,master_address,sch_00039|616 N. 15TH ST.,2026-10-06
+bld_00041,ahera_code,2310,2026-10-06
+bld_00041,master_address,sch_00040|1435 N 26TH ST,2026-10-06
+bld_00041,master_address,sch_00040|1435 N. 26TH ST.,2026-10-06
+bld_00041,master_address,sch_00298|1435 N 26TH ST,2026-10-06
+bld_00041,master_address,sch_00298|1435 N. 26TH ST.,2026-10-06
+bld_00042,ahera_code,2320,2026-10-06
+bld_00042,site_folder,"Girard, Stephen Site 1_S-45GIS1",2026-10-06
+bld_00042,site_folder,Stephen Girard_1800 Snyder Ave_19145,2026-10-06
+bld_00042,master_address,sch_00041|1800 SNYDER AVE,2026-10-06
+bld_00042,master_address,sch_00041|1800 SNYDER AVE.,2026-10-06
+bld_00043,ahera_code,2340,2026-10-06
+bld_00043,fca_part_code,B234001,2026-10-06
+bld_00043,site_folder,General George A. McCall_325 S. 7th Street_19106,2026-10-06
+bld_00043,site_folder,"McCall, George Site 1_CC06MGA1",2026-10-06
+bld_00043,master_address,sch_00042|325 S 7TH ST,2026-10-06
+bld_00043,master_address,sch_00042|325 S. 7TH ST.,2026-10-06
+bld_00044,ahera_code,2370,2026-10-06
+bld_00044,site_folder,"McDaniel, Delaplaine Site 1_S-45MDD1",2026-10-06
+bld_00044,master_address,sch_00043|1801 S 22ND ST,2026-10-06
+bld_00044,master_address,sch_00043|1801 S. 22ND ST.,2026-10-06
+bld_00045,ahera_code,2380,2026-10-06
+bld_00045,site_folder,"Meredith, William Site 1_S-47MEW1",2026-10-06
+bld_00045,site_folder,William M. Meredith_725 S 05th St_19147,2026-10-06
+bld_00045,master_address,sch_00044|725 S 5TH ST,2026-10-06
+bld_00045,master_address,sch_00044|725 S. 5TH ST.,2026-10-06
+bld_00046,ahera_code,2390,2026-10-06
+bld_00046,fca_part_code,B239001,2026-10-06
+bld_00046,site_folder,"Morris, Robert Site 1_N-21MRO1",2026-10-06
+bld_00046,site_folder,Robert Morris_2600 W Thompson St_19121,2026-10-06
+bld_00046,master_address,sch_00045|2600 W THOMPSON ST,2026-10-06
+bld_00046,master_address,sch_00045|2600 W. THOMPSON ST.,2026-10-06
+bld_00047,ahera_code,2321,2026-10-06
+bld_00047,site_folder,Girard Academic Music Program Site 1_S-45GMP1,2026-10-06
+bld_00047,site_folder,Girard Academic Music Program_2136 Ritner St_19145,2026-10-06
+bld_00047,master_address,sch_00046|2136 W RITNER ST,2026-10-06
+bld_00047,master_address,"sch_00046|2136 W RITNER ST, GAMP",2026-10-06
+bld_00047,master_address,sch_00046|2136 W. RITNER ST.,2026-10-06
+bld_00048,ahera_code,2450,2026-10-06
+bld_00048,site_folder,Edwin M. Stanton_901 South 17th Street_19146,2026-10-06
+bld_00048,site_folder,"Stanton, Edwin Site 1_S-46STN1",2026-10-06
+bld_00048,master_address,sch_00047|901 S. 17TH ST.,2026-10-06
+bld_00049,ahera_code,2470,2026-10-06
+bld_00049,site_folder,Albert M. Greenfield_2200 Chestnut St_19103,2026-10-06
+bld_00049,site_folder,"Greenfield, Albert Site 1_CC03GAM1",2026-10-06
+bld_00049,master_address,sch_00048|2200 CHESTNUT ST,2026-10-06
+bld_00049,master_address,sch_00048|2200 CHESTNUT ST.,2026-10-06
+bld_00050,ahera_code,2480,2026-10-06
+bld_00050,site_folder,"Arthur, Chester Site 1_S-46ARC1",2026-10-06
+bld_00050,site_folder,Marian Anderson Neighborhood_2000 Catharine St_19146,2026-10-06
+bld_00050,master_address,sch_00049|2000 CATHARINE ST,2026-10-06
+bld_00050,master_address,sch_00049|2000 CATHARINE ST.,2026-10-06
+bld_00051,site_folder,"Waring, Laura Site 1_N-30WLW1",2026-10-06
+bld_00051,master_address,sch_00050|1801 GREEN ST,2026-10-06
+bld_00051,master_address,sch_00050|1801 GREEN ST.,2026-10-06
+bld_00052,ahera_code,2510,2026-10-06
+bld_00052,site_folder,Fanny Jackson Coppin_1213 S 12th St_19147,2026-10-06
+bld_00052,site_folder,"Jackson, Andrew Site 1_S-47JAN1",2026-10-06
+bld_00052,master_address,sch_00051|1213 S 12TH ST,2026-10-06
+bld_00052,master_address,sch_00051|1213 S. 12TH ST.,2026-10-06
+bld_00053,ahera_code,2520,2026-10-06
+bld_00053,fca_part_code,B252001,2026-10-06
+bld_00053,site_folder,Abram S. Jenks_2501 S 13th St_19148,2026-10-06
+bld_00053,site_folder,"Jenks, Abraham Site 1_S-48JAS1",2026-10-06
+bld_00053,master_address,sch_00052|2501 S 13TH ST,2026-10-06
+bld_00053,master_address,sch_00052|2501 S. 13TH ST.,2026-10-06
+bld_00054,master_address,sch_00053|91 N 48TH ST,2026-10-06
+bld_00054,master_address,sch_00053|91 N. 48TH ST.,2026-10-06
+bld_00055,ahera_code,2540,2026-10-06
+bld_00055,site_folder,Francis S. Key_2230 S 08th St_19148,2026-10-06
+bld_00055,site_folder,"Key, Francis Site 1_S-48KFS1",2026-10-06
+bld_00055,master_address,sch_00054|2230 S 8TH ST,2026-10-06
+bld_00055,master_address,sch_00054|2230 S. 8TH ST.,2026-10-06
+bld_00056,ahera_code,2580,2026-10-06
+bld_00056,site_folder,Eliza B. Kirkbride_1501 S 07th St_19147,2026-10-06
+bld_00056,site_folder,"Kirkbride, Eliza Site 1_S-47KEB1",2026-10-06
+bld_00056,master_address,sch_00055|1501 S 7TH ST,2026-10-06
+bld_00056,master_address,sch_00055|1501 S. 7TH ST.,2026-10-06
+bld_00057,ahera_code,2590,2026-10-06
+bld_00057,ahera_code,6250,2026-10-06
+bld_00057,site_folder,Charles W. Henry_601 Carpenter Ln_19119,2026-10-06
+bld_00057,site_folder,George W. Nebinger_601 Carpenter St_19147,2026-10-06
+bld_00057,site_folder,"Henry, Charles W_B625001",2026-10-06
+bld_00057,site_folder,"Nebinger, George Site 1_S-47NGW1",2026-10-06
+bld_00057,master_address,sch_00056|601 CARPENTER ST,2026-10-06
+bld_00057,master_address,sch_00056|601 CARPENTER ST.,2026-10-06
+bld_00057,master_address,sch_00241|601 CARPENTER LN,2026-10-06
+bld_00057,master_address,sch_00241|601 CARPENTER LN.,2026-10-06
+bld_00058,ahera_code,2430,2026-10-06
+bld_00058,site_folder,Academy at Palumbo_1100 Catharine St_19147,2026-10-06
+bld_00058,site_folder,"Bartlett, Charles Site 1_S-47BCE1",2026-10-06
+bld_00058,master_address,sch_00057|1100 CATHARINE ST,2026-10-06
+bld_00058,master_address,sch_00057|1100 CATHARINE ST.,2026-10-06
+bld_00059,ahera_code,2630,2026-10-06
+bld_00059,site_folder,George W. Sharswood_2300 S 02nd St_19148,2026-10-06
+bld_00059,site_folder,"Sharswood, George Site 1_S-48SGW1",2026-10-06
+bld_00059,master_address,sch_00058|2300 S 2ND ST,2026-10-06
+bld_00059,master_address,sch_00058|2300 S. 2ND ST.,2026-10-06
+bld_00060,ahera_code,2640,2026-10-06
+bld_00060,site_folder,Southwark Site 1_S-48SWK1,2026-10-06
+bld_00060,site_folder,Southwark_1835 S 09th St_19148,2026-10-06
+bld_00060,master_address,sch_00059|1835 S 9TH ST,2026-10-06
+bld_00060,master_address,sch_00059|1835 S. 9TH ST.,2026-10-06
+bld_00061,master_address,sch_00060|1482 GREEN LN,2026-10-06
+bld_00061,master_address,sch_00060|1482 GREEN ST,2026-10-06
+bld_00062,master_address,sch_00060|55 N. 22ND ST.,2026-10-06
+bld_00063,ahera_code,2670,2026-10-06
+bld_00063,site_folder,Constitution Site 1_CC06CON1,2026-10-06
+bld_00063,site_folder,Constitution_18 S 07th St_19106,2026-10-06
+bld_00063,master_address,sch_00061|18 S 7TH ST,2026-10-06
+bld_00063,master_address,sch_00061|18 S. 7TH ST.,2026-10-06
+bld_00064,ahera_code,4100,2026-10-06
+bld_00064,site_folder,"Beeber, Teter Site 1_W-31BET1",2026-10-06
+bld_00064,site_folder,Science Leadership Academy @ Beeber_5925 Malvern Ave_19131,2026-10-06
+bld_00064,master_address,sch_00062|5925 MALVERN AVE,2026-10-06
+bld_00064,master_address,sch_00062|5925 MALVERN AVE.,2026-10-06
+bld_00065,ahera_code,2690,2026-10-06
+bld_00065,site_folder,John H. Taggart_400 W Porter St_19148,2026-10-06
+bld_00065,site_folder,"Taggart, John Site 1_S-48TAJ1",2026-10-06
+bld_00065,master_address,sch_00063|400 W PORTER ST,2026-10-06
+bld_00065,master_address,sch_00063|400 W. PORTER ST.,2026-10-06
+bld_00066,ahera_code,2730,2026-10-06
+bld_00066,site_folder,Vare-Washington_1198 S 05th St_19147,2026-10-06
+bld_00066,site_folder,"Washington, George  Site 1 (1198 South 5th Street)_S-47WGE1",2026-10-06
+bld_00066,master_address,sch_00064|1198 S 5TH ST,2026-10-06
+bld_00066,master_address,sch_00064|1198 S. 5TH ST.,2026-10-06
+bld_00067,ahera_code,1450,2026-10-06
+bld_00067,site_folder,Philadelphia Learning Academy West W-04MES1,2026-10-06
+bld_00067,site_folder,Philadelphia Learning Academy_4300 Westminster Ave_19104,2026-10-06
+bld_00067,master_address,sch_00065|4300 WESTMINSTER AVE,2026-10-06
+bld_00067,master_address,sch_00065|4300 WESTMINSTER AVE.,2026-10-06
+bld_00067,master_address,sch_00327|4300 WESTMINSTER AVE,2026-10-06
+bld_00067,master_address,sch_00327|4300 WESTMINSTER AVE.,2026-10-06
+bld_00067,master_address,sch_00331|4300 WESTMINSTER AVE,2026-10-06
+bld_00067,master_address,sch_00331|4300 WESTMINSTER AVE.,2026-10-06
+bld_00068,ahera_code,5030,2026-10-06
+bld_00068,master_address,sch_00066|4224 N FRONT ST,2026-10-06
+bld_00068,master_address,sch_00066|4224 N. FRONT ST.,2026-10-06
+bld_00068,master_address,sch_00163|4224 N FRONT ST,2026-10-06
+bld_00068,master_address,sch_00163|4224 N. FRONT ST.,2026-10-06
+bld_00068,master_address,sch_00328|4224 N FRONT ST,2026-10-06
+bld_00068,master_address,sch_00328|4224 N. FRONT ST.,2026-10-06
+bld_00069,ahera_code,5140,2026-10-06
+bld_00069,fca_part_code,B514001,2026-10-06
+bld_00069,site_folder,"Fleisher, Helen Site 1_N-23FHE1",2026-10-06
+bld_00069,site_folder,Parkway Center City_540 N 13th St_19123,2026-10-06
+bld_00069,master_address,sch_00067|540 N 13TH ST,2026-10-06
+bld_00069,master_address,sch_00192|540 N 13TH ST,2026-10-06
+bld_00069,master_address,sch_00192|540 N. 13TH ST.,2026-10-06
+bld_00070,master_address,sch_00068|1952 E ALLEGHENY AVE,2026-10-06
+bld_00070,master_address,sch_00068|1952 E. ALLEGHENY AVE.,2026-10-06
+bld_00071,master_address,sch_00068|2332 E LEHIGH AVE,2026-10-06
+bld_00072,ahera_code,3240,2026-10-06
+bld_00072,master_address,sch_00068|2343 E TUCKER ST,2026-10-06
+bld_00073,ahera_code,3290,2026-10-06
+bld_00073,master_address,sch_00069|4641 ROOSEVELT BLVD,2026-10-06
+bld_00073,master_address,sch_00069|4641 ROOSEVELT BLVD.,2026-10-06
+bld_00074,master_address,sch_00070|1100 E ERIE AVE,2026-10-06
+bld_00074,master_address,sch_00070|1100 E. ERIE AVE.,2026-10-06
+bld_00075,master_address,sch_00071|640 N 66TH ST,2026-10-06
+bld_00075,master_address,sch_00071|640 N. 66TH ST.,2026-10-06
+bld_00076,master_address,sch_00072|1231 N BROAD ST,2026-10-06
+bld_00076,master_address,sch_00072|1231 N. BROAD ST. - 3RD FLR,2026-10-06
+bld_00076,master_address,sch_00385|1231 N BROAD ST,2026-10-06
+bld_00076,master_address,sch_00385|1231 N. BROAD STREET,2026-10-06
+bld_00077,master_address,sch_00072|2309 N BROAD ST,2026-10-06
+bld_00078,master_address,sch_00073|916 CHRISTIAN ST,2026-10-06
+bld_00078,master_address,sch_00073|916 CHRISTIAN ST.,2026-10-06
+bld_00079,master_address,sch_00074|6301 N 2ND ST,2026-10-06
+bld_00079,master_address,sch_00074|6301 N. 2ND ST.,2026-10-06
+bld_00080,master_address,sch_00075|1301 BELMONT AVE,2026-10-06
+bld_00080,master_address,sch_00075|1301 BELMONT AVE.,2026-10-06
+bld_00081,master_address,sch_00076|6201 N 21ST ST,2026-10-06
+bld_00081,master_address,sch_00076|6201 N. 21ST STREET,2026-10-06
+bld_00082,master_address,sch_00077|800 N ORIANNA ST,2026-10-06
+bld_00082,master_address,sch_00077|800 NORTH ORIANNA STREET,2026-10-06
+bld_00083,master_address,sch_00077|926 W SEDGLEY AVE,2026-10-06
+bld_00083,master_address,sch_00098|926 W. SEDGLEY AVE.,2026-10-06
+bld_00084,master_address,sch_00078|3821 N BROAD ST,2026-10-06
+bld_00084,master_address,sch_00078|3821 N. BROAD ST.,2026-10-06
+bld_00085,master_address,sch_00079|1928 POINT BREEZE AVE,2026-10-06
+bld_00085,master_address,sch_00079|1928 POINT BREEZE AVE.,2026-10-06
+bld_00086,master_address,sch_00080|7115 STENTON AVE,2026-10-06
+bld_00086,master_address,sch_00080|7115 STENTON AVE.,2026-10-06
+bld_00087,master_address,sch_00081|1722 CECIL B MOORE AVE,2026-10-06
+bld_00088,master_address,sch_00081|1821 CECIL B MOORE AVE,2026-10-06
+bld_00088,master_address,sch_00081|1821 N. CECIL B. MOORE AVE.,2026-10-06
+bld_00089,master_address,sch_00082|105 S 7TH ST,2026-10-06
+bld_00089,master_address,sch_00082|105 S. 7TH ST.,2026-10-06
+bld_00090,master_address,sch_00083|2027 CHESTNUT ST,2026-10-06
+bld_00090,master_address,sch_00083|2027 CHESTNUT ST.,2026-10-06
+bld_00091,master_address,sch_00084|447 N BROAD ST,2026-10-06
+bld_00091,master_address,sch_00084|447 N. BROAD ST.,2026-10-06
+bld_00092,master_address,sch_00085|11000 ROOSEVELT BLVD,2026-10-06
+bld_00092,master_address,sch_00085|11000 ROOSEVELT BLVD.,2026-10-06
+bld_00093,master_address,sch_00086|5400 WARRINGTON AVE,2026-10-06
+bld_00093,master_address,sch_00086|5400 WARRINGTON AVE.,2026-10-06
+bld_00094,master_address,sch_00087|801 S 15TH ST,2026-10-06
+bld_00094,master_address,sch_00087|801 S. 15TH ST.,2026-10-06
+bld_00095,master_address,sch_00088|1800 BYBERRY RD,2026-10-06
+bld_00095,master_address,sch_00088|1800 BYBERRY RD.,2026-10-06
+bld_00096,master_address,sch_00089|900 N MARSHALL ST,2026-10-06
+bld_00096,master_address,sch_00089|900 N. MARSHALL ST.,2026-10-06
+bld_00097,master_address,sch_00090|5301 TACONY ST,2026-10-06
+bld_00097,master_address,sch_00090|5301 TACONY ST.,2026-10-06
+bld_00098,master_address,sch_00091|1840 TORRESDALE AVE,2026-10-06
+bld_00098,master_address,sch_00091|1840 TORRESDALE AVE.,2026-10-06
+bld_00099,master_address,sch_00092|301 W HUNTING PARK AVE,2026-10-06
+bld_00099,master_address,sch_00092|301 W. HUNTING PARK AVE.,2026-10-06
+bld_00100,master_address,sch_00093|8001 TORRESDALE AVE,2026-10-06
+bld_00100,master_address,sch_00093|8001 TORRESDALE AVE.,2026-10-06
+bld_00101,master_address,sch_00094|800 N BROAD ST,2026-10-06
+bld_00101,master_address,sch_00094|800 N. BROAD ST.,2026-10-06
+bld_00102,master_address,sch_00095|2600 S BROAD ST,2026-10-06
+bld_00102,master_address,sch_00095|2600 S. BROAD ST.,2026-10-06
+bld_00103,master_address,sch_00096|4601 W GIRARD AVE,2026-10-06
+bld_00103,master_address,sch_00096|4601 W. GIRARD AVE.,2026-10-06
+bld_00104,master_address,sch_00097|1600 LOMBARD ST,2026-10-06
+bld_00104,master_address,sch_00097|1600 LOMBARD ST.,2026-10-06
+bld_00105,master_address,sch_00099|5070 PARKSIDE AVE,2026-10-06
+bld_00105,master_address,sch_00099|5070 PARKSIDE AVE.,2026-10-06
+bld_00105,master_address,sch_00157|5070 PARKSIDE AVE,2026-10-06
+bld_00105,master_address,sch_00157|5070 PARKSIDE AVE.,2026-10-06
+bld_00106,master_address,sch_00100|6701 CALLOWHILL ST,2026-10-06
+bld_00106,master_address,sch_00100|6701 CALLOWHILL ST.,2026-10-06
+bld_00107,master_address,sch_00101|1420 CHESTNUT ST,2026-10-06
+bld_00107,master_address,sch_00101|1420 CHESTNUT ST.,2026-10-06
+bld_00108,master_address,sch_00101|1709 BENJAMIN FRANKLIN PKWY,2026-10-06
+bld_00109,master_address,sch_00102|2601 S 58TH ST,2026-10-06
+bld_00109,master_address,sch_00102|2601 S. 58TH ST.,2026-10-06
+bld_00110,master_address,sch_00103|1911 ARCH ST,2026-10-06
+bld_00110,master_address,sch_00103|1911 ARCH ST.,2026-10-06
+bld_00111,master_address,sch_00104|35 S 4TH ST,2026-10-06
+bld_00111,master_address,sch_00104|35 S. 4TH ST.,2026-10-06
+bld_00112,master_address,sch_00105|4700 WISSAHICKON AVE,2026-10-06
+bld_00112,master_address,sch_00105|4700 WISSAHICKON AVE.,2026-10-06
+bld_00113,master_address,sch_00106|4300 TACONY ST,2026-10-06
+bld_00113,master_address,sch_00106|4300 TACONY ST.,2026-10-06
+bld_00114,master_address,sch_00107|468 DOMINO LANE,2026-10-06
+bld_00114,master_address,sch_00107|468 DOMINO LN,2026-10-06
+bld_00115,master_address,sch_00108|2275 BRIDGE ST,2026-10-06
+bld_00115,master_address,sch_00108|2275 BRIDGE ST.,2026-10-06
+bld_00116,ahera_code,1210,2026-10-06
+bld_00116,fca_part_code,B121001,2026-10-06
+bld_00116,site_folder,Belmont Charter_4030 Brown St_19104,2026-10-06
+bld_00116,master_address,sch_00109|4030 BROWN ST,2026-10-06
+bld_00116,master_address,sch_00109|4030 BROWN ST.,2026-10-06
+bld_00117,master_address,sch_00110|2539 N 16TH ST,2026-10-06
+bld_00117,master_address,sch_00110|2539 N. 16TH ST.,2026-10-06
+bld_00117,master_address,sch_00151|2539 N 16TH ST,2026-10-06
+bld_00117,master_address,sch_00151|2539 N. 16TH ST.,2026-10-06
+bld_00118,master_address,sch_00110|2600 W CLEARFIELD ST,2026-10-06
+bld_00119,master_address,sch_00110|3001 N 27TH ST,2026-10-06
+bld_00120,master_address,sch_00111|4700 PARKSIDE AVE,2026-10-06
+bld_00120,master_address,sch_00111|4700 PARKSIDE AVE.,2026-10-06
+bld_00121,master_address,sch_00112|2227 ISLAND AVE.,2026-10-06
+bld_00121,master_address,sch_00112|2227 ISLAND RD,2026-10-06
+bld_00122,master_address,sch_00113|1922 N 63RD ST,2026-10-06
+bld_00122,master_address,sch_00113|1922 N. 63RD ST.,2026-10-06
+bld_00123,ahera_code,4130,2026-10-06
+bld_00123,site_folder,Mastery Charter School at Shoemaker_5301 Media Street_19131,2026-10-06
+bld_00123,master_address,sch_00114|5301 MEDIA ST,2026-10-06
+bld_00123,master_address,sch_00114|5301 MEDIA ST.,2026-10-06
+bld_00124,master_address,sch_00115|1023 CALLOWHILL ST,2026-10-06
+bld_00124,master_address,sch_00115|1023 CALLOWHILL ST.,2026-10-06
+bld_00125,ahera_code,2150,2026-10-06
+bld_00125,site_folder,Mastery Charter School Thomas_927 Johnston St_19148,2026-10-06
+bld_00125,master_address,sch_00116|927 JOHNSTON ST,2026-10-06
+bld_00125,master_address,sch_00116|927 JOHNSTON ST.,2026-10-06
+bld_00126,master_address,sch_00117|4621 CASTOR AVE,2026-10-06
+bld_00126,master_address,sch_00117|4621 CASTOR AVE.,2026-10-06
+bld_00127,master_address,sch_00118|5501 CEDAR AVE,2026-10-06
+bld_00127,master_address,sch_00118|5501 CEDAR AVE.,2026-10-06
+bld_00128,master_address,sch_00119|4521 LONGSHORE AVE,2026-10-06
+bld_00128,master_address,sch_00119|4521 LONGSHORE AVE.,2026-10-06
+bld_00129,master_address,sch_00120|7101 PASCHALL AVE,2026-10-06
+bld_00129,master_address,sch_00120|7101 PASCHALL AVE.,2026-10-06
+bld_00130,ahera_code,6150,2026-10-06
+bld_00130,site_folder,Mastery Charter School at Pickett_5700 Wayne Ave_19144,2026-10-06
+bld_00130,master_address,sch_00121|5700 WAYNE AVE,2026-10-06
+bld_00130,master_address,sch_00121|5700 WAYNE AVE.,2026-10-06
+bld_00131,master_address,sch_00122|2830 N AMERICAN ST,2026-10-06
+bld_00131,master_address,sch_00122|2830 N. AMERICAN ST.,2026-10-06
+bld_00132,master_address,sch_00123|4101 N AMERICAN ST,2026-10-06
+bld_00132,master_address,sch_00123|4101 N. AMERICAN ST.,2026-10-06
+bld_00133,master_address,sch_00125|3300 HENRY AVE.,2026-10-06
+bld_00133,master_address,sch_00159|3300 HENRY AVE,2026-10-06
+bld_00133,master_address,sch_00179|3300 HENRY AVE,2026-10-06
+bld_00134,master_address,sch_00126|2501 KENSINGTON AVE,2026-10-06
+bld_00134,master_address,sch_00126|2501 KENSINGTON AVE.,2026-10-06
+bld_00135,master_address,sch_00127|4259 RICHMOND ST,2026-10-06
+bld_00135,master_address,sch_00127|4259 RICHMOND ST.,2026-10-06
+bld_00136,master_address,sch_00128|1330 RHAWN ST,2026-10-06
+bld_00136,master_address,sch_00128|1330 RHAWN ST.,2026-10-06
+bld_00137,ahera_code,5120,2026-10-06
+bld_00137,site_folder,"Stetson, John Site 1_N-34STJ1",2026-10-06
+bld_00137,master_address,sch_00129|3200 B ST,2026-10-06
+bld_00137,master_address,sch_00129|3200 B. ST.,2026-10-06
+bld_00137,master_address,sch_00223|3200 B ST,2026-10-06
+bld_00137,master_address,sch_00224|3200 B ST,2026-10-06
+bld_00138,ahera_code,1310,2026-10-06
+bld_00138,site_folder,Mastery Charter School Harrity_5601 Christian St_19143,2026-10-06
+bld_00138,master_address,sch_00130|5601 CHRISTIAN ST,2026-10-06
+bld_00138,master_address,sch_00130|5601 CHRISTIAN ST.,2026-10-06
+bld_00139,ahera_code,4340,2026-10-06
+bld_00139,site_folder,Mastery Charter School Mann_5376 W Berks St_19131,2026-10-06
+bld_00139,master_address,sch_00131|5376 W BERKS ST,2026-10-06
+bld_00139,master_address,sch_00131|5376 W. BERKS ST.,2026-10-06
+bld_00140,ahera_code,7420,2026-10-06
+bld_00140,master_address,sch_00132|1790 BRIDGE ST,2026-10-06
+bld_00140,master_address,sch_00132|1790 BRIDGE ST.,2026-10-06
+bld_00141,master_address,sch_00133|5801 MEDIA ST,2026-10-06
+bld_00141,master_address,sch_00133|5801 MEDIA ST.,2026-10-06
+bld_00142,ahera_code,4210,2026-10-06
+bld_00142,site_folder,The Workshop School @ Daroff_5630 Vine St_19139,2026-10-06
+bld_00142,master_address,sch_00134|5630 VINE ST,2026-10-06
+bld_00142,master_address,sch_00134|5630 VINE ST.,2026-10-06
+bld_00143,ahera_code,4510,2026-10-06
+bld_00143,site_folder,Frederick Douglass_2118 W Norris St_19121,2026-10-06
+bld_00143,master_address,sch_00135|2118 W NORRIS ST,2026-10-06
+bld_00143,master_address,sch_00135|2118 W. NORRIS ST.,2026-10-06
+bld_00144,ahera_code,7020,2026-10-06
+bld_00144,master_address,sch_00136|100 W DUNCANNON AVE,2026-10-06
+bld_00144,master_address,sch_00136|100 W. DUNCANNON AVE.,2026-10-06
+bld_00144,master_address,sch_00261|100 W DUNCANNON AVE,2026-10-06
+bld_00144,master_address,sch_00262|100 W DUNCANNON AVE,2026-10-06
+bld_00145,ahera_code,5220,2026-10-06
+bld_00145,site_folder,Mastery Charter at Clymer_1201 W Rush St_19133,2026-10-06
+bld_00145,master_address,sch_00137|1201 W RUSH ST,2026-10-06
+bld_00145,master_address,sch_00137|1201 W. RUSH ST.,2026-10-06
+bld_00146,ahera_code,4010,2026-10-06
+bld_00146,site_folder,Mastery Charter School Simon Gratz_1798 W Hunting Park Avenue_19140,2026-10-06
+bld_00146,master_address,sch_00138|1798 W HUNTING PARK AVE,2026-10-06
+bld_00146,master_address,sch_00138|1798 W. HUNTING PARK AVE.,2026-10-06
+bld_00147,ahera_code,2800,2026-10-06
+bld_00147,site_folder,Universal Audenried Promise Neighborhood Partnership_3301 Tasker St_19145,2026-10-06
+bld_00147,master_address,sch_00139|3301 TASKER ST,2026-10-06
+bld_00147,master_address,sch_00139|3301 TASKER ST.,2026-10-06
+bld_00148,master_address,sch_00140|1901 S 23RD ST,2026-10-06
+bld_00149,ahera_code,2120,2026-10-06
+bld_00149,fca_part_code,B212001,2026-10-06
+bld_00149,master_address,sch_00140|2100 S 24TH ST,2026-10-06
+bld_00149,master_address,sch_00140|2100 S. 24TH ST.,2026-10-06
+bld_00150,ahera_code,7210,2026-10-06
+bld_00150,fca_part_code,B721001,2026-10-06
+bld_00150,site_folder,Lindley Academy at Birney_900 W Lindley Ave_19141,2026-10-06
+bld_00150,master_address,sch_00141|900 LINDLEY AVE,2026-10-06
+bld_00150,master_address,sch_00141|900 LINDLEY AVE.,2026-10-06
+bld_00151,master_address,sch_00142|3701 N 19TH ST,2026-10-06
+bld_00151,master_address,sch_00142|3701 N. 19TH ST.,2026-10-06
+bld_00152,master_address,sch_00143|5401 TABOR AVE,2026-10-06
+bld_00152,master_address,sch_00143|5401 TABOR AVE.,2026-10-06
+bld_00153,ahera_code,7250,2026-10-06
+bld_00153,site_folder,Phila Charter at Edmunds_1197 Haworth St_19124,2026-10-06
+bld_00153,master_address,sch_00144|1197 HAWORTH ST,2026-10-06
+bld_00153,master_address,sch_00144|1197 HAWORTH ST.,2026-10-06
+bld_00154,ahera_code,5100,2026-10-06
+bld_00154,site_folder,Memphis Street Academy at J.P. Jones_2950 Memphis St_19134,2026-10-06
+bld_00154,site_folder,Memphis Street Middle School 1_N-34JJP1,2026-10-06
+bld_00154,master_address,sch_00145|2950 MEMPHIS ST,2026-10-06
+bld_00154,master_address,sch_00145|2950 MEMPHIS ST.,2026-10-06
+bld_00154,master_address,sch_00339|2950 MEMPHIS ST,2026-10-06
+bld_00155,ahera_code,2200,2026-10-06
+bld_00155,site_folder,Universal Alcorn_3200 Dickinson St_19146,2026-10-06
+bld_00155,master_address,sch_00146|3200 DICKINSON ST,2026-10-06
+bld_00155,master_address,sch_00146|3200 DICKINSON ST.,2026-10-06
+bld_00156,ahera_code,6330,2026-10-06
+bld_00156,site_folder,Mastery Charter School at Pastorius_5650 Sprague Street_19138,2026-10-06
+bld_00156,master_address,sch_00147|5650 SPRAGUE ST,2026-10-06
+bld_00156,master_address,sch_00147|5650 SPRAGUE ST.,2026-10-06
+bld_00157,ahera_code,6430,2026-10-06
+bld_00157,fca_part_code,B643001,2026-10-06
+bld_00157,site_folder,John Wister_67 E Bringhurst St_19144,2026-10-06
+bld_00157,master_address,sch_00148|67 E BRINGHURST ST,2026-10-06
+bld_00157,master_address,sch_00148|67 E. BRINGHURST ST.,2026-10-06
+bld_00158,ahera_code,1330,2026-10-06
+bld_00158,site_folder,Global Leadership Academy Southwest at Huey_5200 Pine St_19143,2026-10-06
+bld_00158,master_address,sch_00149|5200 PINE ST,2026-10-06
+bld_00158,master_address,sch_00149|5200 PINE ST.,2026-10-06
+bld_00159,master_address,sch_00150|4601 MARKET ST,2026-10-06
+bld_00160,master_address,sch_00152|3556 FRANKFORD AVE,2026-10-06
+bld_00160,master_address,sch_00152|3556 FRANKFORD AVE.,2026-10-06
+bld_00161,master_address,sch_00153|1801 W PIKE ST,2026-10-06
+bld_00161,master_address,sch_00153|1801 W. PIKE ST.,2026-10-06
+bld_00162,master_address,sch_00154|6238 RISING SUN AVE.,2026-10-06
+bld_00163,master_address,sch_00154|6501 STATE RD,2026-10-06
+bld_00164,master_address,sch_00155|2221 N BROAD ST,2026-10-06
+bld_00164,master_address,sch_00155|2221 N. BROAD ST.,2026-10-06
+bld_00165,master_address,sch_00156|5600 CHESTER AVE,2026-10-06
+bld_00165,master_address,sch_00156|5600 CHESTER AVE.,2026-10-06
+bld_00166,master_address,sch_00158|1 CROWN WAY,2026-10-06
+bld_00167,master_address,sch_00160|1241 N TANEY ST,2026-10-06
+bld_00168,master_address,sch_00160|126 W. DAUPHIN ST.,2026-10-06
+bld_00169,ahera_code,2391,2026-10-06
+bld_00169,ahera_code,5330,2026-10-06
+bld_00169,master_address,sch_00160|3360 FRANKFORD AVE,2026-10-06
+bld_00170,master_address,sch_00160|4290 PENN ST,2026-10-06
+bld_00171,master_address,sch_00161|2111 EASTBURN AVE,2026-10-06
+bld_00171,master_address,sch_00161|2111 EASTBURN AVE.,2026-10-06
+bld_00172,ahera_code,1012,2026-10-06
+bld_00172,site_folder,One Bright Ray Site 1 (6404 East Elmwood Avenue)_SW42OBY1,2026-10-06
+bld_00172,master_address,sch_00162|6404 ELMWOOD AVE,2026-10-06
+bld_00172,master_address,sch_00162|6404 ELMWOOD AVE.,2026-10-06
+bld_00173,ahera_code,8020,2026-10-06
+bld_00173,fca_part_code,B802001,2026-10-06
+bld_00173,site_folder,Northeast Site 3_NE11NEA3,2026-10-06
+bld_00173,site_folder,Northeast_1601 Cottman Ave_19111,2026-10-06
+bld_00173,master_address,sch_00164|1601 COTTMAN AVE,2026-10-06
+bld_00173,master_address,sch_00164|1601 COTTMAN AVE.,2026-10-06
+bld_00173,master_address,sch_00294|1601 COTTMAN AVE,2026-10-06
+bld_00173,master_address,sch_00294|1601 COTTMAN AVE.,2026-10-06
+bld_00174,ahera_code,4020,2026-10-06
+bld_00174,site_folder,Overbrook Site 1 (5898 West Lancaster Avenue)_W-31OVK1,2026-10-06
+bld_00174,master_address,sch_00166|5898 LANCASTER AVE,2026-10-06
+bld_00174,master_address,sch_00166|5898 LANCASTER AVE.,2026-10-06
+bld_00175,ahera_code,4030,2026-10-06
+bld_00175,site_folder,"Carver, George Site 1_N-21CGW1",2026-10-06
+bld_00175,site_folder,George Washington Carver_1600 W Norris St_19121,2026-10-06
+bld_00175,master_address,sch_00167|1600 W NORRIS ST,2026-10-06
+bld_00175,master_address,sch_00167|1600 W. NORRIS ST.,2026-10-06
+bld_00176,ahera_code,4060,2026-10-06
+bld_00176,site_folder,"Dobbins, Murrell Site 1_N-32DOB1",2026-10-06
+bld_00176,site_folder,Murrell Dobbins_2150 W Lehigh Ave_19132,2026-10-06
+bld_00176,master_address,sch_00168|2150 W LEHIGH AVE,2026-10-06
+bld_00176,master_address,sch_00168|2150 W. LEHIGH AVE.,2026-10-06
+bld_00177,ahera_code,4140,2026-10-06
+bld_00177,ahera_code,4450,2026-10-06
+bld_00177,site_folder,"Hill, Leslie | Strawberry Mansion Site 1_N-21HSM1",2026-10-06
+bld_00177,site_folder,Leslie Pinckney Hill_3133 Ridge Ave_19132,2026-10-06
+bld_00177,master_address,sch_00169|3133 RIDGE AVE,2026-10-06
+bld_00177,master_address,sch_00169|3133 RIDGE AVE.,2026-10-06
+bld_00177,master_address,sch_00334|3133 RIDGE AVE,2026-10-06
+bld_00177,master_address,sch_00334|3133 RIDGE AVE.,2026-10-06
+bld_00177,master_address,sch_00335|3133 RIDGE AVE,2026-10-06
+bld_00177,master_address,sch_00335|3133 RIDGE AVE.,2026-10-06
+bld_00178,ahera_code,4220,2026-10-06
+bld_00178,site_folder,"Blaine, James Site 1_N-21BLJ1",2026-10-06
+bld_00178,site_folder,James Blaine Elementary_3001 W Berks St_19121,2026-10-06
+bld_00178,master_address,sch_00170|3001 W BERKS ST,2026-10-06
+bld_00178,master_address,sch_00170|3001 W. BERKS ST.,2026-10-06
+bld_00179,master_address,sch_00171|1625 N 76TH ST,2026-10-06
+bld_00180,site_folder,"Cassidy, Lewis Site 1_W-51CLC1",2026-10-06
+bld_00180,master_address,sch_00171|6523 LANSDOWNE AVE,2026-10-06
+bld_00180,master_address,sch_00171|6523 LANSDOWNE AVE.,2026-10-06
+bld_00181,ahera_code,4390,2026-10-06
+bld_00181,fca_part_code,B439001,2026-10-06
+bld_00181,site_folder,Anna B. Pratt Early Childhood Center_2200 N 22nd St_19132,2026-10-06
+bld_00181,master_address,sch_00172|2200 N 22ND ST,2026-10-06
+bld_00181,master_address,sch_00179|2200 N 22ND ST,2026-10-06
+bld_00182,ahera_code,4270,2026-10-06
+bld_00182,site_folder,"Dick, William Site 1_N-21DIW1",2026-10-06
+bld_00182,site_folder,William Dick_2498 W Diamond St_19121,2026-10-06
+bld_00182,master_address,sch_00172|2498 W DIAMOND ST,2026-10-06
+bld_00182,master_address,sch_00172|2498 W. DIAMOND ST.,2026-10-06
+bld_00183,ahera_code,4280,2026-10-06
+bld_00183,site_folder,"Gompers, Samuel Site 1_W-31GOS1",2026-10-06
+bld_00183,site_folder,Samuel Gompers_5701 Wynnefield Ave_19131,2026-10-06
+bld_00183,master_address,sch_00173|5701 WYNNEFIELD AVE,2026-10-06
+bld_00183,master_address,sch_00173|5701 WYNNEFIELD AVE.,2026-10-06
+bld_00184,ahera_code,4300,2026-10-06
+bld_00184,site_folder,Edward Heston_1621 N 54th St_19131,2026-10-06
+bld_00184,site_folder,"Heston, Edward Site 1_W-31HEW1",2026-10-06
+bld_00184,master_address,sch_00174|1621 N 54TH ST,2026-10-06
+bld_00184,master_address,sch_00174|1621 N. 54TH ST.,2026-10-06
+bld_00185,ahera_code,4320,2026-10-06
+bld_00185,site_folder,"Lamberton, Robert Site 1_W-51LRE1",2026-10-06
+bld_00185,site_folder,Robert E. Lamberton_7501 Woodbine Ave_19151,2026-10-06
+bld_00185,master_address,sch_00175|7501 WOODBINE AVE,2026-10-06
+bld_00185,master_address,sch_00175|7501 WOODBINE AVE.,2026-10-06
+bld_00186,ahera_code,4350,2026-10-06
+bld_00186,site_folder,E. Washington Rhodes_2900 W Clearfield St_19132,2026-10-06
+bld_00186,site_folder,"Rhodes, Eugene Site 1_N-32REW1",2026-10-06
+bld_00186,master_address,sch_00176|2900 W CLEARFIELD ST,2026-10-06
+bld_00186,master_address,sch_00176|2900 W. CLEARFIELD ST.,2026-10-06
+bld_00187,ahera_code,4310,2026-10-06
+bld_00187,ahera_code,4360,2026-10-06
+bld_00187,fca_part_code,B431001,2026-10-06
+bld_00187,site_folder,Kenderton Site 1_N-40KEN1,2026-10-06
+bld_00187,site_folder,Kenderton_1500 W Ontario St_19140,2026-10-06
+bld_00187,master_address,sch_00177|1500 W ONTARIO ST,2026-10-06
+bld_00187,master_address,sch_00177|1500 W. ONTARIO ST.,2026-10-06
+bld_00188,ahera_code,4370,2026-10-06
+bld_00188,site_folder,Overbrook Site 1 (2032 North 62nd Street)_W-51OVE1,2026-10-06
+bld_00188,site_folder,Overbrook_2032 N 62nd St_19151,2026-10-06
+bld_00188,master_address,sch_00178|2032 N 62ND ST,2026-10-06
+bld_00188,master_address,sch_00178|2032 N. 62ND ST.,2026-10-06
+bld_00189,site_folder,"Peirce, Thomas Site 1_N-32PET1",2026-10-06
+bld_00189,site_folder,The New T.M. Peirce_2300 W Cambria St._19132,2026-10-06
+bld_00189,master_address,sch_00179|2300 W CAMBRIA ST,2026-10-06
+bld_00189,master_address,sch_00179|2300 W. CAMBRIA ST.,2026-10-06
+bld_00190,ahera_code,4440,2026-10-06
+bld_00190,site_folder,"Allen, Ethel Site 1_N-32AEL1",2026-10-06
+bld_00190,site_folder,Dr. Ethel Allen_3200 W Lehigh Ave_19132,2026-10-06
+bld_00190,master_address,sch_00180|3200 W LEHIGH AVE,2026-10-06
+bld_00190,master_address,sch_00180|3200 W. LEHIGH AVE.,2026-10-06
+bld_00191,ahera_code,4460,2026-10-06
+bld_00191,fca_part_code,B446001,2026-10-06
+bld_00191,site_folder,"Duckrey, Tanner Site 1_N-21DTG1",2026-10-06
+bld_00191,site_folder,Tanner Duckrey_1501 W Diamond St_19121,2026-10-06
+bld_00191,master_address,sch_00181|1501 W DIAMOND ST,2026-10-06
+bld_00191,master_address,sch_00181|1501 W. DIAMOND ST.,2026-10-06
+bld_00192,site_folder,"Wright, Richard Site 1_N-32WRR1",2026-10-06
+bld_00192,master_address,sch_00182|2201 N 28TH ST,2026-10-06
+bld_00192,master_address,sch_00182|2201 N. 28TH ST.,2026-10-06
+bld_00193,ahera_code,4480,2026-10-06
+bld_00193,site_folder,Overbrook Educational Center (St. Callistus)_6722 Lansdowne Ave_19151,2026-10-06
+bld_00193,site_folder,Overbrook Educational Center Site 1_W-51OVC1,2026-10-06
+bld_00193,master_address,sch_00183|6722 LANSDOWNE AVE,2026-10-06
+bld_00193,master_address,sch_00183|6722 LANSDOWNE AVE.,2026-10-06
+bld_00194,site_folder,"Bluford, Guion Site 1_W-31BLU1",2026-10-06
+bld_00194,site_folder,Guion S Bluford_5720 Media St_19131,2026-10-06
+bld_00194,master_address,sch_00184|5720 MEDIA ST,2026-10-06
+bld_00195,ahera_code,4530,2026-10-06
+bld_00195,fca_part_code,B453001,2026-10-06
+bld_00195,site_folder,Edward Gideon_2817 W Glenwood Ave_19121,2026-10-06
+bld_00195,site_folder,"Gideon, Edward Site 1_N-21GID1",2026-10-06
+bld_00195,master_address,sch_00185|2817 W GLENWOOD AVE,2026-10-06
+bld_00195,master_address,sch_00185|2817 W. GLENWOOD AVE.,2026-10-06
+bld_00196,ahera_code,4560,2026-10-06
+bld_00196,site_folder,"Kelley, William Site 1_N-21KWD1",2026-10-06
+bld_00196,site_folder,William D. Kelley_1601 N 28th St_19121,2026-10-06
+bld_00196,master_address,sch_00186|1601 N 28TH ST,2026-10-06
+bld_00196,master_address,sch_00186|1601 N. 28TH ST.,2026-10-06
+bld_00197,ahera_code,4570,2026-10-06
+bld_00197,fca_part_code,B457001,2026-10-06
+bld_00197,site_folder,General George G. Meade_1600 N 18th St_19121,2026-10-06
+bld_00197,site_folder,"Meade, George Site 1_N-21MGG1",2026-10-06
+bld_00197,master_address,sch_00187|1600 N 18TH ST,2026-10-06
+bld_00197,master_address,sch_00187|1600 N. 18TH ST.,2026-10-06
+bld_00198,ahera_code,5020,2026-10-06
+bld_00198,site_folder,"Edison, Thomas Site 2_N-40EDN2",2026-10-06
+bld_00198,site_folder,Thomas A. Edison_151 W Luzerne St_19140,2026-10-06
+bld_00198,master_address,sch_00188|151 W LUZERNE ST,2026-10-06
+bld_00198,master_address,sch_00188|151 W. LUZERNE ST.,2026-10-06
+bld_00199,ahera_code,5270,2026-10-06
+bld_00199,master_address,sch_00189|2118 N. 13TH ST.,2026-10-06
+bld_00200,ahera_code,5060,2026-10-06
+bld_00200,site_folder,"Mastbaum, Jules Site 1_N-34MJE1",2026-10-06
+bld_00200,master_address,sch_00190|3116 FRANKFORD AVE,2026-10-06
+bld_00200,master_address,sch_00190|3116 FRANKFORD AVE.,2026-10-06
+bld_00201,ahera_code,6460,2026-10-06
+bld_00201,site_folder,"Hill, Joseph Site 1_NW38HJE1",2026-10-06
+bld_00201,site_folder,Parkway Northwest_6200 Crittenden St_19138,2026-10-06
+bld_00201,master_address,sch_00191|6200 CRITTENDEN ST,2026-10-06
+bld_00201,master_address,sch_00191|6200 CRITTENDEN ST.,2026-10-06
+bld_00202,ahera_code,5150,2026-10-06
+bld_00202,fca_part_code,B515001,2026-10-06
+bld_00202,site_folder,Bodine_1101 N 4th St_19123,2026-10-06
+bld_00202,site_folder,"Jefferson, Thomas Site 1_N-23JTH1",2026-10-06
+bld_00202,master_address,sch_00194|1101 N 4TH ST,2026-10-06
+bld_00202,master_address,sch_00194|1101 N. 4TH ST.,2026-10-06
+bld_00203,ahera_code,5110,2026-10-06
+bld_00203,fca_part_code,B511001,2026-10-06
+bld_00203,site_folder,Penn Treaty Site 1_N-25PNT1,2026-10-06
+bld_00203,site_folder,Penn Treaty_600 E Thompson St_19125,2026-10-06
+bld_00203,master_address,sch_00195|600 E THOMPSON ST,2026-10-06
+bld_00203,master_address,sch_00195|600 E. THOMPSON ST.,2026-10-06
+bld_00203,master_address,sch_00213|600 E THOMPSON ST,2026-10-06
+bld_00204,ahera_code,5170,2026-10-06
+bld_00204,site_folder,"de Burgos, Julia Site 2_N-33DBU2",2026-10-06
+bld_00204,master_address,sch_00196|401 W LEHIGH AVE,2026-10-06
+bld_00204,master_address,sch_00196|401 W. LEHIGH AVE.,2026-10-06
+bld_00205,ahera_code,2130,2026-10-06
+bld_00205,site_folder,Vaux Community Building_2300 W Master St_19121,2026-10-06
+bld_00205,master_address,sch_00197|2300 W MASTER ST,2026-10-06
+bld_00205,master_address,sch_00197|2300 W. MASTER ST.,2026-10-06
+bld_00206,ahera_code,5200,2026-10-06
+bld_00206,fca_part_code,B520001,2026-10-06
+bld_00206,site_folder,"Adaire, Alexander Site 1_N-25AAL1",2026-10-06
+bld_00206,site_folder,Alexander Adaire_1300 E Palmer St_19125,2026-10-06
+bld_00206,master_address,sch_00198|1300 E PALMER ST,2026-10-06
+bld_00206,master_address,sch_00198|1300 E. PALMER ST.,2026-10-06
+bld_00207,ahera_code,5210,2026-10-06
+bld_00207,site_folder,"Brown, Henry Site 1_N-25BRN1",2026-10-06
+bld_00207,site_folder,Henry A. Brown_1946 E Sergeant St_19125,2026-10-06
+bld_00207,master_address,sch_00199|1946 E SERGEANT ST,2026-10-06
+bld_00207,master_address,sch_00199|1946 E. SERGEANT ST.,2026-10-06
+bld_00208,ahera_code,5230,2026-10-06
+bld_00208,fca_part_code,B523001,2026-10-06
+bld_00208,site_folder,"Conwell, Russell Site 1_N-34CRH1",2026-10-06
+bld_00208,site_folder,Russell Conwell_1849 Clearfield Ave_19134,2026-10-06
+bld_00208,master_address,sch_00200|1849 E CLEARFIELD ST,2026-10-06
+bld_00208,master_address,sch_00200|1849 E. CLEARFIELD ST.,2026-10-06
+bld_00209,ahera_code,5250,2026-10-06
+bld_00209,fca_part_code,B525001,2026-10-06
+bld_00209,site_folder,"Dunbar, Paul Site 1_N-22DPL1",2026-10-06
+bld_00209,site_folder,Paul L. Dunbar_1750 N 12th St_19122,2026-10-06
+bld_00209,master_address,sch_00201|1750 N 12TH ST,2026-10-06
+bld_00209,master_address,sch_00201|1750 N. 12TH ST.,2026-10-06
+bld_00210,ahera_code,5260,2026-10-06
+bld_00210,fca_part_code,B526001,2026-10-06
+bld_00210,site_folder,"Elkin, Lewis Site 1_N-34ELE1",2026-10-06
+bld_00210,site_folder,Lewis Elkin_3199 D St_19134,2026-10-06
+bld_00210,master_address,sch_00202|3199 D ST,2026-10-06
+bld_00210,master_address,sch_00202|3199 D ST.,2026-10-06
+bld_00211,ahera_code,5300,2026-10-06
+bld_00211,site_folder,"Hackett, Horatio Site 1_N-25HHB1",2026-10-06
+bld_00211,site_folder,Horatio B. Hackett_2161 E York St_19125,2026-10-06
+bld_00211,master_address,sch_00203|2161 E YORK ST,2026-10-06
+bld_00211,master_address,sch_00203|2161 E. YORK ST.,2026-10-06
+bld_00212,ahera_code,5320,2026-10-06
+bld_00212,site_folder,"Hartranft, John Site 1_N-33HJF1",2026-10-06
+bld_00212,site_folder,John F. Hartranft_720 W Cumberland St_19133,2026-10-06
+bld_00212,master_address,sch_00204|720 W CUMBERLAND ST,2026-10-06
+bld_00212,master_address,sch_00204|720 W. CUMBERLAND ST.,2026-10-06
+bld_00213,site_folder,"Hunter, William Site 2_N-33HUW2",2026-10-06
+bld_00213,site_folder,William H. Hunter_2400-54 N Front St_19133,2026-10-06
+bld_00213,master_address,sch_00205|2400 N FRONT ST,2026-10-06
+bld_00213,master_address,sch_00205|2400 N. FRONT ST.,2026-10-06
+bld_00214,ahera_code,5340,2026-10-06
+bld_00214,site_folder,James R. Ludlow_550 Master St_19122,2026-10-06
+bld_00214,site_folder,"Ludlow, James Site 1_N-22LJA1",2026-10-06
+bld_00214,master_address,sch_00206|550 W MASTER ST,2026-10-06
+bld_00214,master_address,sch_00206|550 W. MASTER ST.,2026-10-06
+bld_00215,ahera_code,5350,2026-10-06
+bld_00215,fca_part_code,B535001,2026-10-06
+bld_00215,site_folder,"McKinley, William Site 1_N-22MCW1",2026-10-06
+bld_00215,site_folder,William McKinley_2101 N Orkney St_19122,2026-10-06
+bld_00215,master_address,sch_00207|2101 N ORKNEY ST,2026-10-06
+bld_00215,master_address,sch_00207|2101 N. ORKNEY ST.,2026-10-06
+bld_00216,ahera_code,5370,2026-10-06
+bld_00216,site_folder,John Moffet Elementary_127 West Oxford Street_19122,2026-10-06
+bld_00216,site_folder,"Moffet, John Site 2_N-22MOJ2",2026-10-06
+bld_00216,master_address,sch_00208|127 W OXFORD ST,2026-10-06
+bld_00216,master_address,sch_00208|127 W. OXFORD ST.,2026-10-06
+bld_00217,ahera_code,5390,2026-10-06
+bld_00217,site_folder,"Potter, Thomas Site 1_N-33PTH1",2026-10-06
+bld_00217,site_folder,Potter-Thomas Promise_3001 N 06th St_19133,2026-10-06
+bld_00217,master_address,sch_00209|3001 N 6TH ST,2026-10-06
+bld_00217,master_address,sch_00209|3001 N. 6TH ST.,2026-10-06
+bld_00218,ahera_code,5400,2026-10-06
+bld_00218,fca_part_code,B540001,2026-10-06
+bld_00218,site_folder,Richmond Site 1_N-34RMD1,2026-10-06
+bld_00218,site_folder,Richmond_2944 Belgrade St_19134,2026-10-06
+bld_00218,master_address,sch_00210|2944 BELGRADE ST,2026-10-06
+bld_00218,master_address,sch_00210|2944 BELGRADE ST.,2026-10-06
+bld_00219,ahera_code,5410,2026-10-06
+bld_00219,fca_part_code,B541001,2026-10-06
+bld_00219,site_folder,Isaac A. Sheppard_120 W Cambria St_19133,2026-10-06
+bld_00219,site_folder,"Sheppard, Isaac Site 1_N-33SIA1",2026-10-06
+bld_00219,master_address,sch_00211|120 W CAMBRIA ST,2026-10-06
+bld_00219,master_address,sch_00211|120 W. CAMBRIA ST.,2026-10-06
+bld_00220,ahera_code,5420,2026-10-06
+bld_00220,site_folder,John Welsh_2331 N 4th St_19133,2026-10-06
+bld_00220,site_folder,"Welsh, John Site 1_N-33WEJ1",2026-10-06
+bld_00220,master_address,sch_00212|2331 N 4TH ST,2026-10-06
+bld_00220,master_address,sch_00212|2331 N. 4TH ST.,2026-10-06
+bld_00221,ahera_code,5430,2026-10-06
+bld_00221,fca_part_code,B543001,2026-10-06
+bld_00221,site_folder,Alternative Middle Years at James Martin_3380 Richmond St_19134,2026-10-06
+bld_00221,master_address,sch_00213|3380 RICHMOND ST,2026-10-06
+bld_00221,master_address,sch_00213|3380 RICHMOND ST.,2026-10-06
+bld_00222,ahera_code,5440,2026-10-06
+bld_00222,site_folder,Frances E. Willard_1930 E Elkhart St_19134,2026-10-06
+bld_00222,site_folder,"Willard, Frances Site 2_N-34WFE2",2026-10-06
+bld_00222,master_address,sch_00214|1930 E ELKHART ST,2026-10-06
+bld_00222,master_address,sch_00214|1930 E. ELKHART ST.,2026-10-06
+bld_00223,ahera_code,5470,2026-10-06
+bld_00223,fca_part_code,B547001,2026-10-06
+bld_00223,site_folder,"Cramp, William Site 1_N-40CRW1",2026-10-06
+bld_00223,site_folder,William Cramp_3449 N Mascher St_19140,2026-10-06
+bld_00223,master_address,sch_00215|3449 N MASCHER ST,2026-10-06
+bld_00223,master_address,sch_00215|3449 N. MASCHER ST.,2026-10-06
+bld_00224,ahera_code,5480,2026-10-06
+bld_00224,site_folder,General Philip Kearny_601 Fairmount Ave_19123,2026-10-06
+bld_00224,site_folder,"Kearny, Philip Site 1_N-23KEP1",2026-10-06
+bld_00224,master_address,sch_00216|601 FAIRMOUNT AVE,2026-10-06
+bld_00224,master_address,sch_00216|601 FAIRMOUNT AVE.,2026-10-06
+bld_00225,ahera_code,5490,2026-10-06
+bld_00225,site_folder,Cayuga Site 1_N-40CAY1,2026-10-06
+bld_00225,site_folder,Cayuga_4344-4358 N 5th St_19140,2026-10-06
+bld_00225,master_address,sch_00217|4344 N 5TH ST,2026-10-06
+bld_00225,master_address,sch_00217|4344-4358 N. 5TH ST.,2026-10-06
+bld_00226,ahera_code,5500,2026-10-06
+bld_00226,site_folder,"Marshall, Thurgood Site 1_NW20MAR1",2026-10-06
+bld_00226,site_folder,Thurgood Marshall_5120 N 06th St_19120,2026-10-06
+bld_00226,master_address,sch_00218|5120 N 6TH ST,2026-10-06
+bld_00226,master_address,sch_00218|5120 N. 6TH ST.,2026-10-06
+bld_00227,ahera_code,5520,2026-10-06
+bld_00227,site_folder,Kensington Creative and Performing Arts Site 1_N-22KNP1,2026-10-06
+bld_00227,master_address,sch_00219|1901 N FRONT ST,2026-10-06
+bld_00227,master_address,sch_00219|1901 N. FRONT ST.,2026-10-06
+bld_00228,ahera_code,5530,2026-10-06
+bld_00228,site_folder,Gloria Casarez_800 E Ontario St_19134,2026-10-06
+bld_00228,site_folder,"Sheridan, Philip Site 1_N-34SHP1",2026-10-06
+bld_00228,master_address,sch_00220|800 E ONTARIO ST,2026-10-06
+bld_00228,master_address,sch_00220|800 E. ONTARIO ST.,2026-10-06
+bld_00229,ahera_code,5011,2026-10-06
+bld_00229,site_folder,Kensington Health Sciences Site 1_N-25KNS1,2026-10-06
+bld_00229,master_address,sch_00221|2463 EMERALD ST,2026-10-06
+bld_00229,master_address,sch_00221|2463 EMERALD ST.,2026-10-06
+bld_00230,ahera_code,5560,2026-10-06
+bld_00230,fca_part_code,B556001,2026-10-06
+bld_00230,site_folder,Spring Garden Site 2_N-23SPG2,2026-10-06
+bld_00230,site_folder,Spring Garden_1146 Melon St_19123,2026-10-06
+bld_00230,master_address,sch_00222|1146 MELON ST,2026-10-06
+bld_00230,master_address,sch_00222|1146 MELON ST.,2026-10-06
+bld_00231,ahera_code,5590,2026-10-06
+bld_00231,site_folder,John H. Webster_3400 Frankford Ave_19134,2026-10-06
+bld_00231,site_folder,"Webster, John Site 1_N-34WEB1",2026-10-06
+bld_00231,master_address,sch_00225|3400 FRANKFORD AVE,2026-10-06
+bld_00231,master_address,sch_00225|3400 FRANKFORD AVE.,2026-10-06
+bld_00232,ahera_code,6280,2026-10-06
+bld_00232,fca_part_code,B628001,2026-10-06
+bld_00232,site_folder,Building 21_6501 Limekiln Pk_19138,2026-10-06
+bld_00232,master_address,sch_00226|6501 LIMEKILN PIKE,2026-10-06
+bld_00233,ahera_code,5290,2026-10-06
+bld_00233,fca_part_code,B529001,2026-10-06
+bld_00233,site_folder,The U School @ Ferguson_2000 N 07th St_19122,2026-10-06
+bld_00233,master_address,sch_00227|2000 N 7TH ST,2026-10-06
+bld_00233,master_address,sch_00227|2000 N. 7TH ST.,2026-10-06
+bld_00234,ahera_code,7140,2026-10-06
+bld_00234,site_folder,"Clemente, Roberto Site 2_N-40CLM2",2026-10-06
+bld_00234,site_folder,Roberto Clemente_122 W Erie Ave_19140,2026-10-06
+bld_00234,master_address,sch_00228|122 W ERIE AVE,2026-10-06
+bld_00234,master_address,sch_00228|122 W. ERIE AVE.,2026-10-06
+bld_00234,master_address,sch_00292|122 W ERIE AVE,2026-10-06
+bld_00234,master_address,sch_00292|122 W. ERIE AVE.,2026-10-06
+bld_00235,ahera_code,5680,2026-10-06
+bld_00235,site_folder,Honorable Luis Munoz-Marin_3300 N 03rd St_19142,2026-10-06
+bld_00235,site_folder,"Muñoz Marín, José Site 1_N-40MMJ1",2026-10-06
+bld_00235,master_address,sch_00229|3300 N 3RD ST,2026-10-06
+bld_00235,master_address,sch_00229|3300 N. 3RD ST.,2026-10-06
+bld_00236,ahera_code,5010,2026-10-06
+bld_00236,site_folder,Kensington_2051 E Cumberland St_19125,2026-10-06
+bld_00236,master_address,sch_00230|2051 E CUMBERLAND ST,2026-10-06
+bld_00237,master_address,sch_00230|2501 CORAL ST.,2026-10-06
+bld_00238,ahera_code,8140,2026-10-06
+bld_00238,site_folder,Austin Meehan_3001 Ryan Ave_19152,2026-10-06
+bld_00238,site_folder,"Meehan, Austin Site 1_NE52MAA1",2026-10-06
+bld_00238,site_folder,"Meehan, Austin_B814001",2026-10-06
+bld_00238,master_address,sch_00230|3001 RYAN AVE,2026-10-06
+bld_00238,master_address,sch_00303|3001 RYAN AVE,2026-10-06
+bld_00238,master_address,sch_00303|3001 RYAN AVE.,2026-10-06
+bld_00238,master_address,sch_00312|3001 RYAN AVE,2026-10-06
+bld_00238,master_address,sch_00322|3001 RYAN AVE,2026-10-06
+bld_00239,ahera_code,6010,2026-10-06
+bld_00239,site_folder,Central Site 4_NW41CEN4,2026-10-06
+bld_00239,site_folder,Central_1700 W Olney Ave_19141,2026-10-06
+bld_00239,master_address,sch_00231|1700 W OLNEY AVE,2026-10-06
+bld_00239,master_address,sch_00231|1700 W. OLNEY AVE.,2026-10-06
+bld_00240,ahera_code,6030,2026-10-06
+bld_00240,site_folder,Roxborough Site 3_NW28RXB3,2026-10-06
+bld_00240,site_folder,Roxborough_6498 Ridge Ave_19128,2026-10-06
+bld_00240,master_address,sch_00232|6498 RIDGE AVE,2026-10-06
+bld_00240,master_address,sch_00232|6498 RIDGE AVE.,2026-10-06
+bld_00241,ahera_code,6040,2026-10-06
+bld_00241,fca_part_code,B604001,2026-10-06
+bld_00241,site_folder,"Saul, Walter Site 1_NW28SAD1",2026-10-06
+bld_00241,site_folder,Walter B. Saul_7100 Henry Ave_19128,2026-10-06
+bld_00241,master_address,sch_00233|7100 HENRY AVE,2026-10-06
+bld_00241,master_address,sch_00233|7100 HENRY AVE.,2026-10-06
+bld_00242,ahera_code,6050,2026-10-06
+bld_00242,fca_part_code,B605001,2026-10-06
+bld_00242,site_folder,"Girls, Philadelphia High School for Site 4_NW41GPH4",2026-10-06
+bld_00242,site_folder,Philadelphia High School for Girls_1400 W Olney Ave_19141,2026-10-06
+bld_00242,master_address,sch_00234|1400 W OLNEY AVE,2026-10-06
+bld_00242,master_address,sch_00234|1400 W. OLNEY AVE.,2026-10-06
+bld_00243,ahera_code,6060,2026-10-06
+bld_00243,site_folder,"King, Martin Site 1_NW38KML1",2026-10-06
+bld_00243,site_folder,Martin Luther King_6100 Stenton Ave_19138,2026-10-06
+bld_00243,master_address,sch_00235|6100 STENTON AVE,2026-10-06
+bld_00243,master_address,sch_00235|6100 STENTON AVE.,2026-10-06
+bld_00244,ahera_code,6090,2026-10-06
+bld_00244,fca_part_code,B609001,2026-10-06
+bld_00244,site_folder,A. Philip Randolph Career and Technical_3101 Henry Ave_19129,2026-10-06
+bld_00244,site_folder,"Randolph, Asa Site 1_N-29RAN1",2026-10-06
+bld_00244,master_address,sch_00236|3101 HENRY AVE,2026-10-06
+bld_00244,master_address,sch_00236|3101 HENRY AVE.,2026-10-06
+bld_00245,ahera_code,6200,2026-10-06
+bld_00245,fca_part_code,B620001,2026-10-06
+bld_00245,site_folder,Anna B. Day_6324-42 Crittenden St_19138,2026-10-06
+bld_00245,site_folder,"Day, Anna Site 1_NW38DAB1",2026-10-06
+bld_00245,master_address,sch_00237|6324 CRITTENDEN ST,2026-10-06
+bld_00245,master_address,sch_00237|6324 CRITTENDEN ST.,2026-10-06
+bld_00246,ahera_code,6210,2026-10-06
+bld_00246,site_folder,"Edmonds, Franklin Site 1_NW50EFS1",2026-10-06
+bld_00246,site_folder,Franklin S. Edmonds_8025 Thouron Ave_19150,2026-10-06
+bld_00246,master_address,sch_00238|8025 THOURON AVE,2026-10-06
+bld_00246,master_address,sch_00238|8025 THOURON AVE.,2026-10-06
+bld_00247,ahera_code,6220,2026-10-06
+bld_00247,fca_part_code,B622001,2026-10-06
+bld_00247,site_folder,Eleanor Emlen_6501 Chew Avenue_19119,2026-10-06
+bld_00247,site_folder,"Emlen, Eleanor Site 1_NW19EEC1",2026-10-06
+bld_00247,master_address,sch_00239|6501 CHEW AVE,2026-10-06
+bld_00247,master_address,sch_00239|6501 CHEW AVE.,2026-10-06
+bld_00248,ahera_code,6230,2026-10-06
+bld_00248,fca_part_code,B623001,2026-10-06
+bld_00248,site_folder,Fitler Academics Plus_140 W Seymour St_19144,2026-10-06
+bld_00248,site_folder,"Fitler, Edwin Site 1_NW44FEH1",2026-10-06
+bld_00248,master_address,sch_00240|140 W SEYMOUR ST,2026-10-06
+bld_00248,master_address,sch_00240|140 W. SEYMOUR ST.,2026-10-06
+bld_00249,ahera_code,6260,2026-10-06
+bld_00249,site_folder,Henry H. Houston_7300 Rural Ln_19119,2026-10-06
+bld_00249,site_folder,Henry W. Lawton_7300 Rural Ln_19119,2026-10-06
+bld_00249,site_folder,"Houston, Henry Site 1_NW19HHH1",2026-10-06
+bld_00249,master_address,sch_00242|7300 RURAL LN,2026-10-06
+bld_00249,master_address,sch_00242|7300 RURAL LN.,2026-10-06
+bld_00250,ahera_code,6270,2026-10-06
+bld_00250,site_folder,"Jenks, John Site 1_NW18JJS1",2026-10-06
+bld_00250,site_folder,John S. Jenks Academy for Arts and Sciences,2026-10-06
+bld_00250,master_address,sch_00243|8301 GERMANTOWN AVE,2026-10-06
+bld_00250,master_address,sch_00243|8301 GERMANTOWN AVE.,2026-10-06
+bld_00251,ahera_code,6300,2026-10-06
+bld_00251,fca_part_code,B630001,2026-10-06
+bld_00251,site_folder,James Logan_1700 Lindley Ave_19141,2026-10-06
+bld_00251,site_folder,"Logan, James Site 1_NW41LGJ1",2026-10-06
+bld_00251,master_address,sch_00244|1700 LINDLEY AVE,2026-10-06
+bld_00251,master_address,sch_00244|1700 LINDLEY AVE.,2026-10-06
+bld_00252,ahera_code,6310,2026-10-06
+bld_00252,fca_part_code,B631001,2026-10-06
+bld_00252,site_folder,John F. McCloskey_8500 Pickering St_19150,2026-10-06
+bld_00252,site_folder,"McCloskey, John Site 1_NW50MJF1",2026-10-06
+bld_00252,master_address,sch_00245|8500 PICKERING AVE,2026-10-06
+bld_00252,master_address,sch_00245|8500 PICKERING ST.,2026-10-06
+bld_00253,ahera_code,6320,2026-10-06
+bld_00253,fca_part_code,B632001,2026-10-06
+bld_00253,site_folder,"Mifflin, Thomas Site 1_NW29MIT1",2026-10-06
+bld_00253,site_folder,Thomas Mifflin_3624 Conrad St_19129,2026-10-06
+bld_00253,master_address,sch_00246|3624 CONRAD ST,2026-10-06
+bld_00253,master_address,sch_00246|3624 CONRAD ST.,2026-10-06
+bld_00254,ahera_code,6340,2026-10-06
+bld_00254,fca_part_code,B634001,2026-10-06
+bld_00254,site_folder,Joseph Pennell_1800 Nedro Ave_19141,2026-10-06
+bld_00254,site_folder,"Pennell, Joseph Site 1_NW41PNL1",2026-10-06
+bld_00254,master_address,sch_00247|1800 NEDRO AVE,2026-10-06
+bld_00254,master_address,sch_00247|1800 NEDRO AVE.,2026-10-06
+bld_00255,ahera_code,6350,2026-10-06
+bld_00255,site_folder,"Pennypacker, Samuel Site 1_NW38PSW1",2026-10-06
+bld_00255,site_folder,Samuel Pennypacker_1858 E Washington Lane_19138,2026-10-06
+bld_00255,master_address,sch_00248|1858 E WASHINGTON LN,2026-10-06
+bld_00255,master_address,sch_00248|1858 E. WASHINGTON LN.,2026-10-06
+bld_00256,ahera_code,6110,2026-10-06
+bld_00256,fca_part_code,B611001,2026-10-06
+bld_00256,site_folder,"Roosevelt, Theodore Site 1_NW44RVT1",2026-10-06
+bld_00256,site_folder,Theodore Roosevelt School_430 E Washington Ln_19144,2026-10-06
+bld_00256,master_address,sch_00249|430 E WASHINGTON LN,2026-10-06
+bld_00256,master_address,sch_00249|430 E. WASHINGTON LN.,2026-10-06
+bld_00257,ahera_code,6380,2026-10-06
+bld_00257,site_folder,Shawmont Site 1_NW28SHM1,2026-10-06
+bld_00257,site_folder,Shawmont_535 Shawmont Avenue_19128,2026-10-06
+bld_00257,master_address,sch_00250|535 SHAWMONT AVE,2026-10-06
+bld_00257,master_address,sch_00250|535 SHAWMONT AVE.,2026-10-06
+bld_00258,ahera_code,6390,2026-10-06
+bld_00258,site_folder,Edward T. Steel_4301 Wayne Ave_19140,2026-10-06
+bld_00258,site_folder,"Steel, Edward Site 1_N-40STL1",2026-10-06
+bld_00258,master_address,sch_00251|4301 WAYNE AVE,2026-10-06
+bld_00258,master_address,sch_00251|4301 WAYNE AVE.,2026-10-06
+bld_00259,ahera_code,6400,2026-10-06
+bld_00259,site_folder,"Widener Memorial, Peter Site 1_NW41WPR1",2026-10-06
+bld_00259,site_folder,Widener Memorial_1450 W Olney Ave_19141,2026-10-06
+bld_00259,master_address,sch_00252|1450 W OLNEY AVE,2026-10-06
+bld_00259,master_address,sch_00252|1450 W. OLNEY AVE.,2026-10-06
+bld_00260,ahera_code,6410,2026-10-06
+bld_00260,fca_part_code,B641001,2026-10-06
+bld_00260,site_folder,"Cook-Wissahickon, Joel  Site 1_NW28CKW1",2026-10-06
+bld_00260,site_folder,Cook-Wissahickon_201 Salaignac St_19128,2026-10-06
+bld_00260,master_address,sch_00253|201 E SALAIGNAC ST,2026-10-06
+bld_00260,master_address,sch_00253|201 E. SALAIGNAC ST.,2026-10-06
+bld_00261,ahera_code,6440,2026-10-06
+bld_00261,site_folder,Anna L. Lingelbach_6340 Wayne Ave_19141,2026-10-06
+bld_00261,site_folder,"Lingelbach, Anna Site 1_NW44LAL1",2026-10-06
+bld_00261,master_address,sch_00254|6340 WAYNE AVE,2026-10-06
+bld_00261,master_address,sch_00254|6340 WAYNE AVE.,2026-10-06
+bld_00262,ahera_code,6450,2026-10-06
+bld_00262,site_folder,"Dobson, James Site 1_NW27DJA1",2026-10-06
+bld_00262,site_folder,James Dobson_4667 Umbria St_19127,2026-10-06
+bld_00262,master_address,sch_00255|4667 UMBRIA ST,2026-10-06
+bld_00262,master_address,sch_00255|4667 UMBRIA ST.,2026-10-06
+bld_00263,site_folder,Hill-Freedman World Academy @ Leeds_1100 E Mount Pleasant Ave_19150,2026-10-06
+bld_00263,site_folder,"Leeds, Morris  Site 1_NW50LME1",2026-10-06
+bld_00263,master_address,sch_00256|1100 E MOUNT PLEASANT AVE,2026-10-06
+bld_00264,master_address,sch_00256|1100 E. MT. PLEASANT AVE.,2026-10-06
+bld_00265,ahera_code,6470,2026-10-06
+bld_00265,site_folder,John B. Kelly_5116 Pulaski Ave_19144,2026-10-06
+bld_00265,site_folder,"Kelly, John Site 1_NW44KJB1",2026-10-06
+bld_00265,master_address,sch_00257|5116 PULASKI AVE,2026-10-06
+bld_00265,master_address,sch_00257|5116 PULASKI AVE.,2026-10-06
+bld_00266,ahera_code,6290,2026-10-06
+bld_00266,site_folder,Academy for the Middle Years Northwest at Levering_6000 Ridge Ave_19128,2026-10-06
+bld_00266,master_address,sch_00258|6000 RIDGE AVE,2026-10-06
+bld_00266,master_address,sch_00258|6000 RIDGE AVE.,2026-10-06
+bld_00267,ahera_code,6540,2026-10-06
+bld_00267,site_folder,"Lankenau, John Site 1_NW28LJD1",2026-10-06
+bld_00267,site_folder,Lankenau_201 Spring Ln_19128,2026-10-06
+bld_00267,master_address,sch_00259|201 SPRING LANE,2026-10-06
+bld_00267,master_address,sch_00259|201 SPRING LN,2026-10-06
+bld_00268,site_folder,Frankford Site 1_NE24FRD1,2026-10-06
+bld_00268,site_folder,Frankford_5000 Oxford Ave_19124,2026-10-06
+bld_00268,master_address,sch_00260|5000 OXFORD AVE,2026-10-06
+bld_00268,master_address,sch_00260|5000 OXFORD AVE.,2026-10-06
+bld_00269,master_address,sch_00262|100 E DUNCANNON AVE,2026-10-06
+bld_00269,master_address,sch_00490|100 E DUNCANNON AVE,2026-10-06
+bld_00270,ahera_code,7100,2026-10-06
+bld_00270,fca_part_code,B710001,2026-10-06
+bld_00270,site_folder,"Cooke, Jay Site 1_NW41COJ1",2026-10-06
+bld_00270,site_folder,Jay Cooke_1300 W Loudon St_19141,2026-10-06
+bld_00270,master_address,sch_00263|1300 W LOUDON ST,2026-10-06
+bld_00271,master_address,sch_00263|1300 W. LOUDEN ST.,2026-10-06
+bld_00272,ahera_code,7110,2026-10-06
+bld_00272,site_folder,"Harding, Warren Site 1_NE24HWG1",2026-10-06
+bld_00272,site_folder,Warren G. Harding_2000 Wakeling St_19124,2026-10-06
+bld_00272,master_address,sch_00264|2000 WAKELING ST,2026-10-06
+bld_00272,master_address,sch_00264|2000 WAKELING ST.,2026-10-06
+bld_00273,ahera_code,7120,2026-10-06
+bld_00273,site_folder,"Fels, Samuel Site 2_NE24FES2",2026-10-06
+bld_00273,master_address,sch_00265|5500 LANGDON ST,2026-10-06
+bld_00273,master_address,sch_00265|5500 LANGDON ST.,2026-10-06
+bld_00274,ahera_code,7130,2026-10-06
+bld_00274,ahera_code,7310,2026-10-06
+bld_00274,site_folder,General Louis Wagner_1701 West Chelten Avenue_19126,2026-10-06
+bld_00274,site_folder,"Wagner, Louis Site 1_NW26WAG1",2026-10-06
+bld_00274,master_address,sch_00266|1701 CHELTEN AVE.,2026-10-06
+bld_00274,master_address,sch_00266|1701 W CHELTEN AVE,2026-10-06
+bld_00275,ahera_code,5890,2026-10-06
+bld_00275,site_folder,Juniata Park Site 1_N-24JNP1,2026-10-06
+bld_00275,master_address,sch_00267|801 E HUNTING PARK AVE,2026-10-06
+bld_00275,master_address,sch_00267|801 E. HUNTING PARK AVE.,2026-10-06
+bld_00276,ahera_code,7200,2026-10-06
+bld_00276,fca_part_code,B720001,2026-10-06
+bld_00276,site_folder,"Barton, Clara Site 1_N-20BRC1",2026-10-06
+bld_00276,site_folder,Clara Barton_4600 Rosehill St_19120,2026-10-06
+bld_00276,master_address,sch_00268|4600 ROSEHILL ST,2026-10-06
+bld_00276,master_address,sch_00268|4600 ROSEHILL ST.,2026-10-06
+bld_00277,ahera_code,7220,2026-10-06
+bld_00277,fca_part_code,B722001,2026-10-06
+bld_00277,site_folder,"Carnell, Laura Site 1_NE49CLH1",2026-10-06
+bld_00277,site_folder,Laura H. Carnell_1100 Devereaux Avenue_19111,2026-10-06
+bld_00277,master_address,sch_00269|1100 DEVEREAUX AVE,2026-10-06
+bld_00277,master_address,sch_00269|1100 DEVEREAUX AVE.,2026-10-06
+bld_00278,ahera_code,7260,2026-10-06
+bld_00278,fca_part_code,B726001,2026-10-06
+bld_00278,site_folder,Ellwood Site 1_NW26ELL1,2026-10-06
+bld_00278,site_folder,Ellwood_6701 N 13th St_19126,2026-10-06
+bld_00278,master_address,sch_00270|6701 N 13TH ST,2026-10-06
+bld_00278,master_address,sch_00270|6701 N. 13TH ST.,2026-10-06
+bld_00279,ahera_code,7270,2026-10-06
+bld_00279,fca_part_code,B727001,2026-10-06
+bld_00279,site_folder,"Finletter, Thomas Site 1_NW20FIN1",2026-10-06
+bld_00279,site_folder,Thomas K. Finletter_6101 N Front St_19120,2026-10-06
+bld_00279,master_address,sch_00271|6100 N FRONT ST,2026-10-06
+bld_00279,master_address,sch_00271|6100 N. FRONT ST.,2026-10-06
+bld_00279,master_address,sch_00271|6101 N FRONT ST,2026-10-06
+bld_00280,ahera_code,7280,2026-10-06
+bld_00280,site_folder,Benjamin Franklin_5735 Rising Sun Ave_19120,2026-10-06
+bld_00280,master_address,sch_00272|5735 RISING SUN AVE,2026-10-06
+bld_00280,master_address,sch_00272|5735 RISING SUN AVE.,2026-10-06
+bld_00280,master_address,sch_00272|5737 RISING SUN AVE,2026-10-06
+bld_00281,ahera_code,7290,2026-10-06
+bld_00281,site_folder,Allen M. Stearne_1655 Unity St_19124,2026-10-06
+bld_00281,site_folder,"Stearne, Allen Site 1_NE24STR1",2026-10-06
+bld_00281,master_address,sch_00273|1655 UNITY ST,2026-10-06
+bld_00281,master_address,sch_00273|1655 UNITY ST.,2026-10-06
+bld_00282,ahera_code,7300,2026-10-06
+bld_00282,fca_part_code,B730001,2026-10-06
+bld_00282,site_folder,Francis Hopkinson_4001 L Street_19124,2026-10-06
+bld_00282,site_folder,"Hopkinson, Francis Site 1_N-24HOP1",2026-10-06
+bld_00282,master_address,sch_00274|4001 L ST,2026-10-06
+bld_00282,master_address,sch_00274|4001 L ST.,2026-10-06
+bld_00283,site_folder,Feltonville Intermediate Site 1_N-20FVI1,2026-10-06
+bld_00283,site_folder,Feltonville Intermediate_238 E Wyoming Ave_19120,2026-10-06
+bld_00283,master_address,sch_00275|238 E WYOMING AVE,2026-10-06
+bld_00283,master_address,sch_00275|238 E. WYOMING AVE.,2026-10-06
+bld_00284,ahera_code,7320,2026-10-06
+bld_00284,site_folder,"Howe, Julia Site 1_NW41HOJ1",2026-10-06
+bld_00284,site_folder,Julia W. Howe_5800 N 13th St_19141,2026-10-06
+bld_00284,master_address,sch_00276|5800 N 13TH ST,2026-10-06
+bld_00284,master_address,sch_00276|5800 N. 13TH ST.,2026-10-06
+bld_00285,ahera_code,7330,2026-10-06
+bld_00285,site_folder,"Lawton, Henry Site 1_NE35LHW1",2026-10-06
+bld_00285,master_address,sch_00277|6101 JACKSON ST,2026-10-06
+bld_00285,master_address,sch_00277|6101 JACKSON ST.,2026-10-06
+bld_00286,ahera_code,7350,2026-10-06
+bld_00286,site_folder,James R. Lowell_450 W Nedro Ave_19120,2026-10-06
+bld_00286,site_folder,"Lowell, James Site 1_NW20LWL1",2026-10-06
+bld_00286,master_address,sch_00278|450 W NEDRO AVE,2026-10-06
+bld_00286,master_address,sch_00278|450 W. NEDRO AVE.,2026-10-06
+bld_00287,ahera_code,7360,2026-10-06
+bld_00287,fca_part_code,B736001,2026-10-06
+bld_00287,site_folder,John Marshall_4500 Griscom St_19124,2026-10-06
+bld_00287,site_folder,"Marshall, John Site 1_NE24MAJ1",2026-10-06
+bld_00287,master_address,sch_00279|4500 GRISCOM ST,2026-10-06
+bld_00287,master_address,sch_00279|4500 GRISCOM ST.,2026-10-06
+bld_00288,ahera_code,7370,2026-10-06
+bld_00288,ahera_code,7560,2026-10-06
+bld_00288,site_folder,Grover Washington Jr_201 E Olney Ave_19120,2026-10-06
+bld_00288,site_folder,"Washington, Jr., Grover Site 1_NW20WGR1",2026-10-06
+bld_00288,master_address,sch_00280|201 E OLNEY AVE,2026-10-06
+bld_00288,master_address,sch_00280|201 E. OLNEY AVE.,2026-10-06
+bld_00288,master_address,sch_00370|201 E OLNEY AVE,2026-10-06
+bld_00289,ahera_code,7380,2026-10-06
+bld_00289,fca_part_code,B738001,2026-10-06
+bld_00289,site_folder,Alexander McClure_600 W. Hunting Park Avenue_19140,2026-10-06
+bld_00289,site_folder,"McClure, Alexander Site 1_N-40MAK1",2026-10-06
+bld_00289,master_address,sch_00281|600 W HUNTING PARK AVE,2026-10-06
+bld_00289,master_address,sch_00281|600 W. HUNTING PARK AVE.,2026-10-06
+bld_00290,ahera_code,7390,2026-10-06
+bld_00290,site_folder,Andrew J. Morrison_5100 N 3rd St_19120,2026-10-06
+bld_00290,site_folder,"Morrison, Andrew Site 1_NW20MOR1",2026-10-06
+bld_00290,master_address,sch_00282|5100 N 3RD ST,2026-10-06
+bld_00290,master_address,sch_00282|5100 N. 3RD ST.,2026-10-06
+bld_00291,ahera_code,7400,2026-10-06
+bld_00291,fca_part_code,B740001,2026-10-06
+bld_00291,site_folder,Olney Site 1 (5301 North Water Street)_NW20OLE1,2026-10-06
+bld_00291,site_folder,Olney_5301 N Water St_19120,2026-10-06
+bld_00291,master_address,sch_00283|5301 N WATER ST,2026-10-06
+bld_00291,master_address,sch_00283|5301 N. WATER ST.,2026-10-06
+bld_00292,ahera_code,7430,2026-10-06
+bld_00292,fca_part_code,B743001,2026-10-06
+bld_00292,site_folder,James J. Sullivan_5300 Ditman Street_19124,2026-10-06
+bld_00292,site_folder,"Sullivan, James Site 1_NE24SUJ1",2026-10-06
+bld_00292,master_address,sch_00284|5300 DITMAN ST,2026-10-06
+bld_00292,master_address,sch_00284|5300 DITMAN ST.,2026-10-06
+bld_00293,ahera_code,7440,2026-10-06
+bld_00293,fca_part_code,B744001,2026-10-06
+bld_00293,fca_part_code,B744101,2026-10-06
+bld_00293,site_folder,Bayard Taylor_3698 N Randolph St_19140,2026-10-06
+bld_00293,site_folder,"Taylor, James Site 1_N-40TJB1",2026-10-06
+bld_00293,master_address,sch_00285|3698 N RANDOLPH ST,2026-10-06
+bld_00293,master_address,sch_00285|3698 N. RANDOLPH ST.,2026-10-06
+bld_00294,ahera_code,7460,2026-10-06
+bld_00294,site_folder,"Ziegler, William Site 1_NE49ZWH1",2026-10-06
+bld_00294,master_address,sch_00286|5935 SAUL ST,2026-10-06
+bld_00294,master_address,sch_00286|5935 SAUL ST.,2026-10-06
+bld_00295,ahera_code,7470,2026-10-06
+bld_00295,site_folder,Bridesburg Site 1_NE37BBG1,2026-10-06
+bld_00295,site_folder,Bridesburg_2824 Jenks St_19137,2026-10-06
+bld_00295,master_address,sch_00287|2824 JENKS ST,2026-10-06
+bld_00295,master_address,sch_00287|2824 JENKS ST.,2026-10-06
+bld_00296,ahera_code,7490,2026-10-06
+bld_00296,site_folder,"Hall, Prince Site 1_NW41HLP1",2026-10-06
+bld_00296,site_folder,Prince Hall_6101-6167 N Gratz St_19141,2026-10-06
+bld_00296,master_address,sch_00288|6101 N GRATZ ST,2026-10-06
+bld_00296,master_address,sch_00288|6101 N. GRATZ ST.,2026-10-06
+bld_00297,ahera_code,7500,2026-10-06
+bld_00297,site_folder,Feltonville Arts and Sciences Site 1_N-20FVA1,2026-10-06
+bld_00297,site_folder,Feltonville Arts_210 E Courtland St_19120,2026-10-06
+bld_00297,master_address,sch_00289|210 E COURTLAND ST,2026-10-06
+bld_00297,master_address,sch_00289|210 E. COURTLAND ST.,2026-10-06
+bld_00298,ahera_code,7510,2026-10-06
+bld_00298,site_folder,"Bethune, Mary Site 1_N-40BTN1",2026-10-06
+bld_00298,site_folder,Mary McLeod Bethune_3301 Old York Rd_19140,2026-10-06
+bld_00298,master_address,sch_00290|3301 OLD YORK RD,2026-10-06
+bld_00298,master_address,sch_00290|3301 OLD YORK RD.,2026-10-06
+bld_00299,ahera_code,7530,2026-10-06
+bld_00299,site_folder,"Rowen, William Site 1_NW26ROW1",2026-10-06
+bld_00299,site_folder,William Rowen_6841 N 19th St_19126,2026-10-06
+bld_00299,master_address,sch_00291|6841 N 19TH ST,2026-10-06
+bld_00299,master_address,sch_00291|6841 N. 19TH ST.,2026-10-06
+bld_00300,ahera_code,8010,2026-10-06
+bld_00300,fca_part_code,B801001,2026-10-06
+bld_00300,site_folder,Abraham Lincoln_3201 Ryan Ave_19136,2026-10-06
+bld_00300,site_folder,"Lincoln, Abraham Site 1_NE36LAB1",2026-10-06
+bld_00300,master_address,sch_00293|3201 RYAN AVE,2026-10-06
+bld_00300,master_address,sch_00293|3201 RYAN AVE.,2026-10-06
+bld_00301,ahera_code,8030,2026-10-06
+bld_00301,site_folder,George Washington_10175 Bustleton Ave_19116,2026-10-06
+bld_00301,site_folder,"Washington, George Site 1 (10175 North Bustleton Avenue)_NW16WGO1",2026-10-06
+bld_00301,master_address,sch_00295|10175 BUSTLETON AVE,2026-10-06
+bld_00301,master_address,sch_00295|10175 BUSTLETON AVE.,2026-10-06
+bld_00302,ahera_code,8150,2026-10-06
+bld_00302,site_folder,Arts Academy at Benjamin Rush_11081 Knights Rd_19154,2026-10-06
+bld_00302,site_folder,"Rush, Benjamin Site 1_NE54RUS1",2026-10-06
+bld_00302,master_address,sch_00296|11081 KNIGHTS RD,2026-10-06
+bld_00302,master_address,sch_00296|11081 KNIGHTS RD.,2026-10-06
+bld_00303,ahera_code,8070,2026-10-06
+bld_00303,master_address,sch_00297|444 N 3RD ST,2026-10-06
+bld_00303,master_address,sch_00297|444 N. 3RD ST.,2026-10-06
+bld_00304,ahera_code,8090,2026-10-06
+bld_00304,site_folder,Swenson Arts and Technology_2750 Red Lion Rd_19114,2026-10-06
+bld_00304,site_folder,Swenson Site 1_NE14SWN1,2026-10-06
+bld_00304,master_address,sch_00299|2750 RED LION RD,2026-10-06
+bld_00304,master_address,sch_00299|2750 RED LION RD.,2026-10-06
+bld_00305,ahera_code,8100,2026-10-06
+bld_00305,master_address,sch_00300|1700 SPRING GARDEN ST,2026-10-06
+bld_00305,master_address,sch_00300|1700 SPRING GARDEN ST RM M1-24,2026-10-06
+bld_00306,ahera_code,8120,2026-10-06
+bld_00306,site_folder,"Castor Gardens (previously known as Wilson, Woodrow) Site 1_NE11WIW1",2026-10-06
+bld_00306,site_folder,Castor Gardens_1800 Cottman Ave_19111,2026-10-06
+bld_00306,master_address,sch_00301|1800 COTTMAN AVE,2026-10-06
+bld_00306,master_address,sch_00301|1800 COTTMAN AVE.,2026-10-06
+bld_00307,site_folder,Northeast Community Propel Academy NE36PRO1,2026-10-06
+bld_00307,master_address,sch_00302|7500 ROWLAND AVE,2026-10-06
+bld_00308,ahera_code,8160,2026-10-06
+bld_00308,site_folder,"Baldi, Charles Site 1_NE15BLC1",2026-10-06
+bld_00308,site_folder,Baldi_8801 Verree Rd_19115,2026-10-06
+bld_00308,master_address,sch_00304|8801 VERREE RD,2026-10-06
+bld_00308,master_address,sch_00304|8801 VERREE RD.,2026-10-06
+bld_00309,ahera_code,8190,2026-10-06
+bld_00309,site_folder,One Bright Ray - Elmwood Campus_2820 N 4th Street_19133,2026-10-06
+bld_00309,master_address,sch_00305|2820 N 4TH ST,2026-10-06
+bld_00309,master_address,sch_00305|2820 N. 4TH ST.,2026-10-06
+bld_00310,ahera_code,8200,2026-10-06
+bld_00310,site_folder,"Allen, Ethan Site 1_NE49AAN1",2026-10-06
+bld_00310,site_folder,Ethan Allen_6329 Battersby St_19149,2026-10-06
+bld_00310,master_address,sch_00306|6329 BATTERSBY ST,2026-10-06
+bld_00310,master_address,sch_00306|6329 BATTERSBY ST.,2026-10-06
+bld_00311,ahera_code,8210,2026-10-06
+bld_00311,fca_part_code,B821001,2026-10-06
+bld_00311,site_folder,"Brown, Joseph Site 1_NE36BNJ1",2026-10-06
+bld_00311,site_folder,Joseph H. Brown_3600 Stanwood St_19136,2026-10-06
+bld_00311,master_address,sch_00307|3600 STANWOOD ST,2026-10-06
+bld_00311,master_address,sch_00307|3600 STANWOOD ST.,2026-10-06
+bld_00312,ahera_code,8230,2026-10-06
+bld_00312,fca_part_code,B823001,2026-10-06
+bld_00312,site_folder,"Crossan, Kennedy Site 1_NE11CNK1",2026-10-06
+bld_00312,site_folder,Kennedy C. Crossan_7350 Bingham St_19111,2026-10-06
+bld_00312,master_address,sch_00308|7350 BINGHAM ST,2026-10-06
+bld_00312,master_address,sch_00308|7350 BINGHAM ST.,2026-10-06
+bld_00313,ahera_code,8240,2026-10-06
+bld_00313,fca_part_code,B824001,2026-10-06
+bld_00313,site_folder,"Disston, Hamilton Site 1_NE35DSN1",2026-10-06
+bld_00313,site_folder,Hamilton Disston_6801 Cottage St_19135,2026-10-06
+bld_00313,master_address,sch_00309|6801 COTTAGE ST,2026-10-06
+bld_00313,master_address,sch_00309|6801 COTTAGE ST.,2026-10-06
+bld_00314,ahera_code,8250,2026-10-06
+bld_00314,ahera_code,8251,2026-10-06
+bld_00314,fca_part_code,B825001,2026-10-06
+bld_00314,fca_part_code,B825002,2026-10-06
+bld_00314,site_folder,Edwin Forrest_7300 Cottage St_19136,2026-10-06
+bld_00314,site_folder,"Forrest, Edwin Site 1_NE36FOR1",2026-10-06
+bld_00314,master_address,sch_00310|7300 COTTAGE ST,2026-10-06
+bld_00314,master_address,sch_00310|7300 COTTAGE ST.,2026-10-06
+bld_00315,ahera_code,8260,2026-10-06
+bld_00315,fca_part_code,B826001,2026-10-06
+bld_00315,site_folder,Fox Chase Site 1_NE11FXC1,2026-10-06
+bld_00315,site_folder,Fox Chase_500 Rhawn St_19111,2026-10-06
+bld_00315,master_address,sch_00311|500 RHAWN ST,2026-10-06
+bld_00315,master_address,sch_00311|500 RHAWN ST.,2026-10-06
+bld_00316,ahera_code,8270,2026-10-06
+bld_00316,fca_part_code,B827001,2026-10-06
+bld_00316,site_folder,"Holme, Thomas Site 2_  NE14HMT2",2026-10-06
+bld_00316,site_folder,Thomas Holme_9120 Academy Rd_19114,2026-10-06
+bld_00316,master_address,sch_00312|9125 ACADEMY RD,2026-10-06
+bld_00316,master_address,sch_00312|9125 ACADEMY RD.,2026-10-06
+bld_00317,ahera_code,8300,2026-10-06
+bld_00317,site_folder,Mayfair Site 1_NE49MFR1,2026-10-06
+bld_00317,master_address,sch_00313|3001 PRINCETON AVE,2026-10-06
+bld_00317,master_address,sch_00313|3001 PRINCETON AVE.,2026-10-06
+bld_00318,ahera_code,8310,2026-10-06
+bld_00318,ahera_code,8311,2026-10-06
+bld_00318,fca_part_code,B831001,2026-10-06
+bld_00318,fca_part_code,B831002,2026-10-06
+bld_00318,site_folder,J. Hampton Moore_6900 Summerdale Ave_19111,2026-10-06
+bld_00318,site_folder,"Moore, Joseph Site 1_NE11MJH1",2026-10-06
+bld_00318,master_address,sch_00314|6900 SUMMERDALE AVE,2026-10-06
+bld_00318,master_address,sch_00314|6900 SUMMERDALE AVE.,2026-10-06
+bld_00319,site_folder,"Solis-Cohen, Solomon Site 1_NE49SCS1",2026-10-06
+bld_00319,master_address,sch_00315|7001 HORROCKS ST,2026-10-06
+bld_00319,master_address,sch_00315|7001 HORROCKS ST.,2026-10-06
+bld_00320,ahera_code,8350,2026-10-06
+bld_00320,site_folder,Gilbert Spruance_6401 Horrocks St_19149,2026-10-06
+bld_00320,site_folder,"Spruance, Gilbert Site 1_NE49SPU1",2026-10-06
+bld_00320,master_address,sch_00316|6401 HORROCKS ST,2026-10-06
+bld_00320,master_address,sch_00316|6401 HORROCKS ST.,2026-10-06
+bld_00321,ahera_code,8360,2026-10-06
+bld_00321,fca_part_code,B836001,2026-10-06
+bld_00321,site_folder,Rhawnhurst Site 1_ NE52RNH1,2026-10-06
+bld_00321,site_folder,Rhawnhurst_7809 Castor Ave_19152,2026-10-06
+bld_00321,master_address,sch_00317|7809 CASTOR AVE,2026-10-06
+bld_00321,master_address,sch_00317|7809 CASTOR AVE.,2026-10-06
+bld_00322,ahera_code,8370,2026-10-06
+bld_00322,site_folder,"Comly, Watson Site 1_NE16COM1",2026-10-06
+bld_00322,site_folder,Watson Comly_1001 Byberry Rd_19116,2026-10-06
+bld_00322,master_address,sch_00318|1001 BYBERRY RD,2026-10-06
+bld_00322,master_address,sch_00318|1001 BYBERRY RD.,2026-10-06
+bld_00323,ahera_code,8380,2026-10-06
+bld_00323,fca_part_code,B838001,2026-10-06
+bld_00323,site_folder,"Farrell, Louis Site 1_NE52FRL1",2026-10-06
+bld_00323,site_folder,Louis H. Farrell_8300 Castor Ave_19152,2026-10-06
+bld_00323,master_address,sch_00319|8300 CASTOR AVE,2026-10-06
+bld_00323,master_address,sch_00319|8300 CASTOR AVE.,2026-10-06
+bld_00324,ahera_code,8390,2026-10-06
+bld_00324,site_folder,A. L. Fitzpatrick_11061 Knights Rd_19154,2026-10-06
+bld_00324,site_folder,"FitzPatrick, Aloysius Site 1_NE54FZP1",2026-10-06
+bld_00324,master_address,sch_00320|11061 KNIGHTS RD,2026-10-06
+bld_00324,master_address,sch_00320|11061 KNIGHTS RD.,2026-10-06
+bld_00325,ahera_code,8400,2026-10-06
+bld_00325,fca_part_code,B840001,2026-10-06
+bld_00325,site_folder,Anne Frank_2000 Bowler St_19115,2026-10-06
+bld_00325,site_folder,"Frank, Anne Site 1_NE15FRA1",2026-10-06
+bld_00325,master_address,sch_00321|2000 BOWLER ST,2026-10-06
+bld_00325,master_address,sch_00321|2000 BOWLER ST.,2026-10-06
+bld_00326,ahera_code,8410,2026-10-06
+bld_00326,site_folder,"Pollock, Robert Site 1_NE52PLK1",2026-10-06
+bld_00326,site_folder,Robert B. Pollock_2875 Welsh Rd_19152,2026-10-06
+bld_00326,master_address,sch_00322|2875 WELSH RD,2026-10-06
+bld_00326,master_address,sch_00322|2875 WELSH RD.,2026-10-06
+bld_00327,ahera_code,8420,2026-10-06
+bld_00327,fca_part_code,B842001,2026-10-06
+bld_00327,site_folder,"Decatur, Stephen Site 1_NE54DCT1",2026-10-06
+bld_00327,site_folder,Stephen Decatur_3500 Academy Rd_19154,2026-10-06
+bld_00327,master_address,sch_00323|3500 ACADEMY RD,2026-10-06
+bld_00327,master_address,sch_00323|3500 ACADEMY RD.,2026-10-06
+bld_00328,ahera_code,8430,2026-10-06
+bld_00328,fca_part_code,B843001,2026-10-06
+bld_00328,site_folder,"Greenberg, Joseph Site 1_NE15GNB1",2026-10-06
+bld_00328,site_folder,Joseph Greenberg_600 Sharon Ln_19115,2026-10-06
+bld_00328,master_address,sch_00324|600 SHARON LN,2026-10-06
+bld_00328,master_address,sch_00324|600 SHARON LN.,2026-10-06
+bld_00329,ahera_code,8440,2026-10-06
+bld_00329,fca_part_code,B844001,2026-10-06
+bld_00329,site_folder,"Loesche, William Site 1_NE16LOE1",2026-10-06
+bld_00329,site_folder,William H. Loesche_595 Tomlinson Road_19116,2026-10-06
+bld_00329,master_address,sch_00325|595 TOMLINSON RD,2026-10-06
+bld_00329,master_address,sch_00325|595 TOMLINSON RD.,2026-10-06
+bld_00330,ahera_code,8450,2026-10-06
+bld_00330,master_address,sch_00326|2709 N BROAD ST,2026-10-06
+bld_00330,master_address,sch_00326|2709 N. BROAD ST.,2026-10-06
+bld_00331,master_address,sch_00329|7901 STATE RD,2026-10-06
+bld_00331,master_address,sch_00329|7901 STATE RD.,2026-10-06
+bld_00332,ahera_code,1022,2026-10-06
+bld_00332,site_folder,The Workshop School @ Hanson Street_221-41 S Hanson St_19139,2026-10-06
+bld_00332,site_folder,Workshop School Site 1_W-39WRK1,2026-10-06
+bld_00332,master_address,sch_00330|221 S HANSON ST,2026-10-06
+bld_00332,master_address,sch_00330|221 S. HANSON ST.,2026-10-06
+bld_00333,ahera_code,8180,2026-10-06
+bld_00333,site_folder,"Hancock, John Site 1_NE14HCJ1",2026-10-06
+bld_00333,site_folder,John Hancock Demonstration_3700 Morrell Ave_19114,2026-10-06
+bld_00333,master_address,sch_00332|3700 MORRELL AVE,2026-10-06
+bld_00333,master_address,sch_00332|3700 MORRELL AVE.,2026-10-06
+bld_00334,master_address,sch_00333|440 N BROAD ST,2026-10-06
+bld_00334,master_address,sch_00333|440 N. BROAD ST.,2026-10-06
+bld_00334,master_address,sch_00338|440 N BROAD ST,2026-10-06
+bld_00334,master_address,sch_00338|440 N. BROAD ST.,2026-10-06
+bld_00334,master_address,sch_00454|440 N BROAD ST,2026-10-06
+bld_00334,master_address,sch_00486|440 N BROAD ST,2026-10-06
+bld_00335,ahera_code,8890,2026-10-06
+bld_00335,master_address,sch_00336|1142 E ERIE AVE,2026-10-06
+bld_00335,master_address,sch_00336|1142 E. ERIE AVE.,2026-10-06
+bld_00335,master_address,sch_00337|1142 E ERIE AVE,2026-10-06
+bld_00336,ahera_code,1014,2026-10-06
+bld_00337,ahera_code,1019,2026-10-06
+bld_00337,site_folder,John Bartram Field (Fieldhouse)_5801 Elmwood Ave_19143,2026-10-06
+bld_00338,ahera_code,1029,2026-10-06
+bld_00339,ahera_code,1101,2026-10-06
+bld_00339,site_folder,Sayre Pool_5835 Spruce St_19139,2026-10-06
+bld_00340,ahera_code,1251,2026-10-06
+bld_00340,site_folder,Catharine School Annex-Truancy Court_6900 Greenway Avenue_19142,2026-10-06
+bld_00341,ahera_code,1260,2026-10-06
+bld_00341,site_folder,Benjamin B. Comegys_5001 Greenway Ave_19143,2026-10-06
+bld_00342,ahera_code,1301,2026-10-06
+bld_00343,ahera_code,1381,2026-10-06
+bld_00344,ahera_code,1390,2026-10-06
+bld_00344,site_folder,Samuel Powel Admin Building_301 N 36th St_19104,2026-10-06
+bld_00345,ahera_code,1391,2026-10-06
+bld_00346,fca_part_code,B142001,2026-10-06
+bld_00347,ahera_code,1441,2026-10-06
+bld_00348,ahera_code,1442,2026-10-06
+bld_00348,site_folder,Penrose Annex_2515 South 78th St_19153,2026-10-06
+bld_00349,ahera_code,1479,2026-10-06
+bld_00349,site_folder,Haverford Center_4601 Haverford Ave_19139,2026-10-06
+bld_00350,ahera_code,1590,2026-10-06
+bld_00351,ahera_code,1781,2026-10-06
+bld_00352,ahera_code,2009,2026-10-06
+bld_00352,site_folder,South Philadelphia Field House_1000 Bigler St_19146,2026-10-06
+bld_00353,ahera_code,2010,2026-10-06
+bld_00354,ahera_code,2210,2026-10-06
+bld_00354,site_folder,Bache-Martin (Bache Building)_801 N 22nd St_19130,2026-10-06
+bld_00355,ahera_code,2291,2026-10-06
+bld_00356,ahera_code,2372,2026-10-06
+bld_00356,site_folder,Delaplaine McDaniel Annex_1901 S 23rd St_19145,2026-10-06
+bld_00357,ahera_code,2490,2026-10-06
+bld_00357,fca_part_code,B249001,2026-10-06
+bld_00357,site_folder,Laura W. Waring_1801 Greene St_19130,2026-10-06
+bld_00358,ahera_code,2551,2026-10-06
+bld_00359,ahera_code,2782,2026-10-06
+bld_00360,ahera_code,2921,2026-10-06
+bld_00361,ahera_code,3417,2026-10-06
+bld_00362,ahera_code,3421,2026-10-06
+bld_00363,ahera_code,3422,2026-10-06
+bld_00364,ahera_code,4011,2026-10-06
+bld_00365,ahera_code,4012,2026-10-06
+bld_00366,ahera_code,4150,2026-10-06
+bld_00367,ahera_code,4260,2026-10-06
+bld_00367,fca_part_code,B426001,2026-10-06
+bld_00367,site_folder,Mastery Charter School at Cleveland_3735 N 19th St_19140,2026-10-06
+bld_00368,ahera_code,4290,2026-10-06
+bld_00369,ahera_code,4322,2026-10-06
+bld_00369,site_folder,Robert E. Lamberton LSH_1625 N 76th St_19151,2026-10-06
+bld_00370,ahera_code,4470,2026-10-06
+bld_00370,fca_part_code,B447001,2026-10-06
+bld_00370,site_folder,Richard R. Wright_2700 W Dauphin St_19132,2026-10-06
+bld_00371,ahera_code,4781,2026-10-06
+bld_00372,ahera_code,4830,2026-10-06
+bld_00373,ahera_code,5231,2026-10-06
+bld_00374,ahera_code,5262,2026-10-06
+bld_00374,fca_part_code,B526002,2026-10-06
+bld_00375,ahera_code,5322,2026-10-06
+bld_00376,ahera_code,5335,2026-10-06
+bld_00377,ahera_code,5341,2026-10-06
+bld_00378,ahera_code,5441,2026-10-06
+bld_00378,site_folder,Willard Annex_3072 Frankford Ave_19134,2026-10-06
+bld_00379,ahera_code,5445,2026-10-06
+bld_00380,ahera_code,5460,2026-10-06
+bld_00380,site_folder,Rivera_2603-2611 N 05th St_19133,2026-10-06
+bld_00381,ahera_code,5591,2026-10-06
+bld_00382,ahera_code,6019,2026-10-06
+bld_00382,site_folder,Central Field (Fieldhouse)_1401 W Somerville Ave_19141,2026-10-06
+bld_00383,ahera_code,6029,2026-10-06
+bld_00383,site_folder,Germantown Field (Fieldhouse)_1100 E Sedgwick St_19141,2026-10-06
+bld_00384,ahera_code,6039,2026-10-06
+bld_00384,site_folder,Roxborough HS Field House_342 Hermitage St_19128,2026-10-06
+bld_00385,ahera_code,6100,2026-10-06
+bld_00386,ahera_code,6201,2026-10-06
+bld_00386,fca_part_code,B620002,2026-10-06
+bld_00387,ahera_code,6404,2026-10-06
+bld_00388,ahera_code,6406,2026-10-06
+bld_00389,ahera_code,7019,2026-10-06
+bld_00389,site_folder,Frankford Field House_1098 Dyre Street_19124,2026-10-06
+bld_00390,ahera_code,7029,2026-10-06
+bld_00391,ahera_code,7222,2026-10-06
+bld_00391,fca_part_code,B722002,2026-10-06
+bld_00392,ahera_code,7240,2026-10-06
+bld_00393,ahera_code,7241,2026-10-06
+bld_00394,ahera_code,7271,2026-10-06
+bld_00394,fca_part_code,B727002,2026-10-06
+bld_00395,ahera_code,7281,2026-10-06
+bld_00396,ahera_code,7301,2026-10-06
+bld_00396,fca_part_code,B730002,2026-10-06
+bld_00397,ahera_code,7401,2026-10-06
+bld_00398,ahera_code,7402,2026-10-06
+bld_00399,ahera_code,7403,2026-10-06
+bld_00400,ahera_code,7441,2026-10-06
+bld_00400,site_folder,Our Lady of Pompei_608 W Erie Ave_19140,2026-10-06
+bld_00401,ahera_code,7501,2026-10-06
+bld_00402,ahera_code,7514,2026-10-06
+bld_00402,site_folder,Trinidad Head Start_1038 W Sedgley Ave_19133,2026-10-06
+bld_00403,ahera_code,8012,2026-10-06
+bld_00403,site_folder,Abraham Lincoln Pool and Field House_3201 Ryan Ave_19136,2026-10-06
+bld_00404,ahera_code,8019,2026-10-06
+bld_00405,ahera_code,8029,2026-10-06
+bld_00405,site_folder,Northeast High School Field House_7500 Summerdale Ave_19111,2026-10-06
+bld_00406,ahera_code,8039,2026-10-06
+bld_00406,site_folder,George Washington Field House_880 Selmer Rd_19116,2026-10-06
+bld_00407,ahera_code,8166,2026-10-06
+bld_00409,ahera_code,8262,2026-10-06
+bld_00411,ahera_code,8320,2026-10-06
+bld_00411,fca_part_code,B832001,2026-10-06
+bld_00411,site_folder,John Hancock MS @ General J Harry LaBrum_10800 Hawley Street_19154,2026-10-06
+bld_00412,ahera_code,8330,2026-10-06
+bld_00413,ahera_code,8341,2026-10-06
+bld_00414,ahera_code,8351,2026-10-06
+bld_00415,ahera_code,8401,2026-10-06
+bld_00415,fca_part_code,B840002,2026-10-06
+bld_00415,site_folder,Anne Frank Little School House_2001 Lott Ave_19115,2026-10-06
+bld_00416,ahera_code,9620,2026-10-06
+bld_00416,site_folder,Constance Clayton Education Center (440 North Broad Street),2026-10-06
+bld_00416,site_folder,Education Center - 440 N. Broad Street_440 N Broad St_19130,2026-10-06
+bld_00417,ahera_code,8422,2026-10-06
+bld_00417,fca_part_code,B842003,2026-10-06
+bld_00418,fca_part_code,B601903,2026-10-06
+bld_00419,fca_part_code,B601904,2026-10-06
+bld_00420,fca_part_code,B602901,2026-10-06
+bld_00421,fca_part_code,B602902,2026-10-06
+bld_00422,fca_part_code,B602905,2026-10-06
+bld_00423,fca_part_code,B602906,2026-10-06
+bld_00424,fca_part_code,B602907,2026-10-06
+bld_00425,fca_part_code,B130101,2026-10-06
+bld_00426,fca_part_code,B801902,2026-10-06
+bld_00427,fca_part_code,B801903,2026-10-06
+bld_00428,fca_part_code,B801909,2026-10-06
+bld_00429,fca_part_code,B802901,2026-10-06
+bld_00430,fca_part_code,B802903,2026-10-06
+bld_00431,fca_part_code,B702901,2026-10-06
+bld_00432,fca_part_code,B702902,2026-10-06
+bld_00433,fca_part_code,B601901,2026-10-06
+bld_00434,fca_part_code,B603901,2026-10-06
+bld_00435,fca_part_code,B603902,2026-10-06
+bld_00436,ahera_code,6043,2026-10-06
+bld_00436,fca_part_code,B604004,2026-10-06
+bld_00437,ahera_code,6044,2026-10-06
+bld_00437,fca_part_code,B604005,2026-10-06
+bld_00438,site_folder,Alternative Education Center (CEP)- Philadelphia Learning Academy North- Camelot Academy East- Crossroads Academy at Hunting Park_4224 N Front St_19140,2026-10-06
+bld_00439,site_folder,Bridesburg Annex_4435 E. Almond Street_19137,2026-10-06
+bld_00440,site_folder,Harrington Annex_810 S 53rd St_19143,2026-10-06
+bld_00441,site_folder,New West Philadelphia High School Field House,2026-10-06
+bld_00442,site_folder,Olney Annex_411-413 East Tabor Road_19120,2026-10-06
+bld_00443,site_folder,The Verree House_8600 Verree Rd_19115,2026-10-06
+bld_00444,site_folder,Alternative Education Center Site 1_N-40AEC1,2026-10-06
+bld_00445,site_folder,"Boone, Daniel Site 2_N-21BOD2",2026-10-06
+bld_00446,site_folder,"Daroff, Samuel  Site 1 W-39DSH1",2026-10-06
+bld_00447,site_folder,"Elverson, James Site 1_N-22ELJ1",2026-10-06
+bld_00448,site_folder,"Ferguson, Joseph  Site 1_N-22FJC1",2026-10-06
+bld_00449,site_folder,Fox Chase Farm,2026-10-06
+bld_00450,site_folder,"Franklin, Benjamin Site 1 (5741 North Rising Sun Avenue)_NE20FBE1",2026-10-06
+bld_00451,site_folder,Germantown Field (Fieldhouse),2026-10-06
+bld_00452,site_folder,Haverford Center Site 1_W-39HCR1,2026-10-06
+bld_00453,site_folder,"Hill, LP Site 1_N-21HSM1",2026-10-06
+bld_00454,site_folder,Kensington Site 1 (2075 East Cumberland Street)_N-25KNN1,2026-10-06
+bld_00455,site_folder,"Kinsey, John Site 1_NW38KNJ1",2026-10-06
+bld_00456,site_folder,"LaBrum, J.  Site 1_NE54LBR1",2026-10-06
+bld_00457,site_folder,"Levering, William Site 1_NW28LWM1",2026-10-06
+bld_00458,site_folder,"Martin, James Site 1_N-34MJA1",2026-10-06
+bld_00459,site_folder,Mastery Charter Schools Of Philadelphia,2026-10-06
+bld_00460,site_folder,Olney Site 1 (100 West Duncannon Avenure) _NW20OLN1,2026-10-06
+bld_00461,site_folder,"Pratt, Anna Site 1_N-32PRA1",2026-10-06
+bld_00462,site_folder,Renaissance Schools,2026-10-06
+bld_00463,site_folder,"Rivera, Ramonita Site 1_N-33RRN1",2026-10-06
+bld_00464,site_folder,Samuel Powel Administration Building,2026-10-06
+bld_00465,site_folder,"Sulzberger, Mayer Site 1_W-39SUM1",2026-10-06
+bld_00466,site_folder,The Verree House (Pennypack Environmental Center),2026-10-06
+bld_00467,site_folder,"Trinidad, Felix Site 1_N-33TRN1",2026-10-06

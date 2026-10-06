@@ -386,3 +386,95 @@ def test_asbestos_metric_adds_buildings_of_one_school():
     one = m[m["school_id"] == "sch_1"].set_index("measure_id")["value"]
     assert one["asbestos_items"] == 120 and one["asbestos_items_damaged"] == 4
     assert set(m["school_id"]) == {"sch_1", "sch_2", "sch_3"}
+
+
+@pytest.mark.parametrize(
+    "raw, out",
+    [
+        ("1231 N. BROAD ST. - 3RD FLR", "1231 N. BROAD ST"),
+        ("550 N BROAD ST, SCIENCE LEADERSHIP ACADEMY, SUITE 202", "550 N BROAD ST"),
+        ("7001 Buist Avenue,", "7001 Buist Avenue"),
+        ("4641 Roosevelt Blvd RM M1-24", "4641 Roosevelt Blvd"),
+    ],
+)
+def test_building_clean_address(raw, out):
+    from phillyschools.buildings import clean_address
+
+    assert clean_address(raw) == out
+
+
+@pytest.mark.parametrize(
+    "name, kind",
+    [
+        ("Penrose Little School House", "little_school_house"),
+        ("Hopkinson, Francis LSH", "little_school_house"),
+        ("Catharine School Annex-Truancy Court", "annex"),
+        ("Germantown Field (Fieldhouse)", "field_house"),
+        ("Lincoln Pool & Field House", "field_house"),
+        ("Sayre Pool", "pool"),
+        ("Tasker Street Garage", "garage_or_barn"),
+        ("John Bartram High School", "school_building"),
+    ],
+)
+def test_building_kind(name, kind):
+    from phillyschools.buildings import kind_of
+
+    assert kind_of(name) == kind
+
+
+def test_building_clusters_merge_same_place_but_keep_annexes_apart():
+    import pandas as pd
+
+    from phillyschools.buildings import cluster
+
+    c = pd.DataFrame(
+        {
+            "source": ["master", "lead", "master", "ahera", "fca", "master"],
+            "name": [
+                "Franklin HS",
+                "Franklin HS",
+                "Day School",
+                "Day Little School House",
+                "Day LSH",
+                "Other School",
+            ],
+            "address": [
+                "550 N BROAD ST",
+                "550 N. Broad St - 3rd Flr",
+                "6324 CRITTENDEN ST",
+                "6324-42 Crittenden Street",
+                None,
+                "100 S BROAD ST",
+            ],
+            "school_ids": ["sch_1", "sch_1", "sch_2", "sch_2", "sch_2", "sch_3"],
+            "ahera_code": [None, None, None, "6201", "6201", None],
+        }
+    )
+    cl = cluster(c).tolist()
+    assert cl[0] == cl[1]  # same building, suite text ignored
+    assert cl[3] == cl[4]  # shared AHERA code
+    assert cl[2] != cl[3]  # little school house stays apart from the main building
+    assert cl[5] not in (cl[0], cl[2])
+
+
+def test_building_ids_are_stable_and_never_reused_for_a_split():
+    import pandas as pd
+
+    from phillyschools.buildings import assign_ids
+
+    g1 = pd.DataFrame({"source": ["ahera"], "key": ["8420"], "ahera_code": ["8420"]})
+    g2 = pd.DataFrame({"source": ["ahera"], "key": ["8421"], "ahera_code": ["8421"]})
+    ids, reg = assign_ids(
+        {0: g1, 1: g2},
+        pd.DataFrame(columns=["building_id", "anchor_type", "anchor_value", "minted_on"]),
+    )
+    assert ids == {0: "bld_00001", 1: "bld_00002"}
+    again, _ = assign_ids({5: g2, 6: g1}, reg)  # reordered clusters keep their IDs
+    assert again == {5: "bld_00002", 6: "bld_00001"}
+    both = pd.concat([g1, g2], ignore_index=True)  # one cluster that spans both anchors
+    merged, _ = assign_ids({0: both}, reg)
+    assert merged[0] == "bld_00001"
+    split_ids, _ = assign_ids(
+        {0: g1.assign(ahera_code="8420"), 1: g1.assign(key="8420x", ahera_code="8420")}, reg
+    )
+    assert len(set(split_ids.values())) == 2  # a split cluster cannot reuse a taken ID

@@ -12,6 +12,7 @@ from .asbestos import build_asbestos, write_asbestos
 from .assessment import build_assessments, write_assessments
 from .attendance import build_attendance, write_attendance
 from .board import catalog_novus, catalog_primegov, catalog_primegov_attachments
+from .buildings import build_buildings, write_building_mart, write_buildings
 from .crdc import build_crdc, write_crdc
 from .discipline import build_discipline, write_discipline
 from .discover import add_file, discover
@@ -326,6 +327,18 @@ def cmd_validate(a):
         raise SystemExit(f"{len(failed)} validation checks failed")
 
 
+def cmd_build_buildings(a):
+    t = build_buildings(offline=a.offline)
+    write_buildings(t)
+    mart = write_building_mart(t)
+    b = t["building"]
+    print(
+        f"  buildings {len(b)}; with OPA account {b['opa_account'].notna().sum()}; "
+        f"school_building rows {len(t['school_building'])}; xwalk keys {len(t['building_xwalk'])}"
+    )
+    print(f"  marts/building {len(mart)} rows x {len(mart.columns)} columns")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -477,6 +490,10 @@ def main():
 
     s = sub.add_parser("build-fca", help="facility condition assessments (2020 cycle)")
     s.set_defaults(fn=cmd_build_fca)
+
+    s = sub.add_parser("build-buildings", help="buildings, school-building links, building mart")
+    s.add_argument("--offline", action="store_true", help="use archived City parcel answers only")
+    s.set_defaults(fn=cmd_build_buildings)
 
     s = sub.add_parser("build-marts", help="wide tables, schema JSON, and the data dictionary")
     s.set_defaults(fn=cmd_build_marts)
