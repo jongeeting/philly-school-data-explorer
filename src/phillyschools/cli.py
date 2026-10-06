@@ -31,6 +31,7 @@ from .marts import build_marts
 from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
 from .peers import build_peer_comparison, write_peer_comparison
+from .release import build_release
 from .scores import build_scores, write_scores
 from .sourcetable import build_source
 from .stage import write_staging
@@ -339,6 +340,16 @@ def cmd_build_buildings(a):
     print(f"  marts/building {len(mart)} rows x {len(mart.columns)} columns")
 
 
+def cmd_release(a):
+    r = build_release(a.version, skip_validation=a.skip_validation)
+    mb = sum(p.stat().st_size for p in r["assets"]) / 1e6
+    print(
+        f"  release v{r['version']}: {r['tables']} core tables, {r['package_files']} files in the package"
+    )
+    print(f"  zip: {r['zip']}  ({r['zip'].stat().st_size / 1e6:.0f} MB)")
+    print(f"  {len(r['assets'])} release assets in {r['dir'] / 'assets'} ({mb:.0f} MB)")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -494,6 +505,11 @@ def main():
     s = sub.add_parser("build-buildings", help="buildings, school-building links, building mart")
     s.add_argument("--offline", action="store_true", help="use archived City parcel answers only")
     s.set_defaults(fn=cmd_build_buildings)
+
+    s = sub.add_parser("release", help="validate, then build the release package and assets")
+    s.add_argument("--version", required=True, help="for example 0.1.0")
+    s.add_argument("--skip-validation", action="store_true")
+    s.set_defaults(fn=cmd_release)
 
     s = sub.add_parser("build-marts", help="wide tables, schema JSON, and the data dictionary")
     s.set_defaults(fn=cmd_build_marts)

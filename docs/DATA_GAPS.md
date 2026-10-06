@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**53 unresolved** of 68 tracked (13 high priority).
+**54 unresolved** of 69 tracked (14 high priority).
 
 **Kinds of gap**
 
@@ -59,6 +59,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-018 | Charter coverage is uneven: district PSSA, attendance, and employee files exclude charters; SPREE gives charters improvement labels only in 2024-25 | `not-collected-by-district` | high | open | state | Use PDE Future Ready for cross-sector measures; label sector coverage on every measure |
 | GAP-019 | Measure dictionary and method breaks not written (attendance renamed 'persistent' in 2021-22; framework changes) *(registry/measures.csv has 36 measures (enrollment, flows, neighborhood rollup, Future Ready); district PSSA, Star, SPREE next)* | `not-yet-ingested` | high | in-progress | us | Phase 4 of the data model |
 | GAP-055 | District suspension data has no disability (IEP) or English learner groups, so the paired 'suspension disparities by race and disability' release cannot be built from public files *(CRDC loaded 2026-10-04: disability (IDEA, 504) and English learner discipline every other year (2011-12 to 2021-22); annual district data still lacks these groups)* | `not-collected-by-district` | high | in-progress | district | Ask the district; or use the federal Civil Rights Data Collection (school-level discipline by disability, every two years) |
+| GAP-069 | The October 1 enrollment count may include students re-enrolled just before the state funding deadline who had left earlier (Inquirer, 2026-10-06: about 720 re-added, about 2,000 improper withdrawals acknowledged); how withdrawals and re-enrollments are recorded is not published *(Usage note added to enrollment_count; the 2026-27 count should be read with this in mind)* | `not-collected-by-district` | high | open | district | Ask the district how withdrawals and re-enrollments around October 1 are recorded and whether past counts were affected; compare the October 1 count with later counts for the same schools |
 | GAP-015 | Catchment retention (flows) not ingested; roughly 16,000 students in cyber and out-of-city charters appear only in flows *(catchment_flow built 2026-10-04 with 50 placeholder schools (cyber, out-of-city charter, programs, non-public special education))* | `not-yet-ingested` | medium | closed | us | Add placeholder school records for out-of-system destinations so flows sum |
 | GAP-017 | No 2020 state test results (state file repeats 2019); 2021 low participation and no growth scores; science waived in 2025 *(Handled with statuses: 2019-20 tests carried_forward, 2024-25 science waived; method breaks recorded in registry/measures.csv)* | `not-collected-by-district` | medium | in-progress | state | Record as measure breaks with status codes; never interpolate |
 | GAP-020 | Student groups under 20 are suppressed at source; enrollment files for 2014-15 to 2018-19 were reposted Aug 2025 under new suppression rules | `not-collected-by-district` | medium | open | district | Keep status codes; archive both versions of reposted files |

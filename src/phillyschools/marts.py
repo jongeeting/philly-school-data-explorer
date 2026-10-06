@@ -117,6 +117,10 @@ TABLES = {
         "one row per confirmed or assumed asbestos material",
         "Materials, spaces, amounts, and damage from each building's latest report.",
     ),
+    "school_placeholder": (
+        "one row per program",
+        "Programs that appear only in state data (cyber charters, non-public special education, programs outside the district list), with their own school_id.",
+    ),
     "building": (
         "one row per building_id",
         "One physical building: name, kind, address, year built, and the City parcel (OPA account) when known.",

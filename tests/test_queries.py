@@ -39,3 +39,26 @@ def test_building_registry_covers_every_building_with_unique_anchors():
     b = pd.read_parquet(ROOT / "core" / "building.parquet")
     assert set(b["building_id"]) <= set(reg["building_id"])
     assert not reg.duplicated(["anchor_type", "anchor_value"]).any()
+
+
+@pytest.mark.skipif(not BUILT, reason="needs the built core/ and marts/ tables")
+def test_release_metadata_and_no_personal_columns():
+    import re
+
+    from phillyschools.release import datapackage, table_names
+
+    pat = re.compile(
+        r"leader|principal|email|phone|fax|liaison|inspector|superintendent|ssn|birth",
+        re.IGNORECASE,
+    )
+    pkg = datapackage("0.0.0", "2026-01-01")
+    names = {r["name"] for r in pkg["resources"]}
+    assert (
+        "core-school-metric" in names and "marts-school-year" in names and "marts-building" in names
+    )
+    for r in pkg["resources"]:
+        assert r["hash"].startswith("sha256:") and r["schema"]["fields"]
+        assert not [f["name"] for f in r["schema"]["fields"] if pat.search(f["name"])], r["name"]
+    assert "school_metric__crdc" not in table_names() and "issues" not in table_names()
+    flat = datapackage("0.0.0", "2026-01-01", url_prefix="https://example.org/dl")
+    assert all(r["path"].startswith("https://example.org/dl/") for r in flat["resources"])

@@ -1,0 +1,31 @@
+{
+ "title": "Philly School Data Explorer",
+ "upload_type": "dataset",
+ "description": "<p>Open, linked data on Philadelphia public schools, built to be read by people, dashboards, and AI agents alike: school and building identity, enrollment, test scores, attendance, discipline, facility condition, lead, water and asbestos records, catchments, and neighborhood context. Every value carries a status and a source; every measure is defined in a dictionary; the release includes validation reports, JSON schemas, a Frictionless data package, and checksums.</p><p>Compiled from data of the School District of Philadelphia, the Pennsylvania Department of Education, the U.S. Department of Education Office for Civil Rights, the U.S. Census Bureau, and the City of Philadelphia. The CC BY 4.0 license covers this compilation and derived work only; the underlying data remain subject to their sources' terms (see docs/SOURCE_TERMS.md in the package). Not endorsed by any source.</p>",
+ "creators": [
+  {
+   "name": "Geeting, Jon"
+  }
+ ],
+ "license": "cc-by-4.0",
+ "access_right": "open",
+ "keywords": [
+  "Philadelphia",
+  "schools",
+  "education",
+  "open data",
+  "school facilities",
+  "enrollment",
+  "catchments"
+ ],
+ "language": "eng",
+ "version": "0.1.0",
+ "related_identifiers": [
+  {
+   "identifier": "https://github.com/jongeeting/philly-school-data-explorer",
+   "relation": "isSupplementTo",
+   "scheme": "url"
+  }
+ ],
+ "notes": "Point-in-time environmental and condition records; see README.md in the package for guardrails (read status before value; groups under 20 students are suppressed; no rankings)."
+}
