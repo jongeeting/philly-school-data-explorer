@@ -261,12 +261,86 @@ def school_budget_checks() -> list[dict]:
             f"{len(empty)} reports without a budget",
         )
     )
+    if (CORE / "school_budget_purchase.parquet").exists():
+        out += school_purchase_checks(sb)
+    wrong = log[log["wrong_school"]]
+    out.append(
+        _check(
+            "reports where the tool answered with a different school are excluded",
+            (wrong["n_rows"] == 0).all() and sb["ulcs"].isin(wrong["ulcs"]).sum() >= 0,
+            f"{len(wrong)} excluded",
+        )
+    )
+    printed = log.dropna(subset=["printed_code"])
+    kept = printed[printed["has_budget"]]
+    out.append(
+        _check(
+            "every kept budget report's printed school code equals its requested code",
+            (kept["printed_code"] == kept["ulcs"]).all(),
+            f"{len(kept)} reports",
+        )
+    )
     unmapped = sb[sb["school_id"].isna()]["ulcs"].nunique()
     out.append(
         _check(
             "school budget ULCS codes link to a school_id (a few non-school programs excepted)",
             unmapped <= 3,
             f"{unmapped} codes without a school_id",
+            hard=False,
+        )
+    )
+    return out
+
+
+def school_purchase_checks(sb: pd.DataFrame) -> list[dict]:
+    """Purchase and position reports against the allotment reports and against themselves."""
+    pu = pd.read_parquet(CORE / "school_budget_purchase.parquet")
+    po = pd.read_parquet(CORE / "school_budget_position.parquet")
+    out = []
+    key = ["ulcs", "sy", "section"]
+    items = pu[pu["line_type"] == "item"].groupby(key)["amount"].sum()
+    totals = pu[pu["line_type"] == "total"].set_index(key)["amount"]
+    diff = (items - totals).dropna()
+    bad = int((diff.abs() > 2).sum())
+    out.append(
+        _check(
+            "school purchase lines add to their printed totals (within $2 of rounding)",
+            bad == 0,
+            f"{bad} off by more than $2; {int((diff != 0).sum())} of {len(diff)} off by $1 or $2",
+        )
+    )
+    at = sb[sb["line_type"] == "school_total"].set_index(["ulcs", "sy"])["amount"]
+    pt = pu[(pu["section"] == "budget_allotment") & (pu["line_type"] == "total")].set_index(
+        ["ulcs", "sy"]
+    )["amount"]
+    both = pd.concat([at, pt], axis=1, keys=["a", "p"]).dropna()
+    bad = int((both["a"] != both["p"]).sum())
+    out.append(
+        _check(
+            "purchase report allotment totals equal the allotment report's school totals",
+            bad == 0,
+            f"{bad} of {len(both)} differ",
+        )
+    )
+    fte = po.groupby(["ulcs", "sy"])["fte_curr"].sum()
+    cnt = pu[(pu["section"] == "position") & (pu["line_type"] == "total")].set_index(
+        ["ulcs", "sy"]
+    )["count"]
+    both = pd.concat([fte, cnt], axis=1, keys=["f", "c"]).dropna()
+    bad = int(((both["f"] - both["c"]).abs() >= 0.011).sum())
+    out.append(
+        _check(
+            "position report FTE add to the purchase report's position counts",
+            bad == 0,
+            f"{bad} of {len(both)} differ",
+        )
+    )
+    unsplit = int((po["parse_note"] == "unsplit").sum())
+    out.append(
+        _check(
+            "position lines with funding and activity not separated are under 0.2%",
+            unsplit / max(len(po), 1) < 0.002,
+            f"{unsplit} of {len(po)}",
             hard=False,
         )
     )

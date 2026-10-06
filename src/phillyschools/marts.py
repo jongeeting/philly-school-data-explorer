@@ -191,6 +191,14 @@ TABLES = {
         "school x sy x line",
         "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",
     ),
+    "school_budget_purchase": (
+        "school x sy x line",
+        "Summary of School Purchases from the School Budgets tool: the budget allotment totals, the school-based positions bought (count and amount by funding type), and discretionary spending by expenditure area. Budgets, not actual spending. Use section and line_type to avoid double counting.",
+    ),
+    "school_budget_position": (
+        "school x sy x position line",
+        "Position Summary of School Purchases: one row per position line (PIDN, position, subject or skill, funding source, activity) with full-time equivalents in the previous and current budget. fte_curr is the count in this fiscal year's budget; parse_note flags rows whose columns were repaired.",
+    ),
     "school_budget_report": (
         "ulcs x sy",
         "One row per budget report requested, with the printed school total, the sum of line items, and whether the district published a budget for that school and year.",

@@ -44,8 +44,14 @@ Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; recon
 | derived council district agrees with the district's list for 97%+ of schools | pass | 99.1% of 344 |
 | school budget group totals add to the scope subtotals | pass | 0 off |
 | school budget scope subtotals add to the school total | pass | 0 off |
-| school budget line items add to their group totals | pass | 0 of 5664 off |
-| reports without a budget are empty ('No data available') pages | pass | 145 reports without a budget |
+| school budget line items add to their group totals | pass | 0 of 5638 off |
+| reports without a budget are empty ('No data available') pages | pass | 158 reports without a budget |
+| school purchase lines add to their printed totals (within $2 of rounding) | pass | 0 off by more than $2; 134 of 8180 off by $1 or $2 |
+| purchase report allotment totals equal the allotment report's school totals | pass | 0 of 2746 differ |
+| position report FTE add to the purchase report's position counts | pass | 0 of 2743 differ |
+| position lines with funding and activity not separated are under 0.2% | pass | 52 of 157906 |
+| reports where the tool answered with a different school are excluded | pass | 13 excluded |
+| every kept budget report's printed school code equals its requested code | pass | 2746 reports |
 | school budget ULCS codes link to a school_id (a few non-school programs excepted) | pass | 2 codes without a school_id |
 
 ## Reconciliations against independent sources

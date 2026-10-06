@@ -375,13 +375,15 @@ def cmd_catalog_afr(a):
 
 
 def cmd_build_school_budget(a):
-    from .school_budgets import write_school_budget
+    from .school_budgets import write_school_budget, write_school_purchases_positions
 
     sb, log = write_school_budget()
     print(
         f"  {int(log['has_budget'].sum())} school-years with a budget of {len(log)} reports; "
         f"{len(sb)} rows"
     )
+    purchases, positions = write_school_purchases_positions()
+    print(f"  purchase summary lines {len(purchases)}; position lines {len(positions)}")
 
 
 def cmd_build_finance(a):

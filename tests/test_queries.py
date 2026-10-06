@@ -127,3 +127,58 @@ def test_school_budget_parser_handles_both_total_layouts():
             "school_total",
         ]
         assert res["rows"][-1]["amount"] == 1200
+
+
+def test_school_purchase_and_position_parsers():
+    from phillyschools.school_budgets import (
+        parse_positions_text,
+        parse_purchase_text,
+        position_vocab,
+        split_position_parts,
+    )
+
+    purchases = """
+   2015-2016 Summary of School Purchases
+   Budget Allotments
+    Funding Type                 Amount
+    School Managed Allotments    100
+    Total                        100
+   School Based Positions
+    Position                     Funding Type                 Count   Amount
+    Principal                    School Managed Allotment     1.00    100
+    Total                                                     1.00    100
+   Discretionary Spending
+    Expenditure Area             Funding Type                 Amount
+    Total
+"""
+    res = parse_purchase_text(purchases)
+    assert res["sy"] == 2016
+    assert [(r["section"], r["line_type"]) for r in res["rows"]] == [
+        ("budget_allotment", "item"),
+        ("budget_allotment", "total"),
+        ("position", "item"),
+        ("position", "total"),
+    ]
+    assert parse_purchase_text("No data available for this school.")["rows"] == []
+
+    positions = """
+   2015-2016 Position Summary of School Purchases
+PIDN      Position Name     Subject/Skill      Funding           Activity            Prev Curr
+A0415O1 Teacher,Full Time   Biology 7-12       Basic Operating   Enrollment Driven   1.00   2.00
+A0415O1 Teacher,Full Time   Math 7-12          Basic Operating   Enrollment Driven   1.00   1.00
+A0415O1 Teacher,Full Time   Grades 7-8 | Grades Basic Operating   Enrollment Driven    0.00   3.00
+                                    7-8 Science
+"""
+    rows = parse_positions_text(positions)["rows"]
+    out = split_position_parts(rows, position_vocab(rows))
+    assert [r["fte_curr"] for r in out] == [2.0, 1.0, 3.0]
+    assert out[2]["funding"] == "Basic Operating"
+    assert out[2]["subject_skill"].endswith("7-8 Science")
+
+
+def test_header_code_reads_the_school_code():
+    from phillyschools.school_budgets import header_code
+
+    text = "   2015-2016 School Budget Allotment Detail\n   Lincoln, Abraham High School (8010)\n   FY16 School Budgets (April, 2015)\n"
+    assert header_code(text) == "8010"
+    assert header_code("No data available for this school.") is None
