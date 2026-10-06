@@ -44,7 +44,7 @@ def header_code(text: str) -> str | None:
 def _num(text: str) -> int:
     """An amount as printed: commas, and parentheses for a negative."""
     text = text.strip()
-    negative = text.startswith("(") or text.startswith("-")
+    negative = text.startswith(("(", "-"))
     value = int(text.strip("()-").replace(",", ""))
     return -value if negative else value
 
