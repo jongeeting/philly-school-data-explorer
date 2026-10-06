@@ -64,6 +64,41 @@
    "description": "City Council district of the school's location."
   },
   {
+   "name": "place_council_district",
+   "type": "str",
+   "description": "City Council district the school's location falls in, from the City's 2024 boundaries (derived; compare council_district, which is as the district lists it)."
+  },
+  {
+   "name": "place_pa_house",
+   "type": "str",
+   "description": "Pennsylvania House district the school's location falls in (Census TIGER/Line 2024)."
+  },
+  {
+   "name": "place_pa_senate",
+   "type": "str",
+   "description": "Pennsylvania Senate district the school's location falls in (Census TIGER/Line 2024)."
+  },
+  {
+   "name": "place_planning_district",
+   "type": "str",
+   "description": "City Planning Commission district the school's location falls in."
+  },
+  {
+   "name": "place_police_district",
+   "type": "str",
+   "description": "Police district the school's location falls in (City boundaries)."
+  },
+  {
+   "name": "place_ward",
+   "type": "str",
+   "description": "Political ward the school's location falls in (City boundaries)."
+  },
+  {
+   "name": "place_zip",
+   "type": "str",
+   "description": "ZIP code area the school's location falls in (City boundaries)."
+  },
+  {
    "name": "asbestos_items",
    "type": "float64",
    "description": "Asbestos-containing materials on record. Entries in the building's room-by-room asbestos log that are confirmed or assumed to contain asbestos (one entry per material per space), from the most recent 6-month or 3-year AHERA report.",

@@ -154,8 +154,70 @@ def hard_checks() -> list[dict]:
     out += building_checks()
     if (CORE / "finance_lea_line.parquet").exists():
         out += finance_checks()
+    if (CORE / "school_place.parquet").exists():
+        out += place_checks()
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
+    return out
+
+
+def place_checks() -> list[dict]:
+    """Place boundaries: expected counts, population covered, and agreement with the district's lists."""
+    units = pd.read_parquet(CORE / "geo_unit.parquet")
+    xw = pd.read_parquet(CORE / "geo_xwalk.parquet")
+    sp = pd.read_parquet(CORE / "school_place.parquet")
+    counts = units["unit_type"].value_counts()
+    expected = {"council_district": 10, "ward": 66, "police_district": 22, "planning_district": 18}
+    off = {k: int(counts.get(k, 0)) for k, v in expected.items() if counts.get(k, 0) != v}
+    out = [
+        _check(
+            "place units: 10 council districts, 66 wards, 22 police, 18 planning", not off, str(off)
+        )
+    ]
+    tracts = xw[(xw["from_type"] == "tract") & (xw["to_type"] == "council_district")]
+    pop = tracts["pop_2020"].sum()
+    out.append(
+        _check(
+            "tract population allocated to council districts matches the tract total",
+            abs(
+                pop / xw[(xw["from_type"] == "tract") & (xw["to_type"] == "ward")]["pop_2020"].sum()
+                - 1
+            )
+            < 0.01,
+            f"{pop:,.0f} people",
+        )
+    )
+    per = sp.groupby("school_id")["unit_type"].nunique()
+    out.append(
+        _check(
+            "every located school falls in one unit of each place type",
+            (per == 7).all() and not sp.duplicated(["school_id", "unit_type"]).any(),
+            f"{len(per)} schools",
+        )
+    )
+    attr = (
+        pd.read_parquet(CORE / "school_year_attr.parquet")
+        .sort_values("sy")
+        .groupby("school_id")
+        .last()["council_district"]
+        .astype(str)
+        .str.extract(r"(\d+)")[0]
+    )
+    geo = (
+        sp[sp["unit_type"] == "council_district"]
+        .set_index("school_id")["name"]
+        .str.extract(r"(\d+)")[0]
+    )
+    both = pd.concat([attr, geo], axis=1, keys=["a", "g"]).dropna()
+    agree = (both["a"] == both["g"]).mean()
+    out.append(
+        _check(
+            "derived council district agrees with the district's list for 97%+ of schools",
+            agree >= 0.97,
+            f"{agree:.1%} of {len(both)}",
+            hard=False,
+        )
+    )
     return out
 
 

@@ -34,3 +34,13 @@ Council districts, state house/senate, wards, ZIP codes, and police districts in
 
 `uv run psd build-area-context` writes `core/area_context` for two ACS 5-year periods: 2015-2019 (2010 tracts, sequence-based Summary File) and 2020-2024 (2020 tracts, table-based Summary File), both keyless. Measures: people and children in poverty, adults with a bachelor's degree or more, owner-occupied homes, and median household income (tract) or its household-weighted approximation (larger areas). 2010 tracts are included in `geo_unit` and `geo_xwalk` (`tract_2010`), allocated through 2020 blocks by 2020 population. Citywide: children in poverty 34.8% (2015-2019) and 29.0% (2020-2024).
 Margins of error: tract values carry the Census Bureau's MOEs; shares get MOEs from the Census proportion formula (ratio formula when needed), and rollups combine weighted tract MOEs by root sum of squares (weights treated as fixed, tracts as independent). Sums of table cells count the largest zero-cell MOE once, per Census guidance. Every value has a coefficient of variation and a reliability label (high, medium, low). Elementary catchment child poverty is medium or low reliability for about half of catchments.
+
+## Place geographies
+
+`geo_unit` also holds the places people use to ask about a school: the 10 City Council districts (2024 boundaries), the Pennsylvania House and Senate districts that reach Philadelphia (Census TIGER/Line 2024; 26 and 7), the 66 political wards, 48 ZIP code areas, 22 police districts, and 18 Planning Commission districts. They are current boundaries (`sy` empty), loaded by `psd build-geography` from the City's open data services and Census.
+
+- **`geo_xwalk`** carries a tract to each place type, weighted by 2020 census-block population like the other units. A tract that straddles a boundary splits its population across districts.
+- **`school_place`** gives each school's unit of every type, by the school's latest known location (point in polygon). 344 schools have a location (GAP-077). Because it is a point, a school near a boundary sits in one district only; a catchment can span several, which `geo_xwalk` handles.
+- **`school_profile`** carries them as `place_council_district`, `place_pa_house`, `place_pa_senate`, `place_ward`, `place_zip`, `place_police_district`, and `place_planning_district`.
+- The derived council district matches the district-reported `council_district` for 99.1% of schools (341 of 344). Three differ (sch_00230, sch_00370, sch_00385), likely schools near a boundary or an error in one list; both values stay in the data.
+- Legislative boundaries are the 2022 maps; earlier years are not loaded. Election divisions (about 1,700) are not loaded.

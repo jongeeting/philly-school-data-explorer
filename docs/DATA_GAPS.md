@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**58 unresolved** of 76 tracked (15 high priority).
+**59 unresolved** of 77 tracked (15 high priority).
 
 **Kinds of gap**
 
@@ -43,9 +43,10 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-011 | Census-to-catchment crosswalk is area-weighted only; population-weighted (census block) version not built *(geo_xwalk built from 2020 blocks (keyless PL file); see docs/GEOGRAPHY.md)* | `not-yet-ingested` | medium | closed | us | Build from decennial census blocks |
 | GAP-031 | Catchment retention (students by catchment and school, SY 2016-17 on) is aggregated by catchment, not neighborhood, and cannot show where students went after the 2013 closures *(No student-level data is public (FERPA))* | `not-collected-by-district` | medium | open | district | Derive neighborhood figures by overlaying catchments on neighborhoods; use Board documents and 2012-13/2013-14 catchments for 2013 |
 | GAP-034 | Catchments for SY 2025-26 and 2026-27 are not published (latest is 2024-25) | `not-collected-by-district` | medium | open | district | Watch for the next release; ask the district |
-| GAP-035 | Council districts, state legislative districts, wards, ZIP codes, and police districts are not yet in geo_unit | `not-yet-ingested` | medium | open | us | Add from City and state publishers; same block weights |
+| GAP-035 | Place geographies: council districts, PA House and Senate districts, wards, ZIP codes, police districts, and planning districts are now in geo_unit with tract crosswalks and school_place; election divisions and historical boundaries (pre-2022 maps, 2016 council) are not *(Current boundaries only; 344 of 444 schools have a known location so 100 schools have no place assignment)* | `not-yet-ingested` | medium | in-progress | us | Add from City and state publishers; same block weights |
 | GAP-036 | ACS neighborhood context (income, education, homeownership) not loaded; the Census API needs a free key *(ACS 2020-2024 loaded keyless from the table-based Summary File into area_context 2026-10-04)* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables from the keyless Summary File (or the API with a free key); store any key as an env var and GitHub secret, never in recorded URLs |
 | GAP-066 | 4 of 414 buildings have no City parcel (OPA) match, and 28 more are low confidence (one weak method); the district street address is often not the parcel address, and a school map point can land on a neighbor *(410 of 414 matched by voting across map point, City address, OPA record, and geocode; 317 high, 65 medium, 28 low (docs/BUILDINGS.md))* | `not-yet-ingested` | medium | in-progress | us | Review the 69 rows in building_parcel_review.csv; ask the district for OPA numbers by building |
+| GAP-077 | About 100 listed schools have no known location (school_parcel has 344), so school_place and the place_* profile columns are empty for them | `not-yet-ingested` | medium | open | us | Geocode the remaining schools' addresses from the master school list |
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | us | Decide (OpenDataPhilly set is the default) |
 | GAP-052 | Only one ACS period (2020-2024) is loaded and applied to every school year; earlier years (for example 2015-2019) would fit pre-pandemic comparisons better *(ACS 2015-2019 loaded 2026-10-04 (sequence-based file, 2010 tracts crosswalked through 2020 blocks))* | `not-yet-ingested` | low | closed | us | Load the 2015-2019 ACS 5-year tables (2010 tract boundaries need their own crosswalk) |
 | GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error *(MOEs, CV, and reliability added 2026-10-04 (Census approximation formulas; median income average has no MOE))* | `not-yet-ingested` | low | closed | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |

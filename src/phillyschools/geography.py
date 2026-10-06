@@ -310,6 +310,10 @@ def build_geography() -> dict:
     units.append(nb.assign(unit_type="neighborhood", sy=pd.NA, school_id=None))
     units.append(tr.assign(unit_type="tract", sy=pd.NA, school_id=None))
     units.append(tr10.assign(unit_type="tract_2010", sy=pd.NA, school_id=None))
+    from .places import PLACE_TYPES, place_units, school_places
+
+    places = place_units(tr.geometry.union_all())
+    units.append(places.assign(sy=pd.NA, school_id=None))
     geo_unit = pd.concat(units, ignore_index=True)
     geo_unit["sy"] = geo_unit["sy"].astype("Int64")
 
@@ -336,6 +340,12 @@ def build_geography() -> dict:
         pair.insert(0, "from_type", from_type)
         pair.insert(2, "sy", pd.NA)
         xw.append(pair)
+    for utype in PLACE_TYPES:
+        pair = crosswalk(base["tract"], allocate_blocks(b, places[places["unit_type"] == utype]))
+        pair.insert(0, "to_type", utype)
+        pair.insert(0, "from_type", "tract")
+        pair.insert(2, "sy", pd.NA)
+        xw.append(pair)
     geo_xwalk = pd.concat(xw, ignore_index=True)
     geo_xwalk["sy"] = geo_xwalk["sy"].astype("Int64")
     geo_xwalk["method"] = "census_block_2020_pop_area_split_v1"
@@ -345,6 +355,7 @@ def build_geography() -> dict:
         "assignment_zone": zones,
         "geo_unit": geo_unit,
         "geo_xwalk": geo_xwalk,
+        "school_place": school_places(places),
         "geo_issues": pd.DataFrame(issues, columns=["type", "id", "sy", "detail"]),
         "_block_pop_total": int(b["pop20"].sum()),
     }
@@ -357,6 +368,6 @@ def write_geography(t: dict) -> None:
         g.to_parquet(CORE / f"{name}.parquet", index=False)
         g.to_file(CORE / f"{name}.geojson", driver="GeoJSON")
         pd.DataFrame(g.drop(columns="geometry")).to_csv(CORE / f"{name}.csv", index=False)
-    for name in ["geo_xwalk", "geo_issues"]:
+    for name in ["geo_xwalk", "geo_issues", "school_place"]:
         t[name].to_parquet(CORE / f"{name}.parquet", index=False)
         t[name].to_csv(CORE / f"{name}.csv", index=False)

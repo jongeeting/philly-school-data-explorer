@@ -38,6 +38,13 @@ COLUMN_DOCS = {
     "admission_type": "Catchment, Citywide, Special Admission, or similar, as the district's school list gives it.",
     "category": "The district's school reporting category.",
     "council_district": "City Council district of the school's location.",
+    "place_council_district": "City Council district the school's location falls in, from the City's 2024 boundaries (derived; compare council_district, which is as the district lists it).",
+    "place_pa_house": "Pennsylvania House district the school's location falls in (Census TIGER/Line 2024).",
+    "place_pa_senate": "Pennsylvania Senate district the school's location falls in (Census TIGER/Line 2024).",
+    "place_ward": "Political ward the school's location falls in (City boundaries).",
+    "place_zip": "ZIP code area the school's location falls in (City boundaries).",
+    "place_police_district": "Police district the school's location falls in (City boundaries).",
+    "place_planning_district": "City Planning Commission district the school's location falls in.",
     "first_sy_in_data": "First school year the school appears in any district list.",
     "last_sy_in_data": "Last school year the school appears in any district list (2027 means the 2026-27 list).",
     "year_opened": "Year the school opened, as the district reports it.",
@@ -87,7 +94,14 @@ TABLES = {
         "Students by the neighborhood unit they live in.",
     ),
     "assignment_zone": ("zone x sy", "Assignment zones."),
-    "geo_unit": ("one row per geographic unit", "Census tracts and other units used for joins."),
+    "geo_unit": (
+        "one row per geographic unit",
+        "Polygons of every type: catchments, assignment zones, neighborhoods, Census tracts, council districts, PA House and Senate districts, wards, ZIP codes, police districts, and planning districts. Place units are current boundaries (sy empty).",
+    ),
+    "school_place": (
+        "school_id x unit_type",
+        "The council district, PA House and Senate district, ward, ZIP code, police district, and planning district each school's location falls in (point in polygon, using the school's latest known location).",
+    ),
     "geo_xwalk": ("geographic unit x neighborhood", "Population-weighted crosswalk between units."),
     "area_context": (
         "geographic unit x period",
@@ -272,6 +286,10 @@ def build_school_profile(school_year: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
     )
     out = school.merge(attrs, on="school_id", how="left")
+    place = pd.read_parquet(CORE / "school_place.parquet")
+    wide_place = place.pivot(index="school_id", columns="unit_type", values="name")
+    wide_place.columns = [f"place_{c}" for c in wide_place.columns]
+    out = out.merge(wide_place.reset_index(), on="school_id", how="left")
     measures = [
         c
         for c in school_year.columns

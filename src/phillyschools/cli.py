@@ -152,9 +152,19 @@ def cmd_gaps(a):
 
 
 def cmd_build_geography(a):
+    from .places import fetch_places
+
+    fetch_places()
     t = build_geography()
     write_geography(t)
-    for name in ["catchment", "assignment_zone", "geo_unit", "geo_xwalk", "geo_issues"]:
+    for name in [
+        "catchment",
+        "assignment_zone",
+        "geo_unit",
+        "geo_xwalk",
+        "geo_issues",
+        "school_place",
+    ]:
         print(f"  {name:16} {len(t[name]):>7} rows")
     print(f"  2020 population in blocks: {t['_block_pop_total']:,}")
 
