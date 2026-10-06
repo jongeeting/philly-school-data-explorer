@@ -10,7 +10,7 @@
   "source_key": "sdp_enrollment",
   "first_sy": 2010.0,
   "breaks": "Coverage break between 2013-14 and 2014-15: files for 2009-10 to 2013-14 cover district schools only (131,894 students in 2013-14); from 2014-15 they include charter and alternative schools (197,694). Do not draw a trend line across that break without labeling it. 2014-15 to 2018-19 files were reposted in Aug 2025 under new suppression rules. 2010-11 Black, Hispanic, American Indian, and multiracial counts are withheld (zeros in the source; corrections/enrollment.csv).",
-  "usage_notes": "Groups under the district's threshold are suppressed (2009-10 to 2013-14: whole rows with 20 or fewer students). Economically disadvantaged counts exist only for 2012-13 and 2013-14 and use a different method from the later CEP rate."
+  "usage_notes": "Groups under the district's threshold are suppressed (2009-10 to 2013-14: whole rows with 20 or fewer students). Economically disadvantaged counts exist only for 2012-13 and 2013-14 and use a different method from the later CEP rate. The October 1 count is the state funding count. In October 2026 the Inquirer reported the district re-enrolled about 720 students just before the deadline and acknowledged about 2,000 improper withdrawals, so a count can be affected by how withdrawals are processed; read the 2026-27 count with that in mind and do not compare it directly with earlier years until the district explains."
  },
  {
   "measure_id": "cep_econ_disadvantaged_rate",

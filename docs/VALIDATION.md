@@ -27,6 +27,11 @@ Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; recon
 | most listed schools have a building from the district list (95%) | pass | 324 of 324 |
 | every latest asbestos report has a building | pass | 0 without |
 | every assessed building has a building_id | pass | 0 without |
+| the five spending functions add to total expenditures (within 0.5%, 99% of agency-years) | pass | 1.0000 of 7,422 agency-years |
+| commission Appendix B sums to the report's printed statewide totals (within $50) | pass | largest difference $8 |
+| all 500 adequacy rows link to a state agency | pass | 500 of 500 |
+| state-reported Basic Education Funding matches the commission's 2023-24 base (within 1%, 95% of districts) | pass | 0.994 of 500 districts |
+| agency-years are unique in district_finance | pass | 11,215 rows |
 
 ## Reconciliations against independent sources
 

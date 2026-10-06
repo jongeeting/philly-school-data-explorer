@@ -8,12 +8,13 @@ GAPS_CSV = SOURCES / "gaps.csv"
 GAPS_MD = ROOT / "docs" / "DATA_GAPS.md"
 QUESTIONS_MD = ROOT / "docs" / "DISTRICT_QUESTIONS.md"
 OWNERS = {"us", "district", "state", "other", "owner decision"}
-AREA_ORDER = ["identity", "geography", "measures", "operations", "workforce", "legal"]
+AREA_ORDER = ["identity", "geography", "measures", "operations", "finance", "workforce", "legal"]
 AREA_TITLES = {
     "identity": "Schools and identity",
     "geography": "Geography",
     "measures": "Measures and facts",
     "operations": "District operations and buildings",
+    "finance": "School finance",
     "workforce": "Workforce",
     "legal": "Legal and licensing",
 }

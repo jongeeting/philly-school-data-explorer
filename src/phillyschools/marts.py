@@ -121,6 +121,34 @@ TABLES = {
         "one row per program",
         "Programs that appear only in state data (cyber charters, non-public special education, programs outside the district list), with their own school_id.",
     ),
+    "finance_lea": (
+        "one row per agency (aun)",
+        "Every school district, charter school, and career and technology center in the state's Annual Financial Report files, with its type and first and last year.",
+    ),
+    "finance_lea_line": (
+        "aun x sy x account",
+        "Each agency's reported revenue and expenditure by state account code, long, in nominal dollars. Accounts are hierarchical and the groups overlap: read finance_account before adding anything.",
+    ),
+    "finance_account": (
+        "table_group x account_code",
+        "Dictionary of the account codes in finance_lea_line: label and level (1 = broadest).",
+    ),
+    "finance_lea_tuition": (
+        "aun x sy x tuition type",
+        "Tuition a school district paid, by recipient: other districts, brick-and-mortar and cyber charter schools (regular and special education), career centers, and others.",
+    ),
+    "finance_lea_instruction": (
+        "aun x sy",
+        "Actual instruction expense by school district, 2008-09 to 2023-24 (the state's measure used in charter tuition rates).",
+    ),
+    "finance_lea_fund_balance": (
+        "aun x sy x fund balance type",
+        "General fund balance by committed, assigned, and unassigned.",
+    ),
+    "adequacy_target": (
+        "one row per school district",
+        "The Basic Education Funding Commission's 2024 adequacy gap and recommended funding for each school district (Appendix B of its report).",
+    ),
     "building": (
         "one row per building_id",
         "One physical building: name, kind, address, year built, and the City parcel (OPA account) when known.",
@@ -329,6 +357,7 @@ def write_dictionary(measures: pd.DataFrame) -> None:
     out += [
         "| `marts/school_year` | school_id x sy | One row per school and school year, wide: name, governance, level, and every measure with an `all students` value | see schema | see `schema/school_year.json` |",
         "| `marts/building` | one row per building_id | One row per building with its latest asbestos, lead-paint, water, and facility-condition results and the schools there now | see schema | see `schema/building.json` |",
+        "| `marts/district_finance` | aun x sy | Headline finance lines for every school district, charter school, and career center: spending by function, revenue by source, Basic Education Funding, charter tuition paid, instruction expense, fund balance; nominal dollars | see schema | see `schema/district_finance.json` |",
         "| `marts/school_profile` | one row per school_id | Most recent reported value of each measure and its year (`<measure>_sy`) | see schema | see `schema/school_profile.json` |",
         "",
         "## Reading a value",

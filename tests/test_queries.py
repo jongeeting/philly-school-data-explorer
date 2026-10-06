@@ -62,3 +62,38 @@ def test_release_metadata_and_no_personal_columns():
     assert "school_metric__crdc" not in table_names() and "issues" not in table_names()
     flat = datapackage("0.0.0", "2026-01-01", url_prefix="https://example.org/dl")
     assert all(r["path"].startswith("https://example.org/dl/") for r in flat["resources"])
+
+
+def test_finance_parsers():
+    from phillyschools.finance import BEFC_ROW, _account_code, _aun, _fy_to_sy, _level
+
+    assert _fy_to_sy("2023-24") == 2024 and _fy_to_sy("2015-16") == 2016
+    assert _aun(126515001.0) == "126515001" and _aun(None) is None
+    assert _account_code("Basic Education Funding 7110", "revenue_state") == "7110"
+    assert (
+        _account_code("Object 100 Personnel Services - Salaries", "expenditure_object") == "obj_100"
+    )
+    assert _account_code("Total Expenditures", "expenditure_function") == "total_expenditures"
+    assert [_level(c) for c in ["7000", "7100", "7110", "7111"]] == [1, 2, 3, 4]
+    row = (
+        "Philadelphia City SD    Philadelphia      $1,418,543,037     $0      37%     "
+        "$1,486,042,268     $40,046,952    $202,649,005   $242,695,957"
+    )
+    m = BEFC_ROW.match(row)
+    assert m["name"] == "Philadelphia City SD" and m["county"] == "Philadelphia"
+    assert m["gap"] == "1,418,543,037" and m["total"] == "242,695,957"
+
+
+@pytest.mark.skipif(not BUILT, reason="needs the built core/ and marts/ tables")
+def test_finance_tables_reconcile_with_the_commission_report():
+    import pandas as pd
+
+    from phillyschools.finance import BEFC_TOTALS
+
+    a = pd.read_parquet(ROOT / "core" / "adequacy_target.parquet")
+    assert len(a) == 500 and a["aun"].notna().all()
+    for k, v in BEFC_TOTALS.items():
+        assert abs(int(a[k].sum()) - v) <= 50, k
+    m = pd.read_parquet(ROOT / "marts" / "district_finance.parquet")
+    p = m[(m["lea_name"] == "Philadelphia City SD") & (m["sy"] == 2024)].iloc[0]
+    assert abs(p["basic_education_funding_7110"] - 1_486_042_268) / 1_486_042_268 < 0.001

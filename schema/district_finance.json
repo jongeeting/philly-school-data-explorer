@@ -1,0 +1,127 @@
+{
+ "table": "district_finance",
+ "grain": "aun x sy",
+ "rows": 11215,
+ "columns": [
+  {
+   "name": "aun",
+   "type": "str",
+   "description": "State agency ID (9 digits) for the school district, charter school, or career center."
+  },
+  {
+   "name": "lea_name",
+   "type": "str",
+   "description": "Agency name as in the state's files."
+  },
+  {
+   "name": "county",
+   "type": "str",
+   "description": "County."
+  },
+  {
+   "name": "lea_type",
+   "type": "str",
+   "description": "school_district, charter_school, career_technology_center, or other."
+  },
+  {
+   "name": "sy",
+   "type": "int64",
+   "description": "Spring year of the fiscal year (2024 = FY 2023-24, July to June)."
+  },
+  {
+   "name": "total_expenditures",
+   "type": "float64",
+   "description": "All expenditures reported, including facilities and other financing uses (debt service and refunding), in nominal dollars."
+  },
+  {
+   "name": "instruction_1000",
+   "type": "float64",
+   "description": "Instruction (function 1000)."
+  },
+  {
+   "name": "support_services_2000",
+   "type": "float64",
+   "description": "Support services (function 2000)."
+  },
+  {
+   "name": "noninstructional_services_3000",
+   "type": "float64",
+   "description": "Operation of noninstructional services (function 3000)."
+  },
+  {
+   "name": "facilities_construction_4000",
+   "type": "float64",
+   "description": "Facilities acquisition, construction, and improvement (function 4000)."
+  },
+  {
+   "name": "other_expenditures_financing_5000",
+   "type": "float64",
+   "description": "Other expenditures and financing uses (function 5000), including debt service and refunding."
+  },
+  {
+   "name": "local_revenue_6000",
+   "type": "float64",
+   "description": "Total local revenue (6000)."
+  },
+  {
+   "name": "current_real_estate_taxes_6111",
+   "type": "float64",
+   "description": "Current real estate taxes (6111)."
+  },
+  {
+   "name": "state_revenue_7000",
+   "type": "float64",
+   "description": "Total state revenue (7000)."
+  },
+  {
+   "name": "basic_education_funding_7110",
+   "type": "float64",
+   "description": "State Basic Education Funding (7110)."
+  },
+  {
+   "name": "federal_revenue_8000",
+   "type": "float64",
+   "description": "Total federal revenue (8000)."
+  },
+  {
+   "name": "other_revenue_9000",
+   "type": "float64",
+   "description": "Other revenue (9000): bond and note proceeds, transfers, and similar. Not operating revenue."
+  },
+  {
+   "name": "salaries_obj_100",
+   "type": "float64",
+   "description": "Salaries (object 100)."
+  },
+  {
+   "name": "benefits_obj_200",
+   "type": "float64",
+   "description": "Employee benefits (object 200)."
+  },
+  {
+   "name": "charter_tuition_paid",
+   "type": "float64",
+   "description": "Tuition a school district paid to charter schools (brick-and-mortar and cyber, regular and special education). Blank for charter schools and career centers."
+  },
+  {
+   "name": "tuition_paid_total",
+   "type": "float64",
+   "description": "All tuition a school district paid, to any recipient."
+  },
+  {
+   "name": "actual_instruction_expense",
+   "type": "float64",
+   "description": "The state's actual instruction expense for the school district (2008-09 to 2023-24)."
+  },
+  {
+   "name": "general_fund_balance",
+   "type": "float64",
+   "description": "Committed + assigned + unassigned general fund balance."
+  },
+  {
+   "name": "current_expenditures_approx",
+   "type": "float64",
+   "description": "Instruction + support services + noninstructional services (1000 + 2000 + 3000). Approximates the commission's 'current expenditures', which also nets out tuition-for-patrons revenue, so this runs slightly high. Derived."
+  }
+ ]
+}

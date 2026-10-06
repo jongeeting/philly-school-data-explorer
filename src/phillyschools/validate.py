@@ -152,6 +152,70 @@ def hard_checks() -> list[dict]:
         )
     )
     out += building_checks()
+    if (CORE / "finance_lea_line.parquet").exists():
+        out += finance_checks()
+    return out
+
+
+def finance_checks() -> list[dict]:
+    """The state's finance files against themselves and against the commission's report."""
+    from .finance import BEFC_TOTALS
+
+    m = pd.read_parquet(MARTS / "district_finance.parquet")
+    a = pd.read_parquet(CORE / "adequacy_target.parquet")
+    line = pd.read_parquet(CORE / "finance_lea_line.parquet")
+    out = []
+    ex = m.dropna(subset=["total_expenditures"])
+    five = ex[
+        [
+            "instruction_1000",
+            "support_services_2000",
+            "noninstructional_services_3000",
+            "facilities_construction_4000",
+            "other_expenditures_financing_5000",
+        ]
+    ].sum(axis=1, min_count=1)
+    share = (((five - ex["total_expenditures"]).abs() / ex["total_expenditures"]) < 0.005).mean()
+    out.append(
+        _check(
+            "the five spending functions add to total expenditures (within 0.5%, 99% of agency-years)",
+            share >= 0.99,
+            f"{share:.4f} of {len(ex):,} agency-years",
+        )
+    )
+    diffs = {k: abs(int(a[k].sum()) - v) for k, v in BEFC_TOTALS.items()}
+    out.append(
+        _check(
+            "commission Appendix B sums to the report's printed statewide totals (within $50)",
+            max(diffs.values()) <= 50,
+            f"largest difference ${max(diffs.values())}",
+        )
+    )
+    out.append(
+        _check(
+            "all 500 adequacy rows link to a state agency",
+            len(a) == 500 and a["aun"].notna().all(),
+            f"{a['aun'].notna().sum()} of {len(a)}",
+        )
+    )
+    bef = line[(line["account_code"] == "7110") & (line["sy"] == 2024)].set_index("aun")["value"]
+    j = a.set_index("aun")[["bef_2023_24_base"]].join(bef.rename("afr")).dropna()
+    close = (((j["afr"] / j["bef_2023_24_base"]) - 1).abs() < 0.01).mean()
+    out.append(
+        _check(
+            "state-reported Basic Education Funding matches the commission's 2023-24 base (within 1%, 95% of districts)",
+            close >= 0.95,
+            f"{close:.3f} of {len(j)} districts",
+            hard=False,
+        )
+    )
+    out.append(
+        _check(
+            "agency-years are unique in district_finance",
+            not m.duplicated(["aun", "sy"]).any(),
+            f"{len(m):,} rows",
+        )
+    )
     return out
 
 

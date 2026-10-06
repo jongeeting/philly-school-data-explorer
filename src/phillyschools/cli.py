@@ -23,6 +23,7 @@ from .envresults import build_lead_paint, build_water, write_lead_paint, write_w
 from .fastfacts import build_fast_facts, write_fast_facts
 from .fca import build_fca, write_fca
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan, read_downloads
+from .finance import build_finance, catalog_afr, write_finance
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
@@ -350,6 +351,22 @@ def cmd_release(a):
     print(f"  {len(r['assets'])} release assets in {r['dir'] / 'assets'} ({mb:.0f} MB)")
 
 
+def cmd_catalog_afr(a):
+    rows = catalog_afr()
+    print(
+        f"cataloged {len(rows)} PDE Annual Financial Report files; run `psd fetch --source pde_afr`"
+    )
+
+
+def cmd_build_finance(a):
+    t = build_finance()
+    mart = write_finance(t)
+    print(
+        f"  agencies {len(t['finance_lea'])}; account lines {len(t['finance_lea_line'])}; "
+        f"district_finance {len(mart)} rows x {len(mart.columns)} columns"
+    )
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -510,6 +527,12 @@ def main():
     s.add_argument("--version", required=True, help="for example 0.1.0")
     s.add_argument("--skip-validation", action="store_true")
     s.set_defaults(fn=cmd_release)
+
+    s = sub.add_parser("catalog-afr", help="catalog the PDE Annual Financial Report files")
+    s.set_defaults(fn=cmd_catalog_afr)
+
+    s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
+    s.set_defaults(fn=cmd_build_finance)
 
     s = sub.add_parser("build-marts", help="wide tables, schema JSON, and the data dictionary")
     s.set_defaults(fn=cmd_build_marts)

@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**53 unresolved** of 69 tracked (13 high priority).
+**59 unresolved** of 75 tracked (16 high priority).
 
 **Kinds of gap**
 
@@ -103,6 +103,17 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-063 | Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders | `not-collected-by-district` | low | open | district | Read the 2019 tables; ask whether charters post newer results elsewhere |
 | GAP-065 | AHERA reports before 2023 use an older layout; the latest report for 18 buildings is from 2016 or 2019, and 6 reports could not be read | `not-yet-ingested` | low | open | district | Check whether the district has newer reports for these buildings; read the older layout |
 | GAP-068 | School-to-building history before 2019 is unavailable (2017-18 and earlier school lists are not read for addresses), so moves and co-locations before 2019 are not shown | `not-yet-ingested` | low | open | us | Read street addresses from the 2017-18 Excel master list and the longitudinal list if it has them |
+
+## School finance
+
+| ID | Gap | Kind | Priority | Status | Owner | How to close |
+| --- | --- | --- | --- | --- | --- | --- |
+| GAP-070 | School-level budgets: the district's School Budgets tool (FY16 to FY27, about 240 schools) is interactive and has no export; each school-year is a PDF report from a public URL but a bulk pull has not been done *(Tested one public report (Decatur FY26) 2026-10-06; reports are keyed by ULCS. Allotments are budgets, and principals decide actual purchases)* | `not-collected-by-district` | high | in-progress | district | Ask the district for an export of school budget allotments and positions; otherwise fetch the public per-school reports at a slow pace with approval |
+| GAP-071 | No enrollment base for per-pupil figures: average daily membership and weighted student counts (used in the funding formula and the adequacy calculation) are not loaded | `not-yet-ingested` | high | open | us | Load PDE average daily membership and the weighted student counts from the Basic Education Funding files |
+| GAP-072 | The 2007 Costing-Out Study and the 2023 Kelly adequacy analysis are known only from press reports; the primary documents are not loaded | `not-yet-ingested` | high | open | us | Read the 2007 study and the 2023 report and enter their district tables with method and dollar-year |
+| GAP-073 | State Basic Education Funding distributions after 2023-24 (the enacted adequacy investment and tax equity supplements) are not loaded; the state page lists only the latest estimated file | `not-yet-ingested` | medium | open | us | Find the state's historical subsidy files and the enacted 2024-25 and 2025-26 distributions by district |
+| GAP-075 | School-level per-pupil expenditures required on the state report card (federal ESSA) have not been found as a download | `unknown` | medium | open | state | Search the state's report card data files and ask PDE |
+| GAP-074 | AFR debt, Act 511 and first-class-district tax files, and years before 2014-15 are not loaded | `not-yet-ingested` | low | open | us | Parse the debt and tax files; download older years from the state's FTP site |
 
 ## Workforce
 
