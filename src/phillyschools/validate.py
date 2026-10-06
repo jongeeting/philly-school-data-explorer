@@ -157,12 +157,43 @@ def hard_checks() -> list[dict]:
     return out
 
 
+def adequacy_study_checks() -> list[dict]:
+    """The 2007 and 2023 studies' district tables against their own published headlines."""
+    from .finance import APA_TOTALS
+
+    apa = pd.read_parquet(CORE / "adequacy_apa_2007.parquet")
+    kelly = pd.read_parquet(CORE / "adequacy_kelly_2023.parquet")
+    below = apa[apa["difference_per_pupil"] < 0]
+    gap_below = -below["total_difference"].sum()
+    net = -apa["total_difference"].sum()
+    short = kelly[kelly["adequacy_shortfall"] > 0]
+    return [
+        _check(
+            "2007 study: 471 districts below the cost estimate, $4.57B below-estimate gap, $4.38B net",
+            len(below) == APA_TOTALS["districts_below_estimate"]
+            and abs(gap_below / APA_TOTALS["gap_if_above_districts_keep_spending"] - 1) < 0.01
+            and abs(net / APA_TOTALS["aggregate_gap"] - 1) < 0.01,
+            f"{len(below)} below; ${gap_below / 1e9:.2f}B; net ${net / 1e9:.2f}B",
+        ),
+        _check(
+            "2023 Kelly analysis: 412 districts with a shortfall totaling about $6.2B",
+            len(short) == 412 and abs(short["adequacy_shortfall"].sum() / 6.2e9 - 1) < 0.02,
+            f"{len(short)} districts; ${short['adequacy_shortfall'].sum() / 1e9:.2f}B",
+        ),
+        _check(
+            "adequacy studies link to state agency IDs",
+            apa["aun"].notna().all() and kelly["aun"].notna().all(),
+            f"{len(apa)} and {len(kelly)} districts",
+        ),
+    ]
+
+
 def finance_checks() -> list[dict]:
     """The state's finance files against themselves and against the commission's report."""
     from .finance import BEFC_TOTALS
 
     m = pd.read_parquet(MARTS / "district_finance.parquet")
-    a = pd.read_parquet(CORE / "adequacy_target.parquet")
+    a = pd.read_parquet(CORE / "adequacy_befc_2024.parquet")
     line = pd.read_parquet(CORE / "finance_lea_line.parquet")
     out = []
     ex = m.dropna(subset=["total_expenditures"])
@@ -207,6 +238,41 @@ def finance_checks() -> list[dict]:
             close >= 0.95,
             f"{close:.3f} of {len(j)} districts",
             hard=False,
+        )
+    )
+    out += adequacy_study_checks()
+    rtl = pd.read_parquet(CORE / "finance_rtl_allocation.parquet")
+    rtl = rtl[rtl["program"] == "Ready to Learn Block Grant"]
+    wide = rtl.pivot_table(
+        index=["aun", "payable_sy"], columns="component", values="value", aggfunc="sum"
+    )
+    new = wide.loc[wide.index.get_level_values("payable_sy") >= 2025].fillna(0)
+    parts = new[["foundation", "adequacy_supplement", "tax_equity_supplement"]].sum(axis=1)
+    out.append(
+        _check(
+            "Ready to Learn grants equal foundation + adequacy + tax equity supplements (2024-25 on, within $5)",
+            ((parts - new["total"]).abs() <= 5).all(),
+            f"{len(new)} district-years",
+        )
+    )
+    adeq = wide.xs(2025, level="payable_sy")["adequacy_supplement"].sum()
+    out.append(
+        _check(
+            "2024-25 adequacy supplements total about $494 million statewide (as reported)",
+            abs(adeq / 493.8e6 - 1) < 0.01,
+            f"${adeq / 1e6:.1f}M",
+            hard=False,
+        )
+    )
+    est = m[(m["sy"] == 2022) & m["adj_adm"].notna()].set_index("aun")
+    ratio = (
+        est["current_expenditures_approx"] / est["current_expenditures_net_of_patron_tuition"]
+    ).dropna()
+    out.append(
+        _check(
+            "instruction + support + noninstructional spending approximates the state's current expenditures (within 5%, 99% of districts, 2021-22)",
+            ((ratio - 1).abs() < 0.05).mean() >= 0.99,
+            f"{((ratio - 1).abs() < 0.05).mean():.3f} of {len(ratio)} districts; median ratio {ratio.median():.4f}",
         )
     )
     out.append(

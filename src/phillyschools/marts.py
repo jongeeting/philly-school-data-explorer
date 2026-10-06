@@ -145,9 +145,33 @@ TABLES = {
         "aun x sy x fund balance type",
         "General fund balance by committed, assigned, and unassigned.",
     ),
-    "adequacy_target": (
+    "adequacy_befc_2024": (
         "one row per school district",
         "The Basic Education Funding Commission's 2024 adequacy gap and recommended funding for each school district (Appendix B of its report).",
+    ),
+    "adequacy_apa_2007": (
+        "one row per school district",
+        "The 2007 Costing-Out Study (Augenblick, Palaich and Associates): 2005-06 spending per pupil against the study's cost estimate per pupil (Appendix F). 2005-06 dollars.",
+    ),
+    "adequacy_kelly_2023": (
+        "one row per school district",
+        "Matthew Kelly's 2023 adequacy analysis: weighted student count, adequacy target, and shortfall for each school district (2021-22 spending).",
+    ),
+    "finance_bef_allocation": (
+        "aun x payable year x component",
+        "The state's Basic Education Funding allocation for each school district and payable year, with its components (base, student-weighted distribution, supplements) as the state's workbook labels them.",
+    ),
+    "finance_bef_input": (
+        "aun x payable year x input",
+        "The inputs the state publishes with each Basic Education Funding workbook: poverty, enrollment (adjusted ADM and weighted counts), local effort, and the district's current expenditures. Labels are as published and change by year.",
+    ),
+    "finance_district_enrollment": (
+        "aun x sy",
+        "Adjusted ADM, current expenditures net of tuition from patrons, and current expenditures per weighted student by data year, derived from the BEF workbooks (the latest workbook wins).",
+    ),
+    "finance_rtl_allocation": (
+        "aun x payable year x component",
+        "Ready to Learn Block Grant (and earlier PA Accountability Grant) allocations by school district; from 2024-25 split into a foundation amount and the enacted adequacy and tax equity supplements.",
     ),
     "building": (
         "one row per building_id",
@@ -358,6 +382,7 @@ def write_dictionary(measures: pd.DataFrame) -> None:
         "| `marts/school_year` | school_id x sy | One row per school and school year, wide: name, governance, level, and every measure with an `all students` value | see schema | see `schema/school_year.json` |",
         "| `marts/building` | one row per building_id | One row per building with its latest asbestos, lead-paint, water, and facility-condition results and the schools there now | see schema | see `schema/building.json` |",
         "| `marts/district_finance` | aun x sy | Headline finance lines for every school district, charter school, and career center: spending by function, revenue by source, Basic Education Funding, charter tuition paid, instruction expense, fund balance; nominal dollars | see schema | see `schema/district_finance.json` |",
+        "| `marts/adequacy_compare` | one row per school district | The three adequacy studies side by side (2007 Costing-Out, 2023 Kelly, 2024 commission), each in its own columns with its own units; they are different estimates by different methods, not versions of one number | see schema | see `schema/adequacy_compare.json` |",
         "| `marts/school_profile` | one row per school_id | Most recent reported value of each measure and its year (`<measure>_sy`) | see schema | see `schema/school_profile.json` |",
         "",
         "## Reading a value",

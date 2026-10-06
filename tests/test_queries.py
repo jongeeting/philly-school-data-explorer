@@ -90,7 +90,7 @@ def test_finance_tables_reconcile_with_the_commission_report():
 
     from phillyschools.finance import BEFC_TOTALS
 
-    a = pd.read_parquet(ROOT / "core" / "adequacy_target.parquet")
+    a = pd.read_parquet(ROOT / "core" / "adequacy_befc_2024.parquet")
     assert len(a) == 500 and a["aun"].notna().all()
     for k, v in BEFC_TOTALS.items():
         assert abs(int(a[k].sum()) - v) <= 50, k

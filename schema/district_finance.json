@@ -122,6 +122,41 @@
    "name": "current_expenditures_approx",
    "type": "float64",
    "description": "Instruction + support services + noninstructional services (1000 + 2000 + 3000). Approximates the commission's 'current expenditures', which also nets out tuition-for-patrons revenue, so this runs slightly high. Derived."
+  },
+  {
+   "name": "adj_adm",
+   "type": "float64",
+   "description": "Adjusted average daily membership: the enrollment base the state uses in the Basic Education Funding formula (school districts only), from the state's BEF workbooks."
+  },
+  {
+   "name": "current_exp_per_weighted_student",
+   "type": "float64",
+   "description": "The state's current expenditures per weighted student in the BEF formula. Its weighted-student count is not the same as the commission's or Kelly's, so do not compare it with their adequacy targets per student."
+  },
+  {
+   "name": "current_expenditures_net_of_patron_tuition",
+   "type": "float64",
+   "description": "The state's current expenditures minus tuition from patrons revenue (the definition in the funding law and the commission's adequacy calculation), from the BEF workbooks. School districts only; 2016-17 to 2022-23."
+  },
+  {
+   "name": "rtl_total_allocation",
+   "type": "float64",
+   "description": "The state's Ready to Learn Block Grant allocation for the school district (payable year = this fiscal year), as allocated, not as booked. School districts only."
+  },
+  {
+   "name": "rtl_adequacy_supplement_allocation",
+   "type": "float64",
+   "description": "The adequacy supplement within the Ready to Learn Block Grant (enacted from 2024-25): the state's adequacy investment for this district that year. It is new money added in that year and rolls into the next year's foundation, so do not add years without noting that."
+  },
+  {
+   "name": "rtl_tax_equity_supplement_allocation",
+   "type": "float64",
+   "description": "The tax equity supplement within the Ready to Learn Block Grant (enacted from 2024-25)."
+  },
+  {
+   "name": "current_expenditures_per_adj_adm",
+   "type": "float64",
+   "description": "current_expenditures_approx divided by adj_adm. Derived; dollars per adjusted ADM, nominal."
   }
  ]
 }

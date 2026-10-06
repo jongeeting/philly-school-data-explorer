@@ -31,6 +31,12 @@ Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; recon
 | commission Appendix B sums to the report's printed statewide totals (within $50) | pass | largest difference $8 |
 | all 500 adequacy rows link to a state agency | pass | 500 of 500 |
 | state-reported Basic Education Funding matches the commission's 2023-24 base (within 1%, 95% of districts) | pass | 0.994 of 500 districts |
+| 2007 study: 471 districts below the cost estimate, $4.57B below-estimate gap, $4.38B net | pass | 471 below; $4.57B; net $4.38B |
+| 2023 Kelly analysis: 412 districts with a shortfall totaling about $6.2B | pass | 412 districts; $6.26B |
+| adequacy studies link to state agency IDs | pass | 501 and 500 districts |
+| Ready to Learn grants equal foundation + adequacy + tax equity supplements (2024-25 on, within $5) | pass | 1000 district-years |
+| 2024-25 adequacy supplements total about $494 million statewide (as reported) | pass | $493.8M |
+| instruction + support + noninstructional spending approximates the state's current expenditures (within 5%, 99% of districts, 2021-22) | pass | 0.996 of 500 districts; median ratio 1.0008 |
 | agency-years are unique in district_finance | pass | 11,215 rows |
 
 ## Reconciliations against independent sources

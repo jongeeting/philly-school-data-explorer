@@ -9,20 +9,31 @@
 - `finance_lea_tuition`: what each school district paid in tuition, by recipient: other districts, brick-and-mortar and cyber charter schools (regular and special education separately), career centers, private schools.
 - `finance_lea_instruction`: actual instruction expense by school district, **2008-09 to 2023-24**, the state's measure used in charter tuition rates.
 - `finance_lea_fund_balance`: general fund balance (committed, assigned, unassigned).
-- `adequacy_target`: the Basic Education Funding Commission's per-district calculation (Appendix B of its January 11, 2024 report): each district's state share of the adequacy gap, tax equity supplement, 2023-24 funding base, and the recommended 2024-25 increases.
-- `marts/district_finance` (11,215 rows): one row per agency and year with the headline lines wide: spending by function, revenue by source, Basic Education Funding, charter tuition paid, instruction expense, fund balance.
+- `adequacy_befc_2024`: the Basic Education Funding Commission's per-district calculation (Appendix B of its January 11, 2024 report): each district's state share of the adequacy gap, tax equity supplement, 2023-24 funding base, and the recommended 2024-25 increases.
+- `marts/district_finance` (11,215 rows): one row per agency and year with the headline lines wide: spending by function, revenue by source, Basic Education Funding, charter tuition paid, instruction expense, fund balance, adjusted ADM, spending per adjusted ADM, and the Ready to Learn allocations. `marts/adequacy_compare`: the three studies and the enacted supplements side by side.
 
 ## What the adequacy numbers are (and are not)
 
-Adequacy studies in Pennsylvania disagree because they define "adequate" differently. This release holds one:
+Adequacy studies in Pennsylvania disagree because they define "adequate" differently. This release holds all three, from the primary documents, each in its own table and side by side in `marts/adequacy_compare` (every study keeps its own columns and units):
 
-| Estimate | Who | Method | Statewide | Loaded |
+| Study | Who | Method | Statewide | Philadelphia |
 | --- | --- | --- | --- | --- |
-| 2007 Costing-Out Study | Commissioned by the state; basis of the 2008 formula | Cost of reaching state performance standards | about $4.4 billion a year (about $1 billion for Philadelphia), per press reports | not yet (primary document to read) |
-| 2023 update | Penn State's Matthew Kelly, for the lawsuit plaintiffs and the commission | Updates the 2007 targets | $6.2 billion, per press reports | not yet |
-| 2024 final report | The bipartisan Basic Education Funding Commission | Median current spending per weighted student of districts meeting state performance standards ($13,704) times each district's weighted students | $5.4 billion total; $5.14 billion the state's share | yes: `adequacy_target` |
+| 2007 Costing-Out Study (`adequacy_apa_2007`) | Augenblick, Palaich and Associates, for the State Board of Education | What it costs for every student to reach state proficiency standards by 2014, built from professional-judgment panels and evidence-based analysis; 2005-06 dollars | $21.63 billion needed against $17.25 billion spent: a $4.38 billion gap ($4.57 billion if districts already above the estimate keep spending); 471 of 501 districts below | $9,947 spent per pupil against a $14,131 estimate: $4,184 per pupil, about $870 million (207,893 students) |
+| 2023 analysis (`adequacy_kelly_2023`) | Matthew Kelly, Penn State, for the lawsuit plaintiffs (testimony to the commission) | Spending per weighted student of 74 districts meeting graduation and test benchmarks, outliers removed, times each district's weighted students; 2021-22 spending | $6.26 billion shortfall; 412 of 500 districts below | $1.57 billion shortfall ($7,926 per weighted student; 383,792 weighted students) |
+| 2024 final report (`adequacy_befc_2024`) | The bipartisan Basic Education Funding Commission | Median current spending per weighted student of districts meeting state standards ($13,704) times each district's weighted students; target year 2021-22 | $5.4 billion total gap, of which $5.14 billion is the state's share; 387 of 500 districts below | State share $1.42 billion (27.6% of the statewide state share); 7-year target equal to 37% of 2021-22 current spending |
 
-In the commission's table, 371 districts have a positive state share of the gap (the report counts 387 districts below the target, including some whose gap is assigned to local share). Philadelphia's state share is $1,418,543,037, 27.6% of the statewide total, with a 2024-25 recommended increase of $242.7 million. The commission's target year is 2021-22 spending; the 2007 figures are in 2005-06 dollars and are not comparable without adjustment. The estimates are different answers to different definitions of adequate, not versions of one number; show each with its author and method.
+These are different answers to different definitions, not versions of one number: they differ in standards, base year, dollars, how weights count students, and whether a local share is assigned. The 2007 figures are in 2005-06 dollars and are not comparable with the others without adjustment. The commission's weighted students are about 385,000 for Philadelphia, the BEF formula's own count is 303,000, so spending per weighted student under the formula (`current_exp_per_weighted_student`) must not be compared with the commission's $13,704. Kelly's target minus his shortfall equals the state's 2021-22 current expenditures within 2% for 83% of districts (he finished before some data were final).
+
+## What the state has enacted
+
+The commission recommended closing its gap over seven years, starting in 2024-25 with $871 million for adequacy and equity plus $200 million through the regular formula. As of the state's files (August 2026):
+
+- **Basic Education Funding** rose $285 million in 2024-25 (a $60 million hold-harmless supplement and a $225 million student-weighted distribution), from $7.87 billion to $8.16 billion; Philadelphia's rose $51.6 million, to $1.538 billion.
+- **The adequacy and tax equity supplements are paid through the Ready to Learn Block Grant** (`finance_rtl_allocation`), not through the Basic Education Funding line: $493.8 million of adequacy supplements and $32.2 million of tax equity supplements in 2024-25, and $532.9 million and $32.2 million in 2025-26, to 348 districts in 2024-25. Each year's supplement is new money that rolls into the next year's foundation.
+- Philadelphia's adequacy supplement was $136.7 million in 2024-25 (67% of the commission's $202.6 million Year-1 recommendation for it; statewide the enacted $526.0 million is 60% of the recommended $871.3 million) and $136.7 million again in 2025-26, with no tax equity supplement.
+- Counting both lines, Philadelphia's 2024-25 state increase ($51.6 million plus $136.7 million) was $188 million against a recommended $243 million.
+
+Whether these amounts are adequate depends on which study and which definition one accepts; the data show what was recommended and what was enacted, not which is right. The Ready to Learn amounts are allocations as published, not revenue as booked.
 
 ## Facts (Philadelphia City SD, 2023-24, from the state's reports)
 
@@ -31,7 +42,9 @@ In the commission's table, 371 districts have a positive state share of the gap 
 - The district paid $1.36 billion in tuition to charter schools: 29% of total expenditures, 45% of the $3.0 billion all Pennsylvania school districts paid to charter schools that year. It was $0.71 billion in 2015-16 (up 91% in nominal dollars). Charter tuition pays for students who live in the district and attend a charter; they are not in the district's own enrollment.
 - Actual instruction expense was $1.53 billion in 2008-09 and $2.57 billion in 2023-24 (up 68% in nominal dollars).
 
-These facts are placed side by side so each side's question can be examined; they do not say whether spending is adequate, efficient, or well used. Per-pupil comparisons need enrollment counts that are not loaded yet (see the gaps).
+- Enrollment base: adjusted ADM (the state's formula count of resident students, which includes students enrolled in charter schools; 78,594 charter ADM in 2022-23) was 196,206 in 2023-24, 204,069 in 2016-17. Current expenditures per adjusted ADM rose from $13,729 to $21,358 (up 56% in nominal dollars). Because the numerator includes tuition paid for charter students and the denominator counts them, this is spending per resident student, not per student in district-run schools.
+
+These facts are placed side by side so each side's question can be examined; they do not say whether spending is adequate, efficient, or well used.
 
 ## Checks
 
@@ -42,4 +55,4 @@ The five spending functions add to total expenditures for all 7,422 agency-years
 - Total expenditures include facilities and debt service/refunding (functions 4000 and 5000) and can jump from year to year; `current_expenditures_approx` is closer to the commission's definition but does not net out tuition-for-patrons revenue, so it runs slightly high.
 - The current year (2024-25) is the state's unaudited data.
 - Charter school finances come from each charter's own report; charter tuition paid by districts and charter revenue are different views of the same money, and they are not netted.
-- Not yet loaded: enrollment (average daily membership and weighted student counts), actual state funding distributions since 2023-24 (including the adequacy investment), the 2007 and 2023 studies, school-level budgets, debt, and years before 2014-15 (older AFR files are on the state's FTP site).
+- Not yet loaded: enrollment by charter school (so per-pupil charter figures are not possible), school-level budgets (in progress), debt, and years before 2014-15 (older AFR files are on the state's FTP site).

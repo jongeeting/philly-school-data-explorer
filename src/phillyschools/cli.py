@@ -23,7 +23,13 @@ from .envresults import build_lead_paint, build_water, write_lead_paint, write_w
 from .fastfacts import build_fast_facts, write_fast_facts
 from .fca import build_fca, write_fca
 from .fetch import fetch, fetch_one_snapshot, head_sizes, plan, read_downloads
-from .finance import build_finance, catalog_afr, write_finance
+from .finance import (
+    build_finance,
+    catalog_afr,
+    catalog_school_budgets,
+    catalog_state_funding,
+    write_finance,
+)
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
@@ -367,6 +373,18 @@ def cmd_build_finance(a):
     )
 
 
+def cmd_catalog_school_budgets(a):
+    rows = catalog_school_budgets(tuple(a.kinds))
+    print(
+        f"cataloged {len(rows)} school budget reports; run `psd fetch --source sdp_school_budgets`"
+    )
+
+
+def cmd_catalog_state_funding(a):
+    rows = catalog_state_funding()
+    print(f"cataloged {len(rows)} state funding and adequacy files")
+
+
 def cmd_build_crdc(a):
     t = build_crdc()
     combined = write_crdc(t)
@@ -533,6 +551,19 @@ def main():
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)
+
+    s = sub.add_parser(
+        "catalog-school-budgets", help="catalog the district's public school budget reports"
+    )
+    s.add_argument(
+        "--kinds", nargs="*", default=["allotment"], choices=["allotment", "purchases", "positions"]
+    )
+    s.set_defaults(fn=cmd_catalog_school_budgets)
+
+    s = sub.add_parser(
+        "catalog-state-funding", help="catalog state subsidy files and the adequacy studies"
+    )
+    s.set_defaults(fn=cmd_catalog_state_funding)
 
     s = sub.add_parser("build-marts", help="wide tables, schema JSON, and the data dictionary")
     s.set_defaults(fn=cmd_build_marts)
