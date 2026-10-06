@@ -1,4 +1,4 @@
-"""Package archived raw files for handoff (for example, Board records for Civus).
+"""Package archived raw files for handoff (for example, Board records for a partner organization).
 
 Writes <out_dir>/<name>.zip containing the files, MANIFEST.csv (URL, retrieval time, SHA-256
 for every file, from sources/downloads.csv), and README.md. Files are stored untouched.

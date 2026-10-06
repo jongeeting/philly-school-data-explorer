@@ -25,7 +25,7 @@ Built for people and agents equally: a dashboard, an MCP server, a chatbot, and 
 | `sources/` | `manifest.csv` (datasets), `files.csv` (discovered file URLs), `downloads.csv` (what we archived, with hashes) | Yes |
 | `registry/` | Permanent `school_id` registry (append-only) | Yes |
 | `src/phillyschools/` | The `psd` command line tool and build code | Yes |
-| `prototype/` | The first-pass scripts and outputs (Oct 3, 2026) that this project grew from | Yes |
+| `prototype/` | The first-pass scripts (Oct 3, 2026) that this project grew from; their outputs are not tracked | Scripts only |
 | `docs/` | Data model, [data gaps](docs/DATA_GAPS.md), findings, methods | Yes |
 
 ## Quick start

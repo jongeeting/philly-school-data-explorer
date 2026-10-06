@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**54 unresolved** of 69 tracked (14 high priority).
+**53 unresolved** of 69 tracked (13 high priority).
 
 **Kinds of gap**
 
@@ -115,5 +115,5 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | ID | Gap | Kind | Priority | Status | Owner | How to close |
 | --- | --- | --- | --- | --- | --- | --- |
 | GAP-028 | District Terms of Use restrict copying and limit use to governmental, accountability, and evaluative purposes; OpenDataPhilly lists the license as unspecified *(Nothing is released until resolved)* | `legal` | high | blocked | district | Obtain written permission or a data-sharing agreement; see docs/SOURCE_TERMS.md |
-| GAP-029 | District-derived tables already sit in the public repo under prototype/data/ | `legal` | high | open | owner decision | Decide: leave, remove from current tree, or scrub history (force-push needs owner approval) |
 | GAP-030 | Terms for PDE, Future Ready, SEDA, and City datasets not yet checked *(SEDA is under a data use agreement)* | `unknown` | medium | open | us | Read each publisher's terms; record in sources/manifest.csv |
+| GAP-029 | District-derived first-pass tables were committed under prototype/data/ *(Removed from the tree before the 0.1.0 release so the release archive does not include them)* | `legal` | low | closed | owner decision | Removed from the current tree 2026-10-06; they remain in earlier git history (rewriting history needs a force-push and the owner's approval) |

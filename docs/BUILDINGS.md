@@ -27,7 +27,7 @@ An address-text match counts more than a map point. The result carries `parcel_c
 
 A parcel is not a building. Annexes and little school houses usually sit on the main building's parcel and share its OPA account (47 buildings share an account with another), and large campuses hold more than one building. Sub-accounts of one parcel (the City lists more than one account at one address) count as one parcel.
 
-Checked against BPN's parcel table on 2026-10-05 (read-only): 359 of the 363 distinct accounts are present; the four missing are tracked on the BPN side.
+Checked against the Build Philly Now parcel table on 2026-10-05 (read-only): 359 of the 363 distinct accounts are present; the other four are not yet in that table.
 
 ## Limits
 

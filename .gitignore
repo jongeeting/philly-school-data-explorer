@@ -4,6 +4,8 @@ staging/*
 !raw/.gitkeep
 !staging/.gitkeep
 prototype/raw/
+# First-pass outputs derived from district files; the scripts stay, the data does not
+prototype/data/
 
 # Python
 .venv/
@@ -16,7 +18,7 @@ __pycache__/
 .env*
 .DS_Store
 
-# Internal strategy docs (host options, faction assessments); never commit
+# Internal strategy notes; never commit
 private/
 
 # Built tables are published as release assets, not committed (registry/ IS committed)

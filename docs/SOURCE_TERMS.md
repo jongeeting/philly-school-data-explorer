@@ -29,4 +29,4 @@ Public-use files with a short usage agreement: make no use of the identity of an
 
 ## Already published in this repo (to decide)
 
-`prototype/data/` (committed Oct 4, 2026) contains district-derived tables, for example `school_years.csv` (per-year school names, codes, and locations from the master lists) and the catchment GeoJSON. Options: leave as is, remove from the current tree, or remove from history too. Removing from history requires a force-push and a decision from the repo owner.
+`prototype/data/` (committed Oct 4, 2026) held district-derived first-pass tables, for example `school_years.csv` and the catchment GeoJSON. It was removed from the current tree on 2026-10-06 (the scripts remain; the outputs are git-ignored). The files remain in the repository's earlier history, which is the repo owner's decision to rewrite or not.

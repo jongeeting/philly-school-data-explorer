@@ -1,8 +1,12 @@
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 CROSSWALK = Path(__file__).parent.parent / "prototype" / "data" / "crosswalk.csv"
+
+
+pytestmark = pytest.mark.skipif(not CROSSWALK.exists(), reason="prototype data is not tracked")
 
 
 def test_ulcs_is_unique():

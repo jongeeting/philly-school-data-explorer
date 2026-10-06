@@ -11,7 +11,7 @@ Everything on it comes from data the School District, the state, the City, and t
 Four principles shape the design:
 
 - **Facts, not rankings.** The site shows information and fair comparisons. It never ranks schools best to worst.
-- **Neutral by design.** No faction in the education debate should be able to call it theirs. Contested topics get added in pairs, so each side's concerns show up together.
+- **Neutral by design.** No side of the education debate should be able to call it theirs. Contested topics get added in pairs, so each side's concerns show up together.
 - **Open and checkable.** The code and data are public, so anyone can verify a number or reuse the work.
 - **Built to hand off.** It's designed to be cheap and simple to run, so an independent organization can take it over.
 
@@ -49,7 +49,7 @@ What the views require of the data model:
 
 ## How it's built
 
-Keep the public site static, and make BPN's Postgres a consumer of the data rather than its home. You get the synergy without tying the schools project's survival, or its brand, to BPN's infrastructure.
+Keep the public site static, and let other systems, such as a property research platform's database, consume the data rather than host it. That keeps the schools project's survival, and its brand, independent of any one organization's infrastructure.
 
 In plain terms: a set of scripts downloads the public files whenever they're updated, cleans and links them, and publishes the result two ways, as downloadable data files and as a fast, simple website. There is no server or database to keep running.
 
@@ -57,12 +57,12 @@ In plain terms: a set of scripts downloads the public files whenever they're upd
 
 - *Handoff.* The goal is a host org you hand this to. A static site plus files costs close to nothing and keeps working if nobody touches it for a year. A running server and database cost money every month, need credentials and upgrades, and break quietly when neglected.
 - *Update rhythm.* School data changes a few times a year. A live database earns its keep when data changes daily or users write to it; neither is true here at launch.
-- *Neutrality.* Hosted inside BPN's stack, the site reads as a BPN product. That's the faction problem we've been designing around.
+- *Neutrality.* Hosted inside one organization's stack, the site reads as that organization's product. Independent hosting keeps it neutral.
 - *Openness.* Parquet files in a public release can be opened by any volunteer, journalist, or researcher with no account. A database needs an API or a dump.
 
 **Where Postgres does fit**
 
-- *As a load target for BPN.* One script loads each release into BPN's Postgres (with PostGIS), so parcels in the property platform carry their school zone, catchment, and school facts. Same IDs, same geography, separate products.
+- *As a load target for other platforms.* A script can load each release into a property platform's Postgres (with PostGIS), so parcels there carry their school zone, catchment, and school facts. Same IDs, same geography, separate products.
 - *Later, if the site needs writes.* Saved comparisons, user accounts, alerts, or a public API with high traffic would justify a database. Postgres on Render is a sensible choice then, and the files make the migration easy.
 
 **The recommended split**
@@ -72,10 +72,10 @@ In plain terms: a set of scripts downloads the public files whenever they're upd
 | Pipeline | Python plus DuckDB, run by GitHub Actions | Free, reproducible, runs on a laptop |
 | Source of truth | Parquet and GeoParquet in versioned GitHub releases | Open, citable, no server |
 | Map tiles | PMTiles (parcels, catchments, zones, districts, tracts) on static hosting | Handles about 580,000 parcels with no tile server |
-| Website | Static build (Observable Framework, or BPN's frontend framework if you'd rather share skills), MapLibre for maps | Cheap, fast, survives neglect |
+| Website | Static build (for example Observable Framework), MapLibre for maps | Cheap, fast, survives neglect |
 | In-browser queries | DuckDB-WASM for the compare tool | Slicing without a backend |
 | Address lookup | City AIS geocoder, then point-in-polygon in the browser | No server of our own |
-| BPN integration | Release loaded into BPN Postgres/PostGIS by script | Shared IDs and geography, separate brands |
+| Platform integration | Release loaded into a partner's Postgres/PostGIS by script | Shared IDs and geography, separate brands |
 | Hosting | Netlify, Cloudflare Pages, or GitHub Pages | Free or nearly free tiers |
 
 One caution on the shared geography: whichever project owns the parcel-to-zone join, the other should consume its release, not re-derive it. Two copies of the same join drift apart.
@@ -105,7 +105,7 @@ The five that matter most:
 2. **Everything is versioned in time.** Boundaries, grade spans, names, and governance each have a valid-from and valid-to. A 2019 score has to join to the 2019 catchment, not today's.
 3. **Measures need a dictionary.** "Regular attendance" became "persistent attendance" in 2021-22; growth and proficiency mean different things. Every number should point to a measure definition with its source, denominator, and known breaks.
 4. **Missing is data.** Suppressed ("IS"), waived, not applicable, and copied-forward (2019-20) are different facts. Store the reason, never just a blank.
-5. **Geography crosswalks need population weights.** We joined tracts to catchments by area. Weighting by census-block population is the right fix, and it's the same layer the BPN platform needs.
+5. **Geography crosswalks need population weights.** We joined tracts to catchments by area. Weighting by census-block population is the right fix, and it's the same layer a property platform needs.
 
 ## Decisions and next steps
 
@@ -114,7 +114,7 @@ The five that matter most:
 - [ ] Repo owner: your account, a new neutral org, or Code for Philly.
 - [ ] Neighborhood set for display (OpenDataPhilly's is the default).
 - [ ] How far back to build: 2012-13 (district schools only before 2019) or 2017-18 (all sectors, state data).
-- [ ] Whether the geography layer is shared with the BPN platform as a common package, or copied.
+- [ ] Whether the geography layer is shared with a property platform as a common package, or copied.
 - [ ] Questions for our School District data contact: code reuse, merge history, and whether they'll review the methods page.
 
 **How this becomes a Claude Code prompt series**
