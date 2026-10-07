@@ -205,3 +205,12 @@ def test_closure_registry_has_23_closed_schools():
     reg = pd.read_csv(CLOSED_CSV, dtype=str)
     assert len(reg) == 23 and reg["school_id"].is_unique
     assert (reg["closed_after_sy"] == "2013").all()
+
+
+def test_lineage_corrections_have_evidence():
+    from phillyschools.identity import read_lineage_corrections
+
+    lin = read_lineage_corrections()
+    assert len(lin) >= 1
+    assert lin["evidence"].str.len().gt(20).all()
+    assert (lin["predecessor_school_id"] != lin["successor_school_id"]).all()

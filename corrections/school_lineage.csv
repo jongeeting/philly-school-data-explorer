@@ -1,0 +1,2 @@
+predecessor_school_id,successor_school_id,sy,lineage_type,evidence,source_id,corrected_on,corrected_by
+sch_00409,sch_00195,2014,regrouped,"Penn Treaty Middle School's last year in the district list is 2012-13 (closed event, 253 students); Penn Treaty High School (Middle-High, 609 students) first appears in 2013-14 with a new ID. Jon Geeting (lives in the neighborhood) says the middle school was regrouped into the high school; no published document found yet",corrections:school_lineage,2026-10-06,claude

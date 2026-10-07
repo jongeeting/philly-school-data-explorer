@@ -38,6 +38,7 @@ Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; recon
 | 2024-25 adequacy supplements total about $494 million statewide (as reported) | pass | $493.8M |
 | instruction + support + noninstructional spending approximates the state's current expenditures (within 5%, 99% of districts, 2021-22) | pass | 0.996 of 500 districts; median ratio 1.0008 |
 | agency-years are unique in district_finance | pass | 11,215 rows |
+| school_lineage links resolve to different schools and carry evidence | pass | 1 links; 0 unknown, 0 self, 0 without evidence |
 | closure plan: every closing and receiving school resolves to a school_id | pass | 0 closing, 0 receiving unknown |
 | closure plan pairs are unique | pass | 0 duplicates |
 | closure flows: every school resolves | pass | 0 unknown |

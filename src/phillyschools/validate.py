@@ -154,6 +154,7 @@ def hard_checks() -> list[dict]:
     out += building_checks()
     if (CORE / "finance_lea_line.parquet").exists():
         out += finance_checks()
+    out += lineage_checks()
     if (CORE / "school_closure_plan.parquet").exists():
         out += closure_plan_checks()
     if (CORE / "school_closure_flow.parquet").exists():
@@ -163,6 +164,22 @@ def hard_checks() -> list[dict]:
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
     return out
+
+
+def lineage_checks() -> list[dict]:
+    """Hand-set lineage links point at real, different schools and carry their evidence."""
+    lin = pd.read_parquet(CORE / "school_lineage.parquet")
+    ids = set(pd.read_parquet(CORE / "school.parquet")["school_id"])
+    bad = (set(lin["predecessor_school_id"]) | set(lin["successor_school_id"])) - ids
+    same = int((lin["predecessor_school_id"] == lin["successor_school_id"]).sum())
+    blank = int(lin["evidence"].isna().sum() + (lin["evidence"] == "").sum())
+    return [
+        _check(
+            "school_lineage links resolve to different schools and carry evidence",
+            not bad and same == 0 and blank == 0,
+            f"{len(lin)} links; {len(bad)} unknown, {same} self, {blank} without evidence",
+        )
+    ]
 
 
 def closure_plan_checks() -> list[dict]:

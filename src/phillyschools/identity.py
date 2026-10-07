@@ -13,7 +13,7 @@ from datetime import UTC, datetime
 
 import pandas as pd
 
-from . import CORE, REGISTRY
+from . import CORE, REGISTRY, ROOT
 
 REGISTRY_FILE = REGISTRY / "school_id_registry.csv"
 STAGED_COLUMNS = [
@@ -101,6 +101,25 @@ def source_id_for(sy: int) -> str:
 
 
 # --- build --------------------------------------------------------------------------------
+
+
+LINEAGE_COLUMNS = [
+    "predecessor_school_id",
+    "successor_school_id",
+    "sy",
+    "lineage_type",
+    "evidence",
+    "source_id",
+]
+
+
+def read_lineage_corrections() -> pd.DataFrame:
+    """Hand-set predecessor and successor links, each with its evidence; never inferred."""
+    path = ROOT / "corrections" / "school_lineage.csv"
+    if not path.exists():
+        return pd.DataFrame(columns=LINEAGE_COLUMNS)
+    df = pd.read_csv(path, dtype={"sy": "Int64"})
+    return df[LINEAGE_COLUMNS]
 
 
 def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd.DataFrame]:
@@ -280,16 +299,7 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
                 }
             )
 
-    school_lineage = pd.DataFrame(
-        columns=[
-            "predecessor_school_id",
-            "successor_school_id",
-            "sy",
-            "lineage_type",
-            "evidence",
-            "source_id",
-        ]
-    )
+    school_lineage = read_lineage_corrections()
     correction = pd.DataFrame(
         columns=[
             "correction_id",

@@ -8,7 +8,7 @@ Tables (built by `uv run psd build-identity`, written to `core/`):
 | `school_year_attr` | school x sy | name, governance, grades level, admission type, council district, lat/lon; `status` and `source_id` on every row |
 | `school_id_xwalk` | school x outside code x run of years | `ulcs`, `state_key` (AUN-school number), `src_id`, `nces`; `shared_across_schools` flags placeholder state codes (0, 9999) and codes used by several programs |
 | `school_event` | school x event | derived from year-to-year changes (governance, name, level, dropped from list); `status = derived` |
-| `school_lineage` | predecessor x successor | empty until sourced from the 2017 Longitudinal School List and Board resolutions; never inferred |
+| `school_lineage` | predecessor x successor | hand-set links in `corrections/school_lineage.csv`, each with its evidence; never inferred (one link so far: Penn Treaty Middle regrouped into Penn Treaty High School, from Jon Geeting's local knowledge, consistent with the lists, no published document yet) |
 | `correction` | one manual fix | empty; every fix to source data is a row here |
 | `source` | dataset x year | URL, local path, SHA-256, retrieval time, license; blank hash means raw file not yet archived |
 
@@ -43,4 +43,3 @@ Notes on the build:
 ## The 2012 closure proposal
 
 `school_closure_plan` holds the district's December 2012 closure proposal as reported by the press: 35 schools proposed for closure and 68 closing-to-receiving pairs (`registry/closure_plan_2012.csv`). `receiving_rule` is `named` when one school was named and `either` when several were offered. It records what was proposed, not what happened: 23 of the 35 were dropped from the district's list in the 2013 wave, while 12 (for example Peirce, Taylor, Cooke, Duckrey) were not, and the closures actually voted on March 7, 2013 included schools not in this list. The final resolution is not archived (GAP-038), so `school_lineage` stays empty rather than guessing which school absorbed which (GAP-078). Roosevelt Middle School shows as dropped from the list although the press reported it spared; that needs checking.
-
