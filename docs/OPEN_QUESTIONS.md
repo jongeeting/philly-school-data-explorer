@@ -109,3 +109,12 @@ Questions this data cannot answer yet, with what we have and how someone could p
 - **What we have:** The 2013 observed flows as a comparison baseline, and current catchments and enrollment.
 - **How to pursue it:** Reporting on the district's plan; the district's reassignment lists when published.
 - **Related gaps:** GAP-078
+
+## Q-013. Did Philadelphia's teacher retention really fall to 69% in 2024-25, or did the coding of classroom teachers change?
+
+*Who might pursue it:* journalists; researchers
+
+- **Why it matters:** PDE's file shows 17.7% of Philadelphia's classroom teachers staying in the district in a non-teaching role, against 2 to 5% in other years, and the count of starting teachers (8,562) does not match the year before or after (8,083; 6,977).
+- **What we have:** Teacher retention by agency for the pairs PDE publishes (staff_lea_retention) and the staff profile by year (staff_lea_profile).
+- **How to pursue it:** Ask PDE's Data Quality Office and the district's HR office whether position coding changed; compare with the district's employee extracts and the district's own retention reporting.
+- **Related gaps:** GAP-081; GAP-027

@@ -247,3 +247,13 @@ def test_measure_coverage_shares_are_valid():
     cov = build_measure_coverage()
     assert cov["share_with_value"].between(0, 1.0001).all()
     assert {"District", "Charter"} <= set(cov["governance"])
+
+
+def test_pde_staff_summary_has_philadelphia_every_year():
+    from phillyschools.pde_school import STAFF_SUMMARY_DIR, read_staff_summary
+
+    if not list(STAFF_SUMMARY_DIR.glob("*.xlsx")):
+        return
+    df = read_staff_summary()
+    years = set(df[df["aun"] == "126515001"]["sy"])
+    assert years == set(range(2013, 2027))

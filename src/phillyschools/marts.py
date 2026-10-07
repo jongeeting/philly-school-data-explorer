@@ -215,6 +215,14 @@ TABLES = {
         "measure x sy x sector",
         "For each measure, school year and sector, how many listed schools have a value. Shows where charter schools are missing from district-only files.",
     ),
+    "staff_lea_profile": (
+        "aun x sy",
+        "Professional staff by agency and year (2012-13 to 2025-26 snapshots, October 1): counts of professional personnel, administrators, classroom teachers, coordinators and others by sex, and for full-time staff the average salary, years of service, years in the agency, and education level (1 to 6). Agency level only; individual staff records are not used. Charter schools are their own agencies.",
+    ),
+    "staff_lea_retention": (
+        "aun x sy",
+        "Where classroom teachers of one year were the next year (sy is the later year; 2015-16 to 2024-25 pairs are available for some years only): retained as a classroom teacher, in the same agency in another role, in a different agency as a teacher or in another role, or left Pennsylvania public education. Agency level.",
+    ),
     "school_budget": (
         "school x sy x line",
         "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",

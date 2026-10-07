@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**58 unresolved** of 80 tracked (14 high priority).
+**59 unresolved** of 81 tracked (14 high priority).
 
 **Kinds of gap**
 
@@ -76,6 +76,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-051 | Peer comparison uses only the poverty of a school's own students; a neighborhood basis (census poverty, income, and adult education of the catchment) is not built because ACS data is not loaded *(Catchment and student-neighborhood bases added 2026-10-04 (docs/PEERS.md))* | `not-yet-ingested` | medium | closed | us | Load ACS 5-year tables (keyless Summary File or API with a key), push through geo_xwalk, add basis catchment_census to peer comparison |
 | GAP-056 | Serious incidents for 2012-13 total 15,770, 2.4 times the next year (6,579), with no explanation in the files | `unknown` | medium | open | district | Ask the district what changed in reporting between 2012-13 and 2013-14 |
 | GAP-062 | CRDC referrals to law enforcement are not comparable before 2015-16: 2013-14 reports 94 referrals but 1,357 school-related arrests (arrests are normally a subset); 2015-16 reports 6,834 *(Loaded as published; flagged in docs/DISCIPLINE.md)* | `invalid-in-source` | medium | open | district | Ask the district how referrals were counted for the 2013-14 CRDC |
+| GAP-081 | Philadelphia City SD's classroom teacher retention drops to 69.3% for 2023-24 to 2024-25 (17.7% stayed in the district in another role, versus 2 to 5% in other years) and the starting teacher count jumps to 8,562 before falling to 6,977 the next year; this looks like a change in how positions were coded, not a real exodus | `invalid-in-source` | medium | open | state | Ask PDE and the district whether 2024-25 classroom teacher coding changed; compare with the district's own employee files |
 | GAP-043 | 2019-20 enrollment keys schools by SRC ID; Camelot Academy's SRC ID does not map to a ULCS, so its 2019-20 enrollment is unassigned *(Resolved 2026-10-04: SRC IDs fall back to other years when a year's list omits a program)* | `not-collected-by-district` | low | closed | us | Ask the district or match by name with a correction row |
 | GAP-045 | Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned | `not-collected-by-district` | low | open | district | Ask the district for its ULCS code |
 | GAP-054 | PDE's 2017-18 School Fast Facts leaves the economically disadvantaged share blank ('- -') for all 217 district schools; charters are reported *(Census-based peer bases cover 2017-18)* | `not-collected-by-district` | low | open | state | Use the district's CEP rate or census bases for that year; ask PDE whether a corrected file exists |
@@ -124,7 +125,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 
 | ID | Gap | Kind | Priority | Status | Owner | How to close |
 | --- | --- | --- | --- | --- | --- | --- |
-| GAP-027 | Teacher-level and school-level turnover requires the PDE staff files, which are not cataloged or downloaded *(Individual teacher data is deliberately excluded)* | `not-yet-ingested` | medium | open | us | Add PDE personnel files; aggregate to school level only |
+| GAP-027 | Teacher retention and staff profile are loaded by agency (district or charter) from PDE's aggregate files; school-level turnover is not published in aggregate, and the individual staff reports (which carry building assignments) have not been used *(Agency level done 2026-10-06 (staff_lea_profile 2012-13 to 2025-26; staff_lea_retention for the pairs PDE publishes). Vacancy and support-staff files are downloaded, not yet parsed)* | `not-yet-ingested` | medium | in-progress | us | Decide whether to download PDE's individual staff reports (large, one row per educator with a public ID) and aggregate to school level without publishing individual rows; or ask the district for school-level retention |
 
 ## Legal and licensing
 

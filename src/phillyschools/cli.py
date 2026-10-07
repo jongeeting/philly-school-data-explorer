@@ -421,6 +421,13 @@ def cmd_build_pde_school(a):
     print("  " + "; ".join(f"{k} {len(v)} rows" for k, v in t.items()))
 
 
+def cmd_build_pde_staff(a):
+    from .pde_school import write_pde_staff
+
+    t = write_pde_staff()
+    print("  " + "; ".join(f"{k} {len(v)} rows" for k, v in t.items()))
+
+
 def cmd_build_finance(a):
     t = build_finance()
     mart = write_finance(t)
@@ -630,6 +637,11 @@ def main():
         "build-pde-school", help="school-level per-pupil expenditures and LEA enrollment from PDE"
     )
     s.set_defaults(fn=cmd_build_pde_school)
+
+    s = sub.add_parser(
+        "build-pde-staff", help="professional staff profile and teacher retention by agency (PDE)"
+    )
+    s.set_defaults(fn=cmd_build_pde_staff)
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)

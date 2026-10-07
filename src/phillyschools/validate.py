@@ -157,6 +157,8 @@ def hard_checks() -> list[dict]:
     out += lineage_checks()
     if (CORE / "school_closure_plan.parquet").exists():
         out += closure_plan_checks()
+    if (CORE / "staff_lea_profile.parquet").exists():
+        out += staff_checks()
     if (CORE / "finance_school_ppe.parquet").exists():
         out += pde_school_checks()
     if (CORE / "school_closure_flow.parquet").exists():
@@ -165,6 +167,53 @@ def hard_checks() -> list[dict]:
         out += place_checks()
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
+    return out
+
+
+def staff_checks() -> list[dict]:
+    """PDE staff files: internal consistency and presence of Philadelphia."""
+    p = pd.read_parquet(CORE / "staff_lea_profile.parquet")
+    r = pd.read_parquet(CORE / "staff_lea_retention.parquet")
+    out = []
+    both = p.dropna(subset=["pp_total", "pp_female", "pp_male"])
+    ok = ((both["pp_female"] + both["pp_male"] - both["pp_total"]).abs() <= 1).mean()
+    out.append(
+        _check(
+            "staff: female plus male equals professional personnel (99%+)", ok >= 0.99, f"{ok:.1%}"
+        )
+    )
+    teachers = p.dropna(subset=["ct_total", "pp_total"])
+    bad = int((teachers["ct_total"] > teachers["pp_total"]).sum())
+    out.append(
+        _check(
+            "staff: classroom teachers never exceed professional personnel", bad == 0, f"{bad} rows"
+        )
+    )
+    years = set(p[p["aun"] == "126515001"]["sy"])
+    out.append(
+        _check(
+            "staff: Philadelphia City SD appears in every year 2013 to 2026",
+            years == set(range(2013, 2027)),
+            f"{len(years)} years",
+        )
+    )
+    parts = r.dropna(subset=["classroom_teachers_start"]).copy()
+    total = (
+        parts["n_retained_as_teacher"].fillna(0)
+        + parts["n_same_agency_other_role"].fillna(0)
+        + parts["n_new_agency_as_teacher"].fillna(0)
+        + parts["n_new_agency_other_role"].fillna(0)
+        + parts["n_left_education"].fillna(0)
+    )
+    ok = ((total - parts["classroom_teachers_start"]).abs() <= 2).mean()
+    out.append(
+        _check(
+            "teacher retention: outcomes add to the starting classroom teachers (95%+)",
+            ok >= 0.95,
+            f"{ok:.1%} of {len(parts)}",
+            hard=False,
+        )
+    )
     return out
 
 
