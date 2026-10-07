@@ -238,3 +238,12 @@ def test_pde_per_pupil_parser_reads_a_building_sheet():
     assert df["sy"].eq(2024).all()
     assert df["aun"].str.len().eq(9).all()
     assert abs(df["adm"].sum() - 1629339.224) < 1
+
+
+def test_measure_coverage_shares_are_valid():
+
+    from phillyschools.marts import build_measure_coverage
+
+    cov = build_measure_coverage()
+    assert cov["share_with_value"].between(0, 1.0001).all()
+    assert {"District", "Charter"} <= set(cov["governance"])
