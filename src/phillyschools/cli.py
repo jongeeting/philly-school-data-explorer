@@ -397,6 +397,13 @@ def cmd_build_closure_plan(a):
     )
 
 
+def cmd_build_closure_flows(a):
+    from .closure_flows import write_closure_flows
+
+    flows, summary = write_closure_flows()
+    print(f"  {len(flows)} closed-to-receiving school pairs; {len(summary)} closed schools covered")
+
+
 def cmd_build_finance(a):
     t = build_finance()
     mart = write_finance(t)
@@ -591,6 +598,11 @@ def main():
         "build-closure-plan", help="the December 2012 closure proposal (a plan, not lineage)"
     )
     s.set_defaults(fn=cmd_build_closure_plan)
+
+    s = sub.add_parser(
+        "build-closure-flows", help="observed enrollment change around the 2013 closures"
+    )
+    s.set_defaults(fn=cmd_build_closure_flows)
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)

@@ -156,6 +156,8 @@ def hard_checks() -> list[dict]:
         out += finance_checks()
     if (CORE / "school_closure_plan.parquet").exists():
         out += closure_plan_checks()
+    if (CORE / "school_closure_flow.parquet").exists():
+        out += closure_flow_checks()
     if (CORE / "school_place.parquet").exists():
         out += place_checks()
     if (CORE / "school_budget.parquet").exists():
@@ -179,6 +181,33 @@ def closure_plan_checks() -> list[dict]:
         ),
         _check("closure plan pairs are unique", dup == 0, f"{dup} duplicates"),
     ]
+
+
+def closure_flow_checks() -> list[dict]:
+    """Observed closure flows: identifiers resolve, and allocated gains are not double counted."""
+    flows = pd.read_parquet(CORE / "school_closure_flow.parquet")
+    ids = set(pd.read_parquet(CORE / "school.parquet")["school_id"])
+    unknown = (set(flows["closed_school_id"]) | set(flows["receiving_school_id"])) - ids
+    out = [_check("closure flows: every school resolves", not unknown, f"{len(unknown)} unknown")]
+    receivers = flows.drop_duplicates("receiving_school_id")
+    gain = receivers["change_beyond_baseline"].clip(lower=0).sum()
+    allocated = flows["gain_allocated"].sum()
+    out.append(
+        _check(
+            "closure flows: allocated gains equal each receiving school's gain once",
+            abs(gain - allocated) <= len(receivers),
+            f"{allocated:,.0f} allocated vs {gain:,.0f}",
+        )
+    )
+    reg = pd.read_csv(ROOT / "registry" / "closures_2013_final.csv", dtype=str)
+    out.append(
+        _check(
+            "the 2013 closure registry lists 23 schools, all in the school table",
+            len(reg) == 23 and set(reg["school_id"]) <= ids,
+            f"{len(reg)} rows",
+        )
+    )
+    return out
 
 
 def place_checks() -> list[dict]:

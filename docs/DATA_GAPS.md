@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**60 unresolved** of 78 tracked (16 high priority).
+**62 unresolved** of 80 tracked (16 high priority).
 
 **Kinds of gap**
 
@@ -32,6 +32,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-008 | Unknown whether the district ever reassigns a retired ULCS code to a new school *(Minted school_id protects us either way)* | `unknown` | medium | open | district | Ask the district; add a check once the longitudinal list is staged |
 | GAP-009 | Closure and opening dates come only from list presence; real-world dates are not recorded *(Year Opened and Year Closed now reported (to 2016-17 via longitudinal list); mid-year dates still absent)* | `not-collected-by-district` | medium | open | district | Use Year Opened/Closed (longitudinal list) and Board resolutions |
 | GAP-038 | The SRC's March 7, 2013 school closure resolution PDF is not archived (Wayback 404); no minutes found for that meeting | `not-in-any-list` | medium | open | district | Ask the district; check news archives and APPS for copies |
+| GAP-079 | School IDs split across reconfigurations: Roosevelt Middle (sch_00427) and Theodore Roosevelt School (sch_00249), Washington E. Rhodes (sch_00391) and E. Washington Rhodes (sch_00176), and Penn Treaty Middle and Penn Treaty School appear as separate schools with different IDs; they may be the same school renamed or regrouped *(Found building the closure flows; not inferred)* | `decision` | medium | open | us | Check against the district's school codes and Board records; add lineage only if a source states it |
 | GAP-004 | NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source *(Repair and bridge status is in staging nces_source and xwalk evidence)* | `not-collected-by-district` | low | open | district | Confirm with the district whether alternative programs have NCES codes; bridged values are labeled evidence=includes_bridged_years |
 | GAP-005 | Missing SRC school IDs (39 staged rows) | `not-collected-by-district` | low | open | district | Check which programs; fill from other years or ask the district |
 
@@ -51,6 +52,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | GAP-012 | Neighborhood set for display not chosen | `decision` | low | open | us | Decide (OpenDataPhilly set is the default) |
 | GAP-052 | Only one ACS period (2020-2024) is loaded and applied to every school year; earlier years (for example 2015-2019) would fit pre-pandemic comparisons better *(ACS 2015-2019 loaded 2026-10-04 (sequence-based file, 2010 tracts crosswalked through 2020 blocks))* | `not-yet-ingested` | low | closed | us | Load the 2015-2019 ACS 5-year tables (2010 tract boundaries need their own crosswalk) |
 | GAP-053 | ACS rollups to catchments, zones, and neighborhoods have no margins of error *(MOEs, CV, and reliability added 2026-10-04 (Census approximation formulas; median income average has no MOE))* | `not-yet-ingested` | low | closed | us | Approximate rollup MOEs from tract MOEs (Census root-sum-of-squares method) |
+| GAP-080 | Five 2013 closures have no neighborhood catchment (Bok, Carroll, Douglas, Communications Technology, Sheridan West), so the observed closure flows do not cover them | `not-in-any-list` | low | open | district | Use enrollment by residence from the district if available; admission-based high schools have no catchment |
 
 ## Measures and facts
 

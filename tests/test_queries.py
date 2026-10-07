@@ -195,3 +195,13 @@ def test_closure_plan_registry_resolves_to_known_schools():
     assert set(plan["receiving_rule"]) == {"named", "either"}
     blank = plan[plan["receiving_school_id"] == ""]
     assert set(blank["receiving_name"]) == {"Vaux"}
+
+
+def test_closure_registry_has_23_closed_schools():
+    import pandas as pd
+
+    from phillyschools.closure_flows import CLOSED_CSV
+
+    reg = pd.read_csv(CLOSED_CSV, dtype=str)
+    assert len(reg) == 23 and reg["school_id"].is_unique
+    assert (reg["closed_after_sy"] == "2013").all()

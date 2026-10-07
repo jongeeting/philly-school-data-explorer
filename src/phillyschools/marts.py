@@ -191,6 +191,14 @@ TABLES = {
         "closing school x receiving school (proposal)",
         "The district's December 2012 proposal as reported by the press: each school proposed for closure and the schools its students might go to (receiving_rule: named, or either when several were offered), with whether the closing school was later dropped from the district's list. A plan, not an outcome and not lineage.",
     ),
+    "school_closure_flow": (
+        "closed school x receiving school",
+        "Observed enrollment change at schools whose 2013-14 catchment overlaps a school closed in 2013: the share of the closed catchment's population inside it, its 2012-13 and 2013-14 enrollment, the change, the change beyond the district-wide baseline, and that gain allocated across the closed catchments it overlaps. Describes enrollment totals, not where individual students went; not lineage.",
+    ),
+    "school_closure_flow_summary": (
+        "closed school",
+        "Per closed school: enrollment in its last year, the schools overlapping its catchment, their net change, and the allocated gain beyond baseline as a share of the closed enrollment. Shares near or above 1 mean gains are as large as the closed enrollment; they can include students from other sources.",
+    ),
     "school_budget": (
         "school x sy x line",
         "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",
