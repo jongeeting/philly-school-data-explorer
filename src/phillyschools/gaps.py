@@ -7,6 +7,8 @@ from . import ROOT, SOURCES
 GAPS_CSV = SOURCES / "gaps.csv"
 GAPS_MD = ROOT / "docs" / "DATA_GAPS.md"
 QUESTIONS_MD = ROOT / "docs" / "DISTRICT_QUESTIONS.md"
+OPEN_QUESTIONS_CSV = SOURCES / "open_questions.csv"
+OPEN_QUESTIONS_MD = ROOT / "docs" / "OPEN_QUESTIONS.md"
 OWNERS = {"us", "district", "state", "other", "owner decision"}
 AREA_ORDER = ["identity", "geography", "measures", "operations", "finance", "workforce", "legal"]
 AREA_TITLES = {
@@ -118,9 +120,44 @@ def render_questions(gaps: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def read_open_questions() -> list[dict]:
+    with open(OPEN_QUESTIONS_CSV, newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def render_open_questions(questions: list[dict]) -> str:
+    lines = [
+        "# Open questions for journalists and researchers",
+        "",
+        (
+            "Questions this data cannot answer yet, with what we have and how someone could "
+            "pursue them. Generated from [sources/open_questions.csv](../sources/open_questions.csv); "
+            "the questions only the district can answer are in "
+            "[DISTRICT_QUESTIONS.md](DISTRICT_QUESTIONS.md), and every gap is in "
+            "[DATA_GAPS.md](DATA_GAPS.md). Tell us if you find an answer, and we will add it "
+            "with the source."
+        ),
+        "",
+    ]
+    for q in questions:
+        lines += [
+            f"## {q['question_id']}. {q['question']}",
+            "",
+            f"*Who might pursue it:* {q['audience']}",
+            "",
+            f"- **Why it matters:** {q['why_it_matters']}",
+            f"- **What we have:** {q['what_we_have']}",
+            f"- **How to pursue it:** {q['how_to_pursue']}",
+            f"- **Related gaps:** {q['related_gaps']}",
+            "",
+        ]
+    return "\n".join(lines)
+
+
 def write_markdown() -> str:
     gaps = read_gaps()
     text = render_markdown(gaps)
     GAPS_MD.write_text(text)
     QUESTIONS_MD.write_text(render_questions(gaps))
+    OPEN_QUESTIONS_MD.write_text(render_open_questions(read_open_questions()))
     return text

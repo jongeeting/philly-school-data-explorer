@@ -214,3 +214,15 @@ def test_lineage_corrections_have_evidence():
     assert len(lin) >= 1
     assert lin["evidence"].str.len().gt(20).all()
     assert (lin["predecessor_school_id"] != lin["successor_school_id"]).all()
+
+
+def test_open_questions_reference_real_gaps():
+    from phillyschools.gaps import read_gaps, read_open_questions
+
+    gap_ids = {g["gap_id"] for g in read_gaps()}
+    questions = read_open_questions()
+    ids = [q["question_id"] for q in questions]
+    assert len(ids) == len(set(ids)) and len(ids) >= 10
+    for q in questions:
+        for gid in [x.strip() for x in q["related_gaps"].split(";") if x.strip()]:
+            assert gid in gap_ids, (q["question_id"], gid)
