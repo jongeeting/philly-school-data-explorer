@@ -157,12 +157,74 @@ def hard_checks() -> list[dict]:
     out += lineage_checks()
     if (CORE / "school_closure_plan.parquet").exists():
         out += closure_plan_checks()
+    if (CORE / "finance_school_ppe.parquet").exists():
+        out += pde_school_checks()
     if (CORE / "school_closure_flow.parquet").exists():
         out += closure_flow_checks()
     if (CORE / "school_place.parquet").exists():
         out += place_checks()
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
+    return out
+
+
+def pde_school_checks() -> list[dict]:
+    """The ESSA per-pupil file against itself, the state's printed total, and enrollment."""
+    b = pd.read_parquet(CORE / "finance_school_ppe.parquet")
+    lea = pd.read_parquet(CORE / "finance_lea_ppe.parquet")
+    enroll = pd.read_parquet(CORE / "finance_lea_enrollment.parquet")
+    out = []
+    g = (
+        b.groupby(["sy", "aun"])
+        .agg(adm=("adm", "sum"), exp=("total_expenditures", "sum"))
+        .reset_index()
+    )
+    j = g.merge(
+        lea[["sy", "aun", "adm", "total_expenditures"]], on=["sy", "aun"], suffixes=("_b", "_l")
+    )
+    adm_off = int(((j["adm_b"] - j["adm_l"]).abs() > 0.01).sum())
+    out.append(
+        _check(
+            "ESSA building ADM adds to the agency's ADM", adm_off == 0, f"{adm_off} of {len(j)} off"
+        )
+    )
+    exp_ok = ((j["exp"] / j["total_expenditures"] - 1).abs() < 0.01).mean()
+    out.append(
+        _check(
+            "ESSA building expenditures add to the agency's within 1% for 97%+ of agency-years",
+            exp_ok >= 0.97,
+            f"{exp_ok:.1%}",
+            hard=False,
+        )
+    )
+    state = b[b["sy"] == 2024]["adm"].sum()
+    out.append(
+        _check(
+            "ESSA 2023-24 statewide ADM equals the state's printed total (1,629,339)",
+            abs(state - 1629339.224) < 1,
+            f"{state:,.1f}",
+        )
+    )
+    ph = b[(b["aun"] == "126515001") & b["adm"].notna()]
+    mapped = ph["school_id"].notna().mean()
+    out.append(
+        _check(
+            "ESSA Philadelphia City SD buildings link to a school_id (99%+)",
+            mapped >= 0.99,
+            f"{mapped:.1%} of {len(ph)}",
+        )
+    )
+    m = lea.merge(enroll[["aun", "sy", "enrollment", "lea_type"]], on=["aun", "sy"])
+    c = m[m["lea_type"].isin(["CS", "Cyber CS"]) & (m["enrollment"] > 50)]
+    near = ((c["adm"] / c["enrollment"] - 1).abs() < 0.10).mean()
+    out.append(
+        _check(
+            "ESSA ADM is within 10% of October 1 enrollment for 90%+ of charter agency-years",
+            near >= 0.90,
+            f"{near:.1%} of {len(c)}",
+            hard=False,
+        )
+    )
     return out
 
 

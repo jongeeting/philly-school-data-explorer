@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**62 unresolved** of 80 tracked (16 high priority).
+**59 unresolved** of 80 tracked (15 high priority).
 
 **Kinds of gap**
 
@@ -113,11 +113,11 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 | ID | Gap | Kind | Priority | Status | Owner | How to close |
 | --- | --- | --- | --- | --- | --- | --- |
 | GAP-070 | School-level budgets: allotment detail, purchase summaries, and position lines for FY16 to FY27 are loaded from the district's School Budgets tool; actual spending by school (versus budgets) is not published *(Budgets, not actual spending; principals decide purchases. 158 requests returned no data; 13 FY16 requests returned another school's report and were excluded)* | `not-collected-by-district` | high | in-progress | district | Ask the district for actual spending by school and fiscal year |
-| GAP-071 | No enrollment base for per-pupil figures: average daily membership and weighted student counts (used in the funding formula and the adequacy calculation) are not loaded *(School districts' adjusted ADM and the formula's weighted counts loaded from the BEF files (2012-13 to 2023-24 data years); charter school enrollment by school is still missing, so per-pupil figures for charters and for district-run schools alone are not possible)* | `not-yet-ingested` | high | in-progress | us | Load PDE average daily membership and the weighted student counts from the Basic Education Funding files |
+| GAP-071 | No enrollment base for per-pupil figures: average daily membership and weighted student counts (used in the funding formula and the adequacy calculation) are not loaded *(Enrollment base loaded for every agency (PDE October 1 enrollment, ESSA ADM, BEF adjusted ADM); different counts answer different questions, documented in FINANCE.md)* | `not-yet-ingested` | high | closed | us | Load PDE average daily membership and the weighted student counts from the Basic Education Funding files |
 | GAP-072 | The 2007 Costing-Out Study and the 2023 Kelly adequacy analysis are known only from press reports; the primary documents are not loaded *(2007 study (Appendix F) and Kelly's 2023 district table loaded from the primary documents; both reconcile to their published headlines (docs/FINANCE.md))* | `not-yet-ingested` | high | closed | us | Read the 2007 study and the 2023 report and enter their district tables with method and dollar-year |
 | GAP-073 | State Basic Education Funding distributions after 2023-24 (the enacted adequacy investment and tax equity supplements) are not loaded; the state page lists only the latest estimated file *(BEF allocations 2016-17 to 2025-26 and the Ready to Learn file loaded; the adequacy and tax equity supplements are paid through Ready to Learn, not the BEF line)* | `not-yet-ingested` | medium | closed | us | Find the state's historical subsidy files and the enacted 2024-25 and 2025-26 distributions by district |
-| GAP-075 | School-level per-pupil expenditures required on the state report card (federal ESSA) have not been found as a download | `unknown` | medium | open | state | Search the state's report card data files and ask PDE |
-| GAP-076 | Enrollment by charter school (average daily membership) is not loaded, so per-pupil revenue and spending for charter schools cannot be computed | `not-yet-ingested` | medium | open | state | Find PDE's charter school enrollment and ADM files by school |
+| GAP-075 | School-level per-pupil expenditures required on the state report card (federal ESSA) have not been found as a download *(Found: PDE's ESSA per-pupil expenditure files by school building, 2018-19 to 2023-24, loaded as finance_school_ppe (all public schools including charters). Not total spending: central costs are mostly excluded for districts)* | `unknown` | medium | closed | state | Search the state's report card data files and ask PDE |
+| GAP-076 | Enrollment by charter school (average daily membership) is not loaded, so per-pupil revenue and spending for charter schools cannot be computed *(Loaded PDE's October 1 enrollment by agency 2015-16 to 2025-26 (finance_lea_enrollment); each charter is its own agency. Enrollment by individual campus of multi-campus charters is not separate)* | `not-yet-ingested` | medium | closed | state | Find PDE's charter school enrollment and ADM files by school |
 | GAP-074 | AFR debt, Act 511 and first-class-district tax files, and years before 2014-15 are not loaded | `not-yet-ingested` | low | open | us | Parse the debt and tax files; download older years from the state's FTP site |
 
 ## Workforce

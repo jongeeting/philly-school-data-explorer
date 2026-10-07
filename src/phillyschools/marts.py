@@ -199,6 +199,18 @@ TABLES = {
         "closed school",
         "Per closed school: enrollment in its last year, the schools overlapping its catchment, their net change, and the allocated gain beyond baseline as a share of the closed enrollment. Shares near or above 1 mean gains are as large as the closed enrollment; they can include students from other sources.",
     ),
+    "finance_school_ppe": (
+        "building x sy",
+        "The state's ESSA per-pupil expenditure report by school building (2018-19 to 2023-24), for every public school including charters: personnel and non-personnel expenditures from local, state and federal funds, average daily membership, and the derived expenditure per ADM. school_id is set when the building's state key (AUN-building number) is in school_id_xwalk. Excludes most central, debt and transfer costs, so it is not total spending per student.",
+    ),
+    "finance_lea_ppe": (
+        "aun x sy",
+        "The same ESSA report summed by agency (school district, charter school, career and technical center). Building rows add to these exactly for ADM.",
+    ),
+    "finance_lea_enrollment": (
+        "aun x sy",
+        "October 1 enrollment and low-income students by agency from PDE (2015-16 to 2025-26). A charter school is its own agency, so this is enrollment by charter school (multi-campus charters are one row). School districts exclude students they pay to attend charters.",
+    ),
     "school_budget": (
         "school x sy x line",
         "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",

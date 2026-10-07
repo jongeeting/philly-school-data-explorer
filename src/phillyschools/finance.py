@@ -282,6 +282,13 @@ MART_DOCS = {
     "adj_adm": "Adjusted average daily membership: the enrollment base the state uses in the Basic Education Funding formula (school districts only), from the state's BEF workbooks.",
     "current_expenditures_net_of_patron_tuition": "The state's current expenditures minus tuition from patrons revenue (the definition in the funding law and the commission's adequacy calculation), from the BEF workbooks. School districts only; 2016-17 to 2022-23.",
     "current_exp_per_weighted_student": "The state's current expenditures per weighted student in the BEF formula. Its weighted-student count is not the same as the commission's or Kelly's, so do not compare it with their adequacy targets per student.",
+    "pde_enrollment": "October 1 enrollment of the agency's own schools, from PDE's public school enrollment file (2016 on). For a school district it excludes students it pays to attend charter schools; a charter school's row is its own enrollment.",
+    "pde_low_income_students": "Low-income students counted on October 1 (PDE).",
+    "pde_low_income_share": "pde_low_income_students divided by pde_enrollment.",
+    "current_expenditures_per_pde_enrollment": "current_expenditures_approx divided by pde_enrollment. Derived. Left empty for school districts, whose spending includes tuition paid for students they do not enroll; for charter schools and career and technical centers it is spending per enrolled student.",
+    "essa_adm": "Average daily membership in the state's ESSA per-pupil expenditure report (2018-19 on), the sum over the agency's school buildings.",
+    "essa_expenditures_total": "Personnel and non-personnel expenditures from local, state and federal funds charged to the agency's school buildings in the ESSA report (2018-19 on). Not the same as total expenditures: it leaves out most central, debt and transfer costs.",
+    "essa_expenditure_per_adm": "essa_expenditures_total divided by essa_adm. Derived.",
     "current_expenditures_per_adj_adm": "current_expenditures_approx divided by adj_adm. Derived; dollars per adjusted ADM, nominal.",
 }
 MART_LINES = {
@@ -357,6 +364,37 @@ def build_district_finance(t: dict) -> pd.DataFrame:
     out = t["finance_lea"][["aun", "lea_name", "county", "lea_type"]].merge(
         wide, on="aun", how="right"
     )
+    enroll_path = CORE / "finance_lea_enrollment.parquet"
+    if enroll_path.exists():
+        e = pd.read_parquet(enroll_path)[
+            ["aun", "sy", "enrollment", "low_income_students", "low_income_share"]
+        ].rename(
+            columns={
+                "enrollment": "pde_enrollment",
+                "low_income_students": "pde_low_income_students",
+                "low_income_share": "pde_low_income_share",
+            }
+        )
+        out = out.merge(e, on=["aun", "sy"], how="left")
+        out["current_expenditures_per_pde_enrollment"] = (
+            out["current_expenditures_approx"] / out["pde_enrollment"]
+        ).round(2)
+        # a district's spending includes tuition for students it does not enroll
+        out.loc[out["lea_type"] == "school_district", "current_expenditures_per_pde_enrollment"] = (
+            None
+        )
+    ppe_path = CORE / "finance_lea_ppe.parquet"
+    if ppe_path.exists():
+        ppe = pd.read_parquet(ppe_path)[
+            ["aun", "sy", "adm", "total_expenditures", "expenditure_per_adm"]
+        ].rename(
+            columns={
+                "adm": "essa_adm",
+                "total_expenditures": "essa_expenditures_total",
+                "expenditure_per_adm": "essa_expenditure_per_adm",
+            }
+        )
+        out = out.merge(ppe, on=["aun", "sy"], how="left")
     return out.sort_values(["aun", "sy"]).reset_index(drop=True)
 
 

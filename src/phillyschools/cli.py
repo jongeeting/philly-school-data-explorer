@@ -404,6 +404,23 @@ def cmd_build_closure_flows(a):
     print(f"  {len(flows)} closed-to-receiving school pairs; {len(summary)} closed schools covered")
 
 
+def cmd_catalog_pde_school(a):
+    from .pde_school import catalog_pde_school
+
+    rows = catalog_pde_school()
+    print(
+        f"cataloged {len(rows)} PDE school-level files; "
+        "run `psd fetch --source pde_essa_ppe` and `psd fetch --source pde_enrollment`"
+    )
+
+
+def cmd_build_pde_school(a):
+    from .pde_school import write_pde_school
+
+    t = write_pde_school()
+    print("  " + "; ".join(f"{k} {len(v)} rows" for k, v in t.items()))
+
+
 def cmd_build_finance(a):
     t = build_finance()
     mart = write_finance(t)
@@ -603,6 +620,16 @@ def main():
         "build-closure-flows", help="observed enrollment change around the 2013 closures"
     )
     s.set_defaults(fn=cmd_build_closure_flows)
+
+    s = sub.add_parser(
+        "catalog-pde-school", help="catalog PDE per-pupil expenditure and enrollment files"
+    )
+    s.set_defaults(fn=cmd_catalog_pde_school)
+
+    s = sub.add_parser(
+        "build-pde-school", help="school-level per-pupil expenditures and LEA enrollment from PDE"
+    )
+    s.set_defaults(fn=cmd_build_pde_school)
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)

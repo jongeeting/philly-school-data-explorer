@@ -41,6 +41,11 @@ Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; recon
 | school_lineage links resolve to different schools and carry evidence | pass | 1 links; 0 unknown, 0 self, 0 without evidence |
 | closure plan: every closing and receiving school resolves to a school_id | pass | 0 closing, 0 receiving unknown |
 | closure plan pairs are unique | pass | 0 duplicates |
+| ESSA building ADM adds to the agency's ADM | pass | 0 of 4054 off |
+| ESSA building expenditures add to the agency's within 1% for 97%+ of agency-years | pass | 98.4% |
+| ESSA 2023-24 statewide ADM equals the state's printed total (1,629,339) | pass | 1,629,339.2 |
+| ESSA Philadelphia City SD buildings link to a school_id (99%+) | pass | 100.0% of 1308 |
+| ESSA ADM is within 10% of October 1 enrollment for 90%+ of charter agency-years | pass | 94.7% of 1047 |
 | closure flows: every school resolves | pass | 0 unknown |
 | closure flows: allocated gains equal each receiving school's gain once | pass | 3,369 allocated vs 3,369 |
 | the 2013 closure registry lists 23 schools, all in the school table | pass | 23 rows |

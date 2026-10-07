@@ -226,3 +226,15 @@ def test_open_questions_reference_real_gaps():
     for q in questions:
         for gid in [x.strip() for x in q["related_gaps"].split(";") if x.strip()]:
             assert gid in gap_ids, (q["question_id"], gid)
+
+
+def test_pde_per_pupil_parser_reads_a_building_sheet():
+    from phillyschools.pde_school import PPE_DIR, read_ppe
+
+    path = PPE_DIR / "2023-2024 per pupil expenditures.xlsx"
+    if not path.exists():
+        return
+    df = read_ppe(path, "Bldg")
+    assert df["sy"].eq(2024).all()
+    assert df["aun"].str.len().eq(9).all()
+    assert abs(df["adm"].sum() - 1629339.224) < 1

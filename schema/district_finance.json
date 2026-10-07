@@ -157,6 +157,41 @@
    "name": "current_expenditures_per_adj_adm",
    "type": "float64",
    "description": "current_expenditures_approx divided by adj_adm. Derived; dollars per adjusted ADM, nominal."
+  },
+  {
+   "name": "pde_enrollment",
+   "type": "float64",
+   "description": "October 1 enrollment of the agency's own schools, from PDE's public school enrollment file (2016 on). For a school district it excludes students it pays to attend charter schools; a charter school's row is its own enrollment."
+  },
+  {
+   "name": "pde_low_income_students",
+   "type": "float64",
+   "description": "Low-income students counted on October 1 (PDE)."
+  },
+  {
+   "name": "pde_low_income_share",
+   "type": "float64",
+   "description": "pde_low_income_students divided by pde_enrollment."
+  },
+  {
+   "name": "current_expenditures_per_pde_enrollment",
+   "type": "float64",
+   "description": "current_expenditures_approx divided by pde_enrollment. Derived. Left empty for school districts, whose spending includes tuition paid for students they do not enroll; for charter schools and career and technical centers it is spending per enrolled student."
+  },
+  {
+   "name": "essa_adm",
+   "type": "float64",
+   "description": "Average daily membership in the state's ESSA per-pupil expenditure report (2018-19 on), the sum over the agency's school buildings."
+  },
+  {
+   "name": "essa_expenditures_total",
+   "type": "float64",
+   "description": "Personnel and non-personnel expenditures from local, state and federal funds charged to the agency's school buildings in the ESSA report (2018-19 on). Not the same as total expenditures: it leaves out most central, debt and transfer costs."
+  },
+  {
+   "name": "essa_expenditure_per_adm",
+   "type": "float64",
+   "description": "essa_expenditures_total divided by essa_adm. Derived."
   }
  ]
 }
