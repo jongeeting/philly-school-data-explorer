@@ -90,7 +90,7 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 
 | ID | Gap | Kind | Priority | Status | Owner | How to close |
 | --- | --- | --- | --- | --- | --- | --- |
-| GAP-021 | Daily canceled or late bus list: no public history, and we have not started capturing it *(History not captured is gone)* | `not-public` | high | open | district | Scrape daily with psd snapshot via a scheduled job; needs the exact page URL |
+| GAP-021 | Daily canceled or late bus list: no public history; capture started 2026-10-07 with psd snapshot-buses (needs a daily schedule) *(History not captured is gone)* | `not-public` | high | open | district | Run psd snapshot-buses daily (saves the two delay sheets and the page; the contact sheets are skipped) |
 | GAP-022 | Facilities dashboard (scores for building condition, program alignment, utilization, neighborhood vulnerability, plus per-school recommendations) runs in a Qlik app with no export; scripted access is refused *(Wayback has the page shell only, no data)* | `not-public` | high | open | district | Ask the district for an export or API access; meanwhile save the master-plan PDFs; keyed by ULCS |
 | GAP-024 | Maintenance work orders, bus on-time history, substitute fill rates, and IEP evaluation timeliness are not public *(Operations is the least covered area)* | `not-public` | high | open | district | Ask the district what exists internally; consider a data request |
 | GAP-037 | Board minutes for the April 23 and April 30, 2026 meetings (the facilities plan vote) are not posted; the May 28 approval item has no attachment | `not-public` | high | open | district | Watch later packets; ask the Board office |

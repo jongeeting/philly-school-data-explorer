@@ -8,8 +8,8 @@ authors:
 repository-code: "https://github.com/jongeeting/philly-school-data-explorer"
 license: CC-BY-4.0
 keywords: [Philadelphia, schools, education, open data]
-version: "0.1.0"
-date-released: "2026-10-06"
+version: "0.2.0"
+date-released: "2026-10-07"
 doi: 10.5281/zenodo.23189127  # all versions; version 0.1.0 is 10.5281/zenodo.23189128
 identifiers:
   - type: doi

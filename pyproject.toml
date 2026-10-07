@@ -1,6 +1,6 @@
 [project]
 name = "philly-school-data-explorer"
-version = "0.1.0"
+version = "0.2.0"
 description = "Open, linked data on Philadelphia's public schools"
 requires-python = ">=3.11"
 dependencies = [

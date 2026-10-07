@@ -7,7 +7,7 @@ Open data gaps that someone at the district could close. Generated from [sources
 2. **Is there a building inventory that links school codes (ULCS) to buildings and OPA parcel numbers, including co-locations and annexes?** (GAP-013, high priority)
    - Context: No building table yet; schools are linked to City parcels (OPA account) by location, but not to buildings
 3. **Does the district keep a history of canceled and late buses, or on-time performance by route? Could it be shared?** (GAP-021, high priority)
-   - Context: Daily canceled or late bus list: no public history, and we have not started capturing it
+   - Context: Daily canceled or late bus list: no public history; capture started 2026-10-07 with psd snapshot-buses (needs a daily schedule)
 4. **Could the facilities planning dashboard data (condition, program alignment, utilization, vulnerability scores, and recommendations) be published as a downloadable file?** (GAP-022, high priority)
    - Context: Facilities dashboard (scores for building condition, program alignment, utilization, neighborhood vulnerability, plus per-school recommendations) runs in a Qlik app with no export; scripted access is refused
 5. **Which operational data exist internally but are not published: work order completion, bus on-time history, substitute fill rates, IEP evaluation timeliness?** (GAP-024, high priority)

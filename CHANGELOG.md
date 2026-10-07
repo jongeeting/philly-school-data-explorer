@@ -2,6 +2,27 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versions are for the data release; a column rename or removal is a major version with an entry here. School and building IDs are permanent and never reused.
 
+## [0.2.0] - 2026-10-07
+
+### Added
+
+- **School finance (state).** The Pennsylvania Annual Financial Report for 779 agencies (500 school districts, 209 charter schools, 68 career and technology centers), 2015-16 to 2024-25: revenue, expenditures by function and object, charter tuition paid, instruction expense, fund balance, with `marts/district_finance` wide by agency and year. Enrollment by agency (charters included) is the base for per-pupil figures.
+- **Adequacy.** The 2007 costing-out study, the 2023 Kelly analysis, and the 2024 Basic Education Funding Commission calculation, side by side in `marts/adequacy_compare`, with the enacted adequacy and tax equity supplements (Ready to Learn allocations).
+- **School budgets.** The district's School Budget Allotment Detail, purchase summaries, and position lines for each school, FY16 to FY27 (budgets, not actual spending).
+- **School-level per-pupil spending.** The state's ESSA report by building, 2018-19 to 2023-24, charters included, linked to `school_id`.
+- **Staff (by agency).** Staff profile (2012-13 to 2025-26) and classroom teacher retention. The 2024-25 Philadelphia figure is flagged as a likely coding change, not an exodus.
+- **Places.** Council districts, PA House and Senate districts, wards, ZIP codes, police districts, and planning districts.
+- **Closures.** The December 2012 closure proposal as a plan, observed enrollment change around the 2013 closures (not lineage), one evidenced lineage link (Penn Treaty Middle), and open questions for journalists and researchers.
+- **Coverage.** `marts/measure_coverage` and `docs/COVERAGE.md` label which sectors (district, charter) each measure covers.
+- **Tooling.** `psd snapshot-buses` archives the daily canceled and late bus lists, which have no public history.
+
+### Known limits
+
+- School budgets are planned amounts; actual spending by school is not published. The Board-adopted district operating budget and capital program budget are not loaded.
+- Per-pupil spending by building is not comparable between district schools and charters (see `docs/FINANCE.md`).
+- School-level teacher turnover is deferred; staff vacancies, Act 35 complement, and support personnel files are downloaded but not parsed.
+- Debt, local tax files, and finance years before 2014-15 are not loaded.
+
 ## [0.1.0] - 2026-10-06
 
 First public data release (a release candidate: the structure is stable, coverage will grow). Zenodo DOI (all versions): 10.5281/zenodo.23189127.

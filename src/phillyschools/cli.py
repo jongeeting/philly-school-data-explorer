@@ -145,6 +145,13 @@ def cmd_snapshot(a):
     print(f"saved {path}")
 
 
+def cmd_snapshot_buses(a):
+    from .buses import snapshot_late_buses
+
+    for path in snapshot_late_buses():
+        print(f"saved {path}")
+
+
 def cmd_gaps(a):
     write_markdown()
     gaps = read_gaps()
@@ -553,6 +560,9 @@ def main():
     s.add_argument("source")
     s.add_argument("url")
     s.set_defaults(fn=cmd_snapshot)
+
+    s = sub.add_parser("snapshot-buses", help="archive today's canceled/late bus lists")
+    s.set_defaults(fn=cmd_snapshot_buses)
 
     s = sub.add_parser("gaps", help="regenerate docs/DATA_GAPS.md from sources/gaps.csv")
     s.set_defaults(fn=cmd_gaps)
