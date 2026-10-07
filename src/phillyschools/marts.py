@@ -187,6 +187,10 @@ TABLES = {
         "aun x payable year x component",
         "Ready to Learn Block Grant (and earlier PA Accountability Grant) allocations by school district; from 2024-25 split into a foundation amount and the enacted adequacy and tax equity supplements.",
     ),
+    "school_closure_plan": (
+        "closing school x receiving school (proposal)",
+        "The district's December 2012 proposal as reported by the press: each school proposed for closure and the schools its students might go to (receiving_rule: named, or either when several were offered), with whether the closing school was later dropped from the district's list. A plan, not an outcome and not lineage.",
+    ),
     "school_budget": (
         "school x sy x line",
         "School Budget Allotment Detail from the district's public School Budgets tool, one row per line item, group total, scope subtotal and school total (fiscal year ending in sy). These are budgets set in spring or summer, not actual spending; principals decide purchases within school-managed allotments. Use line_type to avoid double counting.",

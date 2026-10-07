@@ -2,7 +2,7 @@
 
 What is missing, why, and how we plan to close it. Generated from [sources/gaps.csv](../sources/gaps.csv); edit the CSV, then run `uv run psd gaps`.
 
-**59 unresolved** of 77 tracked (15 high priority).
+**60 unresolved** of 78 tracked (16 high priority).
 
 **Kinds of gap**
 
@@ -23,9 +23,10 @@ Owner: who can close it (`us`, `district`, `state`, `other`, or `owner decision`
 
 | ID | Gap | Kind | Priority | Status | Owner | How to close |
 | --- | --- | --- | --- | --- | --- | --- |
-| GAP-001 | School lineage (predecessor/successor) table is empty: no source says which school absorbed a closed school's students *(Longitudinal list has Year Closed but no receiving school; inferred candidates deferred by owner decision)* | `not-in-any-list` | high | open | district | Derive candidates from 2012-13 vs 2013-14 catchments and enrollment; confirm against Board resolutions; label evidence level (stated, geographic, enrollment) |
+| GAP-001 | School lineage (predecessor/successor) table is empty: no source says which school absorbed a closed school's students *(2026-10-06: the December 2012 proposal is loaded as school_closure_plan (a plan, not lineage). school_lineage stays empty: no source we hold states who actually absorbed a closed school)* | `not-in-any-list` | high | in-progress | district | Derive candidates from 2012-13 vs 2013-14 catchments and enrollment; confirm against Board resolutions; label evidence level (stated, geographic, enrollment) |
 | GAP-002 | Longitudinal School List (2001-02 to 2016-17, 5,070 rows, ULCS keyed) is archived but not staged, so schools before 2019 have no school_id *(Staged 2026-10-04: 444 schools, 2002-2027; 93 district-reported closures)* | `not-yet-ingested` | high | closed | us | Stage it; mint IDs for pre-2019 schools; replace derived closure events with Year Closed |
 | GAP-007 | 24 alternative or contracted programs share state code 9999 (plus one with 0); continuation academies report under a host school's code *(state_key flagged shared_across_schools)* | `not-collected-by-district` | high | open | state | Mark state measures 'not separately measurable'; use district files where they exist |
+| GAP-078 | Final 2013 receiving schools for the closed schools: the press lists we have are the December 2012 proposal, which offered several choices per school and included schools later kept open *(Pairs with GAP-038)* | `not-in-any-list` | high | open | district | Obtain the March 7, 2013 SRC resolution and the district's reassignment lists; compare enrollment by residence before and after |
 | GAP-003 | 2017-18 master list (xlsx, different layout) not staged *(Staged 2026-10-04 from xlsx; header line breaks normalized)* | `not-yet-ingested` | medium | closed | us | Write a loader for its layout |
 | GAP-006 | District master lists omit most Alternate Schools in 2020-2025 (2 to 4 programs vs 25 to 28 in 2019 and 2026) *(Shown as listing-gap issues, never as closures)* | `not-collected-by-district` | medium | open | district | Ask the district why coverage changed; cross-check with enrollment files |
 | GAP-008 | Unknown whether the district ever reassigns a retired ULCS code to a new school *(Minted school_id protects us either way)* | `unknown` | medium | open | district | Ask the district; add a check once the longitudinal list is staged |

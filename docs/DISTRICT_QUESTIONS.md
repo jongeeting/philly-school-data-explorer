@@ -24,51 +24,53 @@ Open data gaps that someone at the district could close. Generated from [sources
    - Context: The October 1 enrollment count may include students re-enrolled just before the state funding deadline who had left earlier (Inquirer, 2026-10-06: about 720 re-added, about 2,000 improper withdrawals acknowledged); how withdrawals and re-enrollments are recorded is not published
 11. **Can the district share school-level budget allotments, position counts, and actual spending by school and fiscal year as a data file?** (GAP-070, high priority)
    - Context: School-level budgets: allotment detail, purchase summaries, and position lines for FY16 to FY27 are loaded from the district's School Budgets tool; actual spending by school (versus budgets) is not published
-12. **Why do the 2019-20 to 2024-25 master lists include only 2 to 4 'Alternate Schools' when 2018-19 and 2025-26 list 25 to 28? Is there a fuller list for those years?** (GAP-006, medium priority)
+12. **Can the district share the final school-by-school receiving assignments for the 2013 closures, and the SRC resolution of March 7, 2013?** (GAP-078, high priority)
+   - Context: Final 2013 receiving schools for the closed schools: the press lists we have are the December 2012 proposal, which offered several choices per school and included schools later kept open
+13. **Why do the 2019-20 to 2024-25 master lists include only 2 to 4 'Alternate Schools' when 2018-19 and 2025-26 list 25 to 28? Is there a fuller list for those years?** (GAP-006, medium priority)
    - Context: District master lists omit most Alternate Schools in 2020-2025 (2 to 4 programs vs 25 to 28 in 2019 and 2026)
-13. **Has the district ever reassigned a retired ULCS code to a new school?** (GAP-008, medium priority)
+14. **Has the district ever reassigned a retired ULCS code to a new school?** (GAP-008, medium priority)
    - Context: Unknown whether the district ever reassigns a retired ULCS code to a new school
-14. **Is there a list of school opening and closing dates (or Board resolution dates) beyond the Year Opened / Year Closed fields?** (GAP-009, medium priority)
+15. **Is there a list of school opening and closing dates (or Board resolution dates) beyond the Year Opened / Year Closed fields?** (GAP-009, medium priority)
    - Context: Closure and opening dates come only from list presence; real-world dates are not recorded
-15. **What changed in the August 2025 repost of the 2014-15 to 2018-19 enrollment files, beyond the new suppression rules?** (GAP-020, medium priority)
+16. **What changed in the August 2025 repost of the 2014-15 to 2018-19 enrollment files, beyond the new suppression rules?** (GAP-020, medium priority)
    - Context: Student groups under 20 are suppressed at source; enrollment files for 2014-15 to 2018-19 were reposted Aug 2025 under new suppression rules
-16. **When will staff vacancies, the SPOTlight scorecard, and Pre-K sites be refreshed?** (GAP-025, medium priority)
+17. **When will staff vacancies, the SPOTlight scorecard, and Pre-K sites be refreshed?** (GAP-025, medium priority)
    - Context: Staff vacancies (due Aug 2025), SPOTlight scorecard (due spring 2025), and Pre-K sites (due spring 2026) are past the district's promised refresh dates
-17. **Are the Goals and Guardrails progress figures available as data rather than PDFs?** (GAP-026, medium priority)
+18. **Are the Goals and Guardrails progress figures available as data rather than PDFs?** (GAP-026, medium priority)
    - Context: Goals and Guardrails results are PDFs, with targets reset in April 2024
-18. **Can catchment retention be published by grade or level (ES, MS, HS), or with residence at a smaller geography than catchment?** (GAP-031, medium priority)
+19. **Can catchment retention be published by grade or level (ES, MS, HS), or with residence at a smaller geography than catchment?** (GAP-031, medium priority)
    - Context: Catchment retention (students by catchment and school, SY 2016-17 on) is aggregated by catchment, not neighborhood, and cannot show where students went after the 2013 closures
-19. **Are the facility condition assessment reports after 2022 available, and is there a structured version of the condition scores?** (GAP-032, medium priority)
+20. **Are the facility condition assessment reports after 2022 available, and is there a structured version of the condition scores?** (GAP-032, medium priority)
    - Context: Building condition reports (FCA): 2020-22 reports are PDFs on Google Drive (about 78), 2017 reports and 2018-19 AHERA survive only on the Wayback Machine; the 2022-24 facilities site's API data was never archived
-20. **When will catchment boundaries for 2025-26 and 2026-27 be published?** (GAP-034, medium priority)
+21. **When will catchment boundaries for 2025-26 and 2026-27 be published?** (GAP-034, medium priority)
    - Context: Catchments for SY 2025-26 and 2026-27 are not published (latest is 2024-25)
-21. **Does the district have the March 7, 2013 SRC school closure resolution and minutes?** (GAP-038, medium priority)
+22. **Does the district have the March 7, 2013 SRC school closure resolution and minutes?** (GAP-038, medium priority)
    - Context: The SRC's March 7, 2013 school closure resolution PDF is not archived (Wayback 404); no minutes found for that meeting
-22. **The 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school. Is a corrected file available?** (GAP-044, medium priority)
+23. **The 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school. Is a corrected file available?** (GAP-044, medium priority)
    - Context: The district's 2010-11 enrollment file reports zero Black, Hispanic, American Indian, and multiracial students in every school; those values are withheld
-23. **Grades 3-8 PSSA proficiency fell about 8 points citywide between 2010-11 and 2011-12. Is there a district note on what changed that year (for example, testing procedures)?** (GAP-048, medium priority)
+24. **Grades 3-8 PSSA proficiency fell about 8 points citywide between 2010-11 and 2011-12. Is there a district note on what changed that year (for example, testing procedures)?** (GAP-048, medium priority)
    - Context: District grades 3-8 proficiency fell about 8 points citywide between 2010-11 and 2011-12 (math 59.1% to 50.9%); the cause is not documented in the data files
-24. **Serious incidents fell from 15,770 in 2012-13 to 6,579 in 2013-14. Did the reporting rules or categories change that year?** (GAP-056, medium priority)
+25. **Serious incidents fell from 15,770 in 2012-13 to 6,579 in 2013-14. Did the reporting rules or categories change that year?** (GAP-056, medium priority)
    - Context: Serious incidents for 2012-13 total 15,770, 2.4 times the next year (6,579), with no explanation in the files
-25. **How were referrals to law enforcement counted for the 2013-14 CRDC? It reports 94 referrals and 1,357 school-related arrests.** (GAP-062, medium priority)
+26. **How were referrals to law enforcement counted for the 2013-14 CRDC? It reports 94 referrals and 1,357 school-related arrests.** (GAP-062, medium priority)
    - Context: CRDC referrals to law enforcement are not comparable before 2015-16: 2013-14 reports 94 referrals but 1,357 school-related arrests (arrests are normally a subset); 2015-16 reports 6,834
-26. **Which buildings does the lead-safe certification program cover, and is there a schedule for the rest?** (GAP-064, medium priority)
+27. **Which buildings does the lead-safe certification program cover, and is there a schedule for the rest?** (GAP-064, medium priority)
    - Context: Lead-safe assessments cover 163 schools; it is unclear whether every occupied building has one or which buildings are required to
-27. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
+28. **Do alternative and contracted programs have NCES codes? About 25 per year have none in the master lists.** (GAP-004, low priority)
    - Context: NCES codes lost to scientific notation in CSV lists were repaired from xlsx where available or bridged from adjacent years; remaining blanks (about 25 per year in 2018, 2019, 2026, 2027) are programs with no NCES code in the source
-28. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
+29. **About 39 school-years in the master lists have no SRC School ID. Is that expected for those programs?** (GAP-005, low priority)
    - Context: Missing SRC school IDs (39 staged rows)
-29. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
+30. **Could Board meeting recordings be made downloadable or captioned, or shared for transcription?** (GAP-039, low priority)
    - Context: Board meeting video has no transcripts or captions and cannot be downloaded
-30. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
+31. **Is there a complete list of Board and SRC meeting videos (about 28 are not reachable from the player's listings)?** (GAP-042, low priority)
    - Context: 28 of 320 videos on the district TelVue player are not reachable from its listing pages (playlists show at most 50, no pagination); most are SRC meetings
-31. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
+32. **What was the ULCS code for Ombudsman South Transition (SRC 848, 2010-12)?** (GAP-045, low priority)
    - Context: Ombudsman South Transition (2010-11 and 2011-12) has an SRC school ID that maps to no ULCS code, so its enrollment is unassigned
-32. **Is there a crosswalk between the serious incident types used through 2015-16 and the categories used from 2016-17?** (GAP-057, low priority)
+33. **Is there a crosswalk between the serious incident types used through 2015-16 and the categories used from 2016-17?** (GAP-057, low priority)
    - Context: Serious incident categories changed in 2016-17 (fine-grained types before, grouped categories after); no published crosswalk between the schemes
-33. **Was the 2011-12 CRDC submission complete for students with disabilities and English learners? It shows almost no repeat suspensions for IDEA students.** (GAP-061, low priority)
+34. **Was the 2011-12 CRDC submission complete for students with disabilities and English learners? It shows almost no repeat suspensions for IDEA students.** (GAP-061, low priority)
    - Context: CRDC 2011-12 discipline counts for students with disabilities and English learners look under-reported (almost no repeat suspensions reported for IDEA students; IDEA suspension rate equals the non-disabled rate, unlike every later year)
-34. **Where are drinking water lead results for charter schools after 2019?** (GAP-063, low priority)
+35. **Where are drinking water lead results for charter schools after 2019?** (GAP-063, low priority)
    - Context: Two 2019 water reports cover many charter schools in one table (Mastery, Renaissance charters) and are not read; charter water testing after 2019 is not in the district's folders
-35. **Do 2023-2026 AHERA reports exist for the buildings whose latest posted report is from 2016 or 2019?** (GAP-065, low priority)
+36. **Do 2023-2026 AHERA reports exist for the buildings whose latest posted report is from 2016 or 2019?** (GAP-065, low priority)
    - Context: AHERA reports before 2023 use an older layout; the latest report for 18 buildings is from 2016 or 2019, and 6 reports could not be read

@@ -386,6 +386,17 @@ def cmd_build_school_budget(a):
     print(f"  purchase summary lines {len(purchases)}; position lines {len(positions)}")
 
 
+def cmd_build_closure_plan(a):
+    from .closures import write_closure_plan
+
+    plan = write_closure_plan()
+    closing = plan.drop_duplicates("closing_school_id")
+    print(
+        f"  {len(plan)} proposed closing-to-receiving pairs for {len(closing)} proposed closures; "
+        f"{int(closing['closed_in_2013_wave'].sum())} closed in the 2013 wave"
+    )
+
+
 def cmd_build_finance(a):
     t = build_finance()
     mart = write_finance(t)
@@ -575,6 +586,11 @@ def main():
         "build-school-budget", help="parse the district's school budget allotment PDFs"
     )
     s.set_defaults(fn=cmd_build_school_budget)
+
+    s = sub.add_parser(
+        "build-closure-plan", help="the December 2012 closure proposal (a plan, not lineage)"
+    )
+    s.set_defaults(fn=cmd_build_closure_plan)
 
     s = sub.add_parser("build-finance", help="state school finance tables from the AFR files")
     s.set_defaults(fn=cmd_build_finance)

@@ -1,6 +1,6 @@
 # Validation report
 
-Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; reconciliations compare independent sources and fail below a stated floor.
+Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; reconciliations compare independent sources and fail below a stated floor.
 
 ## Hard checks
 
@@ -38,6 +38,8 @@ Generated 2026-10-06 by `uv run psd validate`. Hard checks fail the build; recon
 | 2024-25 adequacy supplements total about $494 million statewide (as reported) | pass | $493.8M |
 | instruction + support + noninstructional spending approximates the state's current expenditures (within 5%, 99% of districts, 2021-22) | pass | 0.996 of 500 districts; median ratio 1.0008 |
 | agency-years are unique in district_finance | pass | 11,215 rows |
+| closure plan: every closing and receiving school resolves to a school_id | pass | 0 closing, 0 receiving unknown |
+| closure plan pairs are unique | pass | 0 duplicates |
 | place units: 10 council districts, 66 wards, 22 police, 18 planning | pass | {} |
 | tract population allocated to council districts matches the tract total | pass | 1,603,794 people |
 | every located school falls in one unit of each place type | pass | 344 schools |

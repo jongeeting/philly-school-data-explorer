@@ -182,3 +182,16 @@ def test_header_code_reads_the_school_code():
     text = "   2015-2016 School Budget Allotment Detail\n   Lincoln, Abraham High School (8010)\n   FY16 School Budgets (April, 2015)\n"
     assert header_code(text) == "8010"
     assert header_code("No data available for this school.") is None
+
+
+def test_closure_plan_registry_resolves_to_known_schools():
+    import pandas as pd
+
+    from phillyschools.closures import PLAN_CSV
+
+    plan = pd.read_csv(PLAN_CSV, dtype=str).fillna("")
+    assert len(plan) == 68
+    assert plan["closing_school_id"].str.match(r"^sch_\d{5}$").all()
+    assert set(plan["receiving_rule"]) == {"named", "either"}
+    blank = plan[plan["receiving_school_id"] == ""]
+    assert set(blank["receiving_name"]) == {"Vaux"}

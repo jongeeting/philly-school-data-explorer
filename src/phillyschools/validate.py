@@ -154,11 +154,31 @@ def hard_checks() -> list[dict]:
     out += building_checks()
     if (CORE / "finance_lea_line.parquet").exists():
         out += finance_checks()
+    if (CORE / "school_closure_plan.parquet").exists():
+        out += closure_plan_checks()
     if (CORE / "school_place.parquet").exists():
         out += place_checks()
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
     return out
+
+
+def closure_plan_checks() -> list[dict]:
+    """The 2012 closure proposal: every named school resolves, and pairs are unique."""
+    plan = pd.read_parquet(CORE / "school_closure_plan.parquet")
+    ids = set(pd.read_parquet(CORE / "school.parquet")["school_id"])
+    bad_closing = set(plan["closing_school_id"]) - ids
+    receiving = set(plan["receiving_school_id"]) - {""}
+    bad_receiving = receiving - ids
+    dup = int(plan.duplicated(["closing_school_id", "receiving_school_id", "receiving_rule"]).sum())
+    return [
+        _check(
+            "closure plan: every closing and receiving school resolves to a school_id",
+            not bad_closing and not bad_receiving,
+            f"{len(bad_closing)} closing, {len(bad_receiving)} receiving unknown",
+        ),
+        _check("closure plan pairs are unique", dup == 0, f"{dup} duplicates"),
+    ]
 
 
 def place_checks() -> list[dict]:

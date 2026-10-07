@@ -39,3 +39,8 @@ Notes on the build:
 ## Next
 
 `school_lineage` (who absorbed a closed school) is deferred. See [DATA_GAPS.md](DATA_GAPS.md).
+
+## The 2012 closure proposal
+
+`school_closure_plan` holds the district's December 2012 closure proposal as reported by the press: 35 schools proposed for closure and 68 closing-to-receiving pairs (`registry/closure_plan_2012.csv`). `receiving_rule` is `named` when one school was named and `either` when several were offered. It records what was proposed, not what happened: 23 of the 35 were dropped from the district's list in the 2013 wave, while 12 (for example Peirce, Taylor, Cooke, Duckrey) were not, and the closures actually voted on March 7, 2013 included schools not in this list. The final resolution is not archived (GAP-038), so `school_lineage` stays empty rather than guessing which school absorbed which (GAP-078). Roosevelt Middle School shows as dropped from the list although the press reported it spared; that needs checking.
+

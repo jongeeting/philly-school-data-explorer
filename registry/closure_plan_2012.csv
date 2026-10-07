@@ -1,0 +1,69 @@
+closing_school_id,closing_name,receiving_school_id,receiving_name,receiving_rule,note
+sch_00181,Duckrey,sch_00399,M.H. Stanton,named,
+sch_00187,Meade,,Vaux,named,A new Vaux school was proposed for the Vaux building; it is not in the 2012-13 list
+sch_00364,Reynolds,,Vaux,named,Vaux was a new school proposed for the Vaux building and is not in the 2012-13 list
+sch_00179,Peirce,sch_00391,Rhodes,named,
+sch_00401,Whittier,sch_00391,Rhodes,named,
+sch_00398,Pratt,sch_00172,William Dick,either,
+sch_00398,Pratt,sch_00399,M.H. Stanton,either,
+sch_00418,Ferguson,sch_00204,Hartranft,either,
+sch_00418,Ferguson,sch_00207,McKinley,either,
+sch_00417,Fairhill,sch_00209,Potter Thomas,either,
+sch_00417,Fairhill,sch_00196,Julia de Burgos,either,
+sch_00285,Taylor,sch_00292,Roberto Clemente,named,
+sch_00045,Morris,,Vaux,either,Vaux was a new school proposed for the Vaux building and is not in the 2012-13 list
+sch_00045,Morris,sch_00186,W.D. Kelley,either,
+sch_00402,Hill,sch_00170,Blaine,either,Leslie P. Hill
+sch_00402,Hill,sch_00180,Ethel Allen,either,Leslie P. Hill
+sch_00402,Hill,sch_00182,Wright,either,Leslie P. Hill
+sch_00263,Cooke,sch_00244,Logan,either,Grover Washington is a middle school (grades 5-8)
+sch_00263,Cooke,sch_00251,Steel,either,Grover Washington is a middle school (grades 5-8)
+sch_00263,Cooke,sch_00280,Grover Washington,either,Grover Washington is a middle school (grades 5-8)
+sch_00430,Fulton,sch_00239,Emlen,either,Leeds is a middle school (grades 5-6)
+sch_00430,Fulton,sch_00434,Wister,either,Leeds is a middle school (grades 5-6)
+sch_00430,Fulton,sch_00426,Leeds,either,Leeds is a middle school (grades 5-6)
+sch_00431,Kinsey,sch_00291,Rowen,either,Wagner is a middle school (grades 6-8)
+sch_00431,Kinsey,sch_00288,Prince Hall,either,Wagner is a middle school (grades 6-8)
+sch_00431,Kinsey,sch_00433,Pastorius,either,Wagner is a middle school (grades 6-8)
+sch_00431,Kinsey,sch_00247,Pennell,either,Wagner is a middle school (grades 6-8)
+sch_00431,Kinsey,sch_00266,Wagner,either,Wagner is a middle school (grades 6-8)
+sch_00245,McCloskey,sch_00238,Edmonds,either,
+sch_00245,McCloskey,sch_00426,Leeds,either,
+sch_00365,Smith,sch_00038,Childs,either,Walter G. Smith
+sch_00365,Smith,sch_00047,E.M. Stanton,either,Walter G. Smith
+sch_00365,Smith,sch_00049,Arthur,either,Walter G. Smith
+sch_00366,George Washington,sch_00056,Nebinger,either,
+sch_00366,George Washington,sch_00064,Vare,either,
+sch_00064,Vare,sch_00366,George Washington,named,Relocation into the Washington building
+sch_00351,Wilson,sch_00015,Lea,named,Alexander Wilson
+sch_00173,Gompers,sch_00387,Beeber,named,New K-8 program at Beeber
+sch_00178,Overbrook Elementary,sch_00387,Beeber,named,New K-8 program at Beeber
+sch_00352,Leidy,sch_00027,Blankenburg,either,
+sch_00352,Leidy,sch_00174,Heston,either,
+sch_00017,McMichael,sch_00023,Martha Washington,either,A Middle Years Alternative program was also named (not a school in our list)
+sch_00017,McMichael,sch_00026,Locke,either,A Middle Years Alternative program was also named (not a school in our list)
+sch_00345,Pepper,sch_00024,Penrose,either,Penrose for grades 5-8
+sch_00345,Pepper,sch_00006,Tilden,either,Penrose for grades 5-8
+sch_00423,Sheridan West,sch_00409,Penn Treaty,named,
+sch_00427,Roosevelt,sch_00426,Leeds,named,Program only
+sch_00343,Shaw,sch_00006,Tilden,either,
+sch_00343,Shaw,sch_00016,Longstreth,either,
+sch_00358,Vaux Promise Academy,sch_00030,Benjamin Franklin,either,Randolph for career and technical programs
+sch_00358,Vaux Promise Academy,sch_00236,Randolph,either,Randolph for career and technical programs
+sch_00420,Carroll,sch_00421,Kensington Business,either,
+sch_00420,Carroll,sch_00422,Kensington Urban Education Academy,either,
+sch_00420,Carroll,sch_00221,Kensington Health Sciences,either,
+sch_00420,Carroll,sch_00190,Mastbaum,either,
+sch_00415,Douglas,sch_00421,Kensington Business,either,
+sch_00415,Douglas,sch_00422,Kensington Urban Education Academy,either,
+sch_00415,Douglas,sch_00221,Kensington Health Sciences,either,
+sch_00415,Douglas,sch_00190,Mastbaum,either,
+sch_00169,Strawberry Mansion,sch_00030,Benjamin Franklin,named,
+sch_00424,Germantown,sch_00235,Martin Luther King,either,
+sch_00424,Germantown,sch_00232,Roxborough,either,
+sch_00341,University City,sch_00002,West Philadelphia,either,
+sch_00341,University City,sch_00003,High School of the Future,either,
+sch_00341,University City,sch_00005,Sayre,either,
+sch_00341,University City,sch_00166,Overbrook High,either,
+sch_00354,Bok,sch_00029,South Philadelphia,named,Career and technical programs relocated
+sch_00396,Lamberton,sch_00166,Overbrook High,named,
