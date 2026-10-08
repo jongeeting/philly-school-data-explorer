@@ -4,6 +4,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/). Versions are for
 
 ## [0.2.0] - 2026-10-07
 
+Adds school finance, school budgets, staff by agency, place geographies, and the 2013 closure tables. Existing tables and columns are unchanged.
+
 ### Added
 
 - **School finance (state).** The Pennsylvania Annual Financial Report for 779 agencies (500 school districts, 209 charter schools, 68 career and technology centers), 2015-16 to 2024-25: revenue, expenditures by function and object, charter tuition paid, instruction expense, fund balance, with `marts/district_finance` wide by agency and year. Enrollment by agency (charters included) is the base for per-pupil figures.

@@ -14,9 +14,11 @@ are published as Parquet and CSV (gzipped when large; GeoJSON for the spatial ta
 Nothing from raw/, staging/, or private/ is included.
 """
 
+import csv
 import gzip
 import hashlib
 import json
+import re
 import shutil
 import zipfile
 from datetime import UTC, datetime
@@ -247,9 +249,25 @@ No student-level data and no named employees are included.
 """
 
 
+def changelog_summary(version: str) -> str:
+    """The prose between this version's heading and its first subsection in CHANGELOG.md."""
+    text = (ROOT / "CHANGELOG.md").read_text()
+    m = re.search(
+        rf"^## \[{re.escape(version)}\][^\n]*\n(.*?)(?=^##)", text, re.DOTALL | re.MULTILINE
+    )
+    if not m or not m.group(1).strip():
+        raise ValueError(f"CHANGELOG.md needs a summary paragraph under ## [{version}]")
+    return m.group(1).strip()
+
+
+def count_unclosed_gaps() -> int:
+    with open(ROOT / "sources" / "gaps.csv", newline="") as f:
+        return sum(r["status"] != "closed" for r in csv.DictReader(f))
+
+
 def release_notes(version: str, n_measures: int) -> str:
     base = f"https://github.com/{REPO}/releases/download/v{version}"
-    return f"""First public data release of Philly School Data Explorer: open, linked data on Philadelphia's public schools, built to be read by people, dashboards, and AI agents alike. This is a release candidate: the structure is stable and coverage will grow.
+    return f"""{changelog_summary(version)}
 
 **Start here:** `README.md` (guardrails), `DATA_DICTIONARY.md` ({n_measures} measures), `VALIDATION.md` (what was checked).
 
@@ -257,9 +275,9 @@ def release_notes(version: str, n_measures: int) -> str:
 - Everything in one file: `{NAME}-v{version}.zip` (core and marts as Parquet and CSV, GeoJSON, schemas, registries, docs, example queries, `datapackage.json`, `SHA256SUMS`).
 - One table at a time, readable from its URL, for example in DuckDB: `read_parquet('{base}/marts__school_year.parquet')`. Files are named `<layer>__<table>.parquet`; `datapackage.json` here lists them all with column descriptions.
 
-**What is in it:** 444 schools and 414 buildings with permanent IDs; enrollment, test scores, attendance, discipline (district and federal), catchments, neighborhood context; buildings, parcels, facility condition, lead paint, drinking-water lead, and asbestos records. 1.03 million school-level measure rows, each with a status and a source. Building-level results are in `marts__building.parquet`.
+**What is in it:** see `CHANGELOG.md` for what each version adds. Building-level results are in `marts__building.parquet`; every school-level measure row has a status and a source.
 
-**Read before you use a number:** read `status` before `value`; environmental, condition, and parcel results are point-in-time; groups under 20 students are suppressed; the October 1 enrollment count can be affected by late re-enrollments; there is no ranking or composite score. 69 open gaps are listed in `docs/DATA_GAPS.md`.
+**Read before you use a number:** read `status` before `value`; environmental, condition, and parcel results are point-in-time; groups under 20 students are suppressed; the October 1 enrollment count can be affected by late re-enrollments; there is no ranking or composite score. {count_unclosed_gaps()} gaps not yet closed are listed in `docs/DATA_GAPS.md`.
 
 **Terms:** our compilation is CC BY 4.0. The data come from the School District of Philadelphia, the Pennsylvania Department of Education, the U.S. Department of Education, the U.S. Census Bureau, and the City of Philadelphia and remain subject to their terms (`docs/SOURCE_TERMS.md`). Not endorsed by any source.
 
