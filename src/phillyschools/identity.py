@@ -11,6 +11,7 @@ Input is the staged SDP master-school-list table (one row per listed school per 
 import re
 from datetime import UTC, datetime
 
+import numpy as np
 import pandas as pd
 
 from . import CORE, REGISTRY, ROOT
@@ -122,7 +123,139 @@ def read_lineage_corrections() -> pd.DataFrame:
     return df[LINEAGE_COLUMNS]
 
 
-def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd.DataFrame]:
+LOCATION_CORRECTIONS = ROOT / "corrections" / "school_location.csv"
+CORRECTION_COLUMNS = [
+    "correction_id",
+    "table",
+    "key",
+    "field",
+    "old_value",
+    "new_value",
+    "reason",
+    "source_id",
+    "corrected_on",
+    "corrected_by",
+]
+
+
+def read_location_corrections() -> pd.DataFrame:
+    """Hand-reviewed fixes to the master lists' GPS Location, each with its reason and evidence."""
+    if not LOCATION_CORRECTIONS.exists():
+        return pd.DataFrame(columns=["correction_id", "school_id", "sy", "action", "lat", "lon"])
+    return pd.read_csv(LOCATION_CORRECTIONS, dtype={"sy": int, "lat": float, "lon": float})
+
+
+def _point(lat, lon) -> str:
+    return "" if pd.isna(lat) else f"{lat}, {lon}"
+
+
+def apply_location_corrections(
+    attr: pd.DataFrame, corrections: pd.DataFrame
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Replace or withhold a listed lat/lon; returns the attr table and `correction` rows.
+
+    The master lists sometimes keep a school's old GPS point for years after its street
+    address changes, or carry another school's point. A replaced point is `derived` (taken
+    from the same list for the same address, or a Census geocode of it); a withheld one is
+    `invalid_in_source`.
+    """
+    out = attr.copy()
+    out["location_status"] = np.where(out["lat"].notna(), "reported", "not_reported")
+    out["correction_id"] = None
+    log = []
+    for c in corrections.itertuples():
+        hit = (out["school_id"] == c.school_id) & (out["sy"] == c.sy)
+        if hit.sum() != 1:
+            raise ValueError(f"location correction {c.correction_id} matches {hit.sum()} rows")
+        i = out.index[hit][0]
+        old = _point(out.at[i, "lat"], out.at[i, "lon"])
+        if c.action == "replace":
+            out.loc[i, ["lat", "lon"]] = [c.lat, c.lon]
+            out.at[i, "location_status"] = "derived"
+        elif c.action == "withhold":
+            out.loc[i, ["lat", "lon"]] = [np.nan, np.nan]
+            out.at[i, "location_status"] = "invalid_in_source"
+        else:
+            raise ValueError(f"unknown location correction action {c.action}")
+        out.at[i, "correction_id"] = c.correction_id
+        log.append(
+            {
+                "correction_id": c.correction_id,
+                "table": "school_year_attr",
+                "key": f"{c.school_id}|{c.sy}",
+                "field": "lat,lon",
+                "old_value": old,
+                "new_value": _point(out.at[i, "lat"], out.at[i, "lon"]),
+                "reason": c.reason,
+                "source_id": out.at[i, "source_id"],
+                "corrected_on": c.corrected_on,
+                "corrected_by": c.corrected_by,
+            }
+        )
+    return out, pd.DataFrame(log, columns=CORRECTION_COLUMNS)
+
+
+def _meters(lat1, lon1, lat2, lon2):
+    lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
+    h = (
+        np.sin((lat2 - lat1) / 2) ** 2
+        + np.cos(lat1) * np.cos(lat2) * np.sin((lon2 - lon1) / 2) ** 2
+    )
+    return 6_371_000 * 2 * np.arcsin(np.sqrt(h))
+
+
+def location_jumps(attr: pd.DataFrame, moved_m: float = 500, near_m: float = 50) -> pd.DataFrame:
+    """Schools whose point jumps onto a point another school held the year before.
+
+    Flags a school_id that moves more than `moved_m` from its own prior-year point to within
+    `near_m` of a different school's prior-year point, when that other school is still listed
+    this year but somewhere else. Moving into a building another school still occupies (a
+    shared or swing building) or one whose school closed is not flagged; two schools trading
+    places from one year to the next is the signature of a misaligned or stale location.
+    A point set by a reviewed row in corrections/school_location.csv is not flagged (a swing
+    building handed from one school to the next looks the same).
+    """
+    a = attr.dropna(subset=["lat", "lon"])[["school_id", "sy", "lat", "lon"]]
+    prev = a.assign(sy=a["sy"] + 1)
+    m = a.merge(prev, on=["school_id", "sy"], suffixes=("", "_prev"))
+    if "correction_id" in attr.columns:
+        reviewed = attr.loc[attr["correction_id"].notna(), ["school_id", "sy"]]
+        m = m.merge(reviewed, on=["school_id", "sy"], how="left", indicator=True)
+        m = m[m.pop("_merge") == "left_only"]
+    moved = m[_meters(m["lat"], m["lon"], m["lat_prev"], m["lon_prev"]) > moved_m]
+    rows = []
+    for r in moved.itertuples():
+        others = prev[(prev["sy"] == r.sy) & (prev["school_id"] != r.school_id)]
+        d = _meters(r.lat, r.lon, others["lat"].to_numpy(), others["lon"].to_numpy())
+        for o, dist in zip(others.itertuples(), d, strict=True):
+            if dist > near_m:
+                continue
+            now = a[(a["school_id"] == o.school_id) & (a["sy"] == r.sy)]
+            moved_away = (
+                len(now) > 0
+                and _meters(r.lat, r.lon, now["lat"].iloc[0], now["lon"].iloc[0]) > near_m
+            )
+            if moved_away:
+                rows.append(
+                    {
+                        "school_id": r.school_id,
+                        "sy": r.sy,
+                        "lat": r.lat,
+                        "lon": r.lon,
+                        "prior_holder": o.school_id,
+                        "distance_m": round(float(dist), 1),
+                    }
+                )
+    return pd.DataFrame(
+        rows, columns=["school_id", "sy", "lat", "lon", "prior_holder", "distance_m"]
+    )
+
+
+def build_identity(
+    staged: pd.DataFrame,
+    registry: pd.DataFrame,
+    location_corrections: pd.DataFrame | None = None,
+) -> dict[str, pd.DataFrame]:
     """Returns the identity tables plus `issues` (data-quality notes, not a core table)."""
     d = staged.reindex(columns=STAGED_COLUMNS + OPTIONAL_COLUMNS).copy()
     d["year"] = d["year"].astype(int)
@@ -186,6 +319,9 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
         .sort_values(["school_id", "sy"])
         .reset_index(drop=True)
     )
+    if location_corrections is None:
+        location_corrections = pd.DataFrame(columns=["correction_id", "school_id", "sy"])
+    attr, correction = apply_location_corrections(attr, location_corrections)
 
     # school_id_xwalk: one row per school x code x run of consecutive years
     d["state_key"] = d["school_key"]
@@ -300,20 +436,6 @@ def build_identity(staged: pd.DataFrame, registry: pd.DataFrame) -> dict[str, pd
             )
 
     school_lineage = read_lineage_corrections()
-    correction = pd.DataFrame(
-        columns=[
-            "correction_id",
-            "table",
-            "key",
-            "field",
-            "old_value",
-            "new_value",
-            "reason",
-            "source_id",
-            "corrected_on",
-            "corrected_by",
-        ]
-    )
 
     return {
         "school": school,
@@ -354,6 +476,9 @@ def validate(t: dict[str, pd.DataFrame]) -> list[str]:
         bad.append("registry missing a ULCS")
     if attr["status"].isna().any() or attr["source_id"].isna().any():
         bad.append("status or source_id missing in school_year_attr")
+    jumps = location_jumps(attr)
+    for r in jumps.itertuples():
+        bad.append(f"{r.school_id} in sy {r.sy} jumps onto {r.prior_holder}'s sy {r.sy - 1} point")
     return bad
 
 

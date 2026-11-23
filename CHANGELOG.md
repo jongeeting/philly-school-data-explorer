@@ -2,6 +2,16 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/). Versions are for the data release; a column rename or removal is a major version with an entry here. School and building IDs are permanent and never reused.
 
+## [Unreleased]
+
+### Fixed
+
+- **School locations.** 44 school-years (13 schools, 2017-18 to 2025-26) had a `lat`/`lon` that belonged to a school's old building or to another school, because the district's lists keep the old GPS point after a street address changes. They are corrected by rows in `corrections/school_location.csv`, logged in `correction`, and the parcel and place links rebuilt from them. Kensington High School's 2026-27 point at the Meehan campus is correct (a temporary move).
+
+### Added
+
+- `school_year_attr.location_status` and `school_year_attr.correction_id`, and a validation check that fails when a school jumps onto a point another school held the year before.
+
 ## [0.2.0] - 2026-10-07
 
 Adds school finance, school budgets, staff by agency, place geographies, and the 2013 closure tables. Existing tables and columns are unchanged.

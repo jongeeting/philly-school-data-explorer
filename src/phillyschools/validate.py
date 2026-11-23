@@ -11,6 +11,7 @@ from datetime import UTC, datetime
 import pandas as pd
 
 from . import CORE, ROOT
+from .identity import location_jumps
 from .marts import DOCS, MARTS
 
 STATUSES = {
@@ -151,6 +152,7 @@ def hard_checks() -> list[dict]:
             f"grades/all = {ratio:.4f} over {len(j)} school-years",
         )
     )
+    out += location_checks()
     out += building_checks()
     if (CORE / "finance_lea_line.parquet").exists():
         out += finance_checks()
@@ -167,6 +169,31 @@ def hard_checks() -> list[dict]:
         out += place_checks()
     if (CORE / "school_budget.parquet").exists():
         out += school_budget_checks()
+    return out
+
+
+def location_checks() -> list[dict]:
+    """School points against the year before, and every location fix against its log row."""
+    attr = pd.read_parquet(CORE / "school_year_attr.parquet")
+    out = []
+    jumps = location_jumps(attr)
+    out.append(
+        _check(
+            "no school jumps onto another school's prior-year point",
+            jumps.empty,
+            "; ".join(f"{r.school_id} sy {r.sy} onto {r.prior_holder}" for r in jumps.itertuples())
+            or "0 jumps",
+        )
+    )
+    fixed = attr["correction_id"].dropna()
+    log = pd.read_parquet(CORE / "correction.parquet")
+    out.append(
+        _check(
+            "every corrected school location has a row in correction",
+            set(fixed) <= set(log["correction_id"]),
+            f"{len(fixed)} corrected school-years",
+        )
+    )
     return out
 
 

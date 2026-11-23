@@ -1,7 +1,15 @@
 import pandas as pd
 import pytest
 
-from phillyschools.identity import STAGED_COLUMNS, build_identity, mint_ids, validate
+from phillyschools.identity import (
+    LOCATION_CORRECTIONS,
+    STAGED_COLUMNS,
+    build_identity,
+    location_jumps,
+    mint_ids,
+    read_location_corrections,
+    validate,
+)
 
 EMPTY_REGISTRY = pd.DataFrame(columns=["school_id", "ulcs", "minted_on"])
 
@@ -95,6 +103,72 @@ def test_validation_catches_broken_tables():
     t = build_identity(staged([{"year": 2026}]), EMPTY_REGISTRY)
     t["school_year_attr"] = pd.concat([t["school_year_attr"]] * 2)
     assert any("grain" in m for m in validate(t))
+
+
+# Two schools trade places, as in the 2026-27 list's Kensington High and Pollock rows.
+CUMBERLAND, RYAN, WELSH = "39.98483, -75.12640", "40.04561, -75.04421", "40.06012, -75.02713"
+
+
+def two_schools(years_a, years_b):
+    return staged(
+        [{"year": y, "ulcs": "1", "gps": g} for y, g in years_a]
+        + [{"year": y, "ulcs": "2", "src_id": "11", "gps": g} for y, g in years_b]
+    )
+
+
+def test_location_jump_onto_a_school_that_moved_away_fails_validation():
+    df = two_schools([(2026, CUMBERLAND), (2027, RYAN)], [(2026, RYAN), (2027, WELSH)])
+    t = build_identity(df, EMPTY_REGISTRY)
+    jumps = location_jumps(t["school_year_attr"])
+    assert jumps[["school_id", "sy", "prior_holder"]].values.tolist() == [
+        ["sch_00001", 2027, "sch_00002"]
+    ]
+    assert any("jumps onto sch_00002" in m for m in validate(t))
+
+
+def test_moving_into_a_shared_or_closed_building_is_not_a_jump():
+    shared = two_schools([(2026, CUMBERLAND), (2027, RYAN)], [(2026, RYAN), (2027, RYAN)])
+    closed = two_schools([(2026, CUMBERLAND), (2027, RYAN)], [(2026, RYAN)])
+    for df in (shared, closed):
+        assert location_jumps(build_identity(df, EMPTY_REGISTRY)["school_year_attr"]).empty
+
+
+def test_location_corrections_replace_withhold_and_log():
+    df = two_schools([(2026, CUMBERLAND), (2027, RYAN)], [(2026, RYAN), (2027, WELSH)])
+    fixes = pd.DataFrame(
+        [
+            ["corr_loc_901", "sch_00002", 2026, "replace", 40.06012, -75.02713],
+            ["corr_loc_902", "sch_00001", 2026, "withhold", None, None],
+        ],
+        columns=["correction_id", "school_id", "sy", "action", "lat", "lon"],
+    ).assign(reason="stale GPS", corrected_on="2026-10-22", corrected_by="test")
+    t = build_identity(df, EMPTY_REGISTRY, fixes)
+    attr = t["school_year_attr"].set_index(["school_id", "sy"])
+    assert attr.loc[("sch_00002", 2026), ["lat", "lon"]].tolist() == [40.06012, -75.02713]
+    assert attr.loc[("sch_00002", 2026), "location_status"] == "derived"
+    assert pd.isna(attr.loc[("sch_00001", 2026), "lat"])
+    assert attr.loc[("sch_00001", 2026), "location_status"] == "invalid_in_source"
+    assert attr.loc[("sch_00001", 2027), "location_status"] == "reported"
+    log = t["correction"].set_index("correction_id")
+    assert log.loc["corr_loc_901", "old_value"] == "40.04561, -75.04421"
+    assert log.loc["corr_loc_901", "key"] == "sch_00002|2026"
+    assert validate(t) == []
+    unmatched = fixes.assign(sy=2020)
+    with pytest.raises(ValueError, match="matches 0 rows"):
+        build_identity(df, EMPTY_REGISTRY, unmatched)
+
+
+def test_location_corrections_file_is_well_formed():
+    if not LOCATION_CORRECTIONS.exists():
+        pytest.skip("no location corrections")
+    c = read_location_corrections()
+    assert c["correction_id"].is_unique
+    assert not c.duplicated(["school_id", "sy"]).any()
+    assert set(c["action"]) <= {"replace", "withhold"}
+    replace = c[c["action"] == "replace"]
+    assert replace["lat"].between(39.8, 40.2).all() and replace["lon"].between(-75.3, -74.9).all()
+    assert c.loc[c["action"] == "withhold", ["lat", "lon"]].isna().all().all()
+    assert c[["reason", "evidence", "corrected_on", "corrected_by"]].notna().all().all()
 
 
 def test_real_prototype_data_builds_and_validates():

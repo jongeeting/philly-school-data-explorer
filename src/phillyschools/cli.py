@@ -33,7 +33,13 @@ from .finance import (
 from .futureready import catalog_future_ready
 from .gaps import read_gaps, write_markdown
 from .geography import build_geography, write_geography
-from .identity import build_identity, load_registry, validate, write_core
+from .identity import (
+    build_identity,
+    load_registry,
+    read_location_corrections,
+    validate,
+    write_core,
+)
 from .marts import build_marts
 from .neighborhoods import build_neighborhood_flows, publishable, write_neighborhood_flows
 from .parcels import build_school_parcel, write_school_parcel
@@ -486,7 +492,7 @@ def cmd_build_identity(a):
         staged = pd.read_csv(PROTOTYPE_INPUT, dtype=str)
         origin = PROTOTYPE_INPUT
     print(f"input: {origin.relative_to(ROOT)} ({len(staged)} rows)")
-    tables = build_identity(staged, load_registry())
+    tables = build_identity(staged, load_registry(), read_location_corrections())
     problems = validate(tables)
     if problems:
         print("VALIDATION FAILED:\n  " + "\n  ".join(problems))

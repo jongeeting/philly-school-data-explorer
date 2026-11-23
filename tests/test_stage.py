@@ -1,7 +1,13 @@
 import pandas as pd
 import pytest
 
-from phillyschools.identity import STAGED_COLUMNS, build_identity, validate
+from phillyschools.identity import (
+    STAGED_COLUMNS,
+    build_identity,
+    load_registry,
+    read_location_corrections,
+    validate,
+)
 from phillyschools.stage import (
     LONGITUDINAL,
     bridge_nces,
@@ -114,7 +120,8 @@ def test_reported_closure_becomes_event_with_first_closed_year():
 def test_real_staging_spans_2002_to_latest_without_era_artifacts():
     d = stage_sdp_master_lists()
     assert d["year"].min() == 2002 and d["year"].nunique() == d["year"].max() - 2002 + 1
-    t = build_identity(d, EMPTY_REGISTRY)
+    # the real registry, so the reviewed location corrections find their school_ids
+    t = build_identity(d, load_registry(), read_location_corrections())
     assert validate(t) == []
     ev = t["school_event"]
     boundary = ev[(ev["sy"] == 2018) & ev["event_type"].isin(["governance_change", "level_change"])]

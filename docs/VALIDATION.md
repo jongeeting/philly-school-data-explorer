@@ -1,6 +1,6 @@
 # Validation report
 
-Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; reconciliations compare independent sources and fail below a stated floor.
+Generated 2026-10-22 by `uv run psd validate`. Hard checks fail the build; reconciliations compare independent sources and fail below a stated floor.
 
 ## Hard checks
 
@@ -20,6 +20,8 @@ Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; recon
 | marts cover every metric school | pass |  |
 | facility parts add up to site totals | pass | 0 sites differ by more than $1,000 |
 | enrollment grades add to the all-grades row (within 1%) | pass | grades/all = 0.9986 over 5145 school-years |
+| no school jumps onto another school's prior-year point | pass | 0 jumps |
+| every corrected school location has a row in correction | pass | 44 corrected school-years |
 | building_id is unique | pass | 414 buildings |
 | every crosswalk key points at a building | pass | 896 keys |
 | no outside key maps to two buildings | pass |  |
@@ -56,7 +58,7 @@ Generated 2026-10-07 by `uv run psd validate`. Hard checks fail the build; recon
 | place units: 10 council districts, 66 wards, 22 police, 18 planning | pass | {} |
 | tract population allocated to council districts matches the tract total | pass | 1,603,794 people |
 | every located school falls in one unit of each place type | pass | 344 schools |
-| derived council district agrees with the district's list for 97%+ of schools | pass | 99.1% of 344 |
+| derived council district agrees with the district's list for 97%+ of schools | pass | 98.8% of 344 |
 | school budget group totals add to the scope subtotals | pass | 0 off |
 | school budget scope subtotals add to the school total | pass | 0 off |
 | school budget line items add to their group totals | pass | 0 of 5638 off |
